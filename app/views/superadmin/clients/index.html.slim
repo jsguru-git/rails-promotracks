@@ -1,0 +1,25 @@
+.col-md-offset-2.col-md-7
+  .panel.panel-primary
+    .panel-heading.panel-heading-with-button
+      .col-sm-6.panel-heading-label
+        h2.text-left.panel-title Clients
+      .col-sm-6.text-right
+        =link_to "Add Client", new_superadmin_client_path, class: 'btn btn-info btn-sm'
+      .clearfix
+    table.table.table-striped
+      thead
+        tr
+          th ID
+          th Name
+          th Phone
+          th
+
+      tbody
+        -@clients.each do |client|
+          tr
+            td #{client.id}
+            td #{client.name}
+            td #{client.phone}
+            td
+              a.btn.btn-success.btn-sm href=superadmin_client_users_path(client)
+                |Admins

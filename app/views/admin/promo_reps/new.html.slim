@@ -1,0 +1,30 @@
+.col-md-offset-3.col-md-6
+  =form_for @promo_rep, url: admin_promo_reps_path(@promo_rep), :html => {:"data-toggle" => "validator"} do |f|
+    .panel.panel-primary
+      .panel-heading
+        h2.panel-title #{@promo_rep.new_record? ? 'New ' : 'Edit '} Admin
+      .panel-body
+        .form-group.row
+          .col-md-6
+            = f.label :first_name
+            sup *
+            .input-group
+              =f.hidden_field :role, :value => :promo_rep
+              = f.text_field :first_name, class: 'name form-control ', required: true
+          .col-md-6
+            = f.label :last_name
+            sup *
+            .input-group
+              = f.text_field :last_name, class: 'name form-control ', required: true
+        .form-group.row
+          .col-md-12
+            = f.label :email
+            sup *
+            .input-group
+              = f.email_field :email, class: 'form-control ', required: true
+
+      .panel-footer
+        .text-right
+          =f.submit 'Submit', class: 'btn btn-success'
+          '
+          a.btn.btn-danger href="#{admin_promo_reps_path}" Cancel

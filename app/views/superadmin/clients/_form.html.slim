@@ -1,0 +1,32 @@
+.col-md-offset-3.col-md-6
+  = form_for [:superadmin, @client] do |f|
+
+    .panel.panel-primary
+      .panel-heading
+        h2.panel-title #{@client.new_record? ? 'New ' : 'Edit '} Client
+      .panel-body
+        .form-group.row
+          .col-md-12
+            = f.label :name
+            sup *
+            .input-group
+              = f.text_field :name, class: 'name form-control', :autocomplete => true, required: true
+        .form-group.row
+          .col-md-12
+            = f.label :phone
+            sup *
+            .input-group
+              = f.text_field :phone, class: 'form-control'
+        .form-group.row
+          .col-md-12
+            = f.label :brands
+            sup *
+            .input-group
+              =f.select :brand_ids, options_for_select(Brand.all&.collect { |u| [u.name, u.id] }, selected_key = @client.brand_ids), {}, {:multiple => true, :class => 'form-control add_brands'}
+              .help-block.with-errors
+
+      .panel-footer
+        .text-right
+          =f.submit 'Submit', class: 'btn btn-success'
+          '
+          a.btn.btn-danger href="#{superadmin_clients_path}" Cancel

@@ -1,0 +1,92 @@
+.col-md-offset-3.col-md-6
+  = form_for [:admin, @event] do |f|
+
+    .panel.panel-primary
+      .panel-heading
+        h2.panel-title #{@event.new_record? ? 'New ' : 'Edit '} Event
+      .panel-body
+        =f.hidden_field :promo_category
+        .form-group.row
+          .col-md-6
+            = f.label :name
+            sup *
+            .input-group
+              = f.text_field :name, class: 'name form-control', :autocomplete => true, required: true
+          .col-md-6
+            = f.label :type
+            sup *
+            .input-group
+              = f.text_field :type, class: 'form-control'
+        .form-group.row
+          .col-md-6
+            = f.label :brand
+            sup *
+            .input-group
+              =f.select :brand_id, options_for_select(@current_client.brands.collect { |u| [u.name, u.id] }, selected_key = @event.brand_id), {}, {:class => 'form-control'}
+              .help-block.with-errors
+        .form-group.row
+          .col-md-3
+            =label_tag :prom_rep
+            =radio_button_tag 'promo', true, true, class: 'form-control', placeholder: 'Name', :id => 'promo_rep_button'
+          .col-md-3
+            =label_tag :prom_group
+            =radio_button_tag 'promo', false, true, class: 'form-control', placeholder: 'Name', :id => 'promo_group_button'
+
+          .col-md-6
+            #promo_reps
+              = f.label :promo_reps
+              sup *
+              .input-group
+                =f.select :user_ids, options_for_select(@promo_reps.collect { |u| [u.full_name, u.id] }, selected_key = @event.users.where(category: :promo_rep)), {}, {:multiple => true, :class => 'form-control add_promo_reps'}
+                .help-block.with-errors
+            #promo_groups style= "display:none"
+              = f.label :promo_groups
+              sup *
+              .input-group
+                =f.select :group_id, options_for_select(@current_client.groups.collect { |u| [u.name, u.id] }, selected_key = @event.group_id), {}, {:class => 'form-control', :title => 'Select Group'}
+                .help-block.with-errors
+        .form-group.row
+          .col-sm-6
+            =f.label :start_time, 'Start Time'
+            #start_time.input-group.date
+              =f.text_field :start_time, class: 'form-control', value: (@event&.start_time)
+              span.input-group-addon
+                span.glyphicon.glyphicon-calendar
+          .col-sm-6
+            =f.label :end_time, 'End Time'
+            #end_time.input-group.date
+              =f.text_field :end_time, class: 'form-control', value: (@event&.end_time)
+              span.input-group-addon
+                span.glyphicon.glyphicon-calendar
+
+        = f.fields_for :address do |addr|
+          .form-group.row
+            .col-md-12
+              = f.label :city
+              sup *
+              .input-group
+                = addr.text_field :city, class: 'city form-control ', :autocomplete => true, required: true
+                span.input-group-addon.btn-primary
+                  .glyphicon.glyphicon-map-marker
+
+      .panel-footer
+        .text-right
+          =f.submit 'Submit', class: 'btn btn-success'
+          '
+          a.btn.btn-danger href="#{admin_events_path}" Cancel
+javascript:
+  $(document).ready(function () {
+    $("#promo_rep_button").prop("checked", true);
+    $("#event_promo_category").val('promo_rep');
+    $('#promo_rep_button').on("click", function () {
+      $("#event_promo_category").val('promo_rep');
+      $('#promo_reps').show();
+      $('#promo_groups').hide();
+    });
+
+    $('#promo_group_button').on("click", function () {
+      $("#event_promo_category").val('promo_group');
+      $('#promo_reps').hide();
+      $('#promo_groups').show();
+    });
+  });

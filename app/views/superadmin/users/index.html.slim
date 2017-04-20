@@ -1,0 +1,20 @@
+.col-md-offset-2.col-md-7
+  .panel.panel-primary
+    .panel-heading.panel-heading-with-button
+      .col-sm-6.panel-heading-label
+        h2.text-left.panel-title Clients
+      .col-sm-6.text-right
+        =link_to "Add Admin", new_superadmin_client_user_path, class: 'btn btn-info btn-sm'
+      .clearfix
+    table.table.table-striped
+      thead
+        tr
+          th ID
+          th Name
+          th Email
+      tbody
+        -@users.each do |user|
+          tr
+            td #{user.id}
+            td #{user.full_name}
+            td #{user.email}

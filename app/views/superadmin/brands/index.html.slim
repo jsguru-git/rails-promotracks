@@ -1,0 +1,19 @@
+.col-md-offset-2.col-md-7
+  .panel.panel-primary
+    .panel-heading.panel-heading-with-button
+      .col-sm-6.panel-heading-label
+        h2.text-left.panel-title Brands
+      .col-sm-6.text-right
+        =link_to "Add Brand", new_superadmin_brand_path, class: 'btn btn-info btn-sm'
+      .clearfix
+    table.table.table-striped
+      thead
+        tr
+          th ID
+          th Name
+
+      tbody
+        -@brands.each do |brand|
+          tr
+            td #{brand.id}
+            td #{brand.name}
