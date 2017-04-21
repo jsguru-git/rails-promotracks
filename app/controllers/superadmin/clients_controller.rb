@@ -7,6 +7,7 @@ class Superadmin::ClientsController < Superadmin::SuperadminApplicationControlle
 
   def new
     @client=Client.new
+    @admin=@client.build_admin
   end
 
   def create
@@ -20,7 +21,7 @@ class Superadmin::ClientsController < Superadmin::SuperadminApplicationControlle
   private
 
   def client_params
-    params.require(:client).permit(:name, :phone, :brand_ids)
+    params.require(:client).permit(:name, :phone, :brand_ids, admin_attributes: [:first_name, :last_name, :password, :password_confirmation, :email, :role])
   end
 
 
