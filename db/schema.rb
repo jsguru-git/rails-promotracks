@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170421061347) do
+ActiveRecord::Schema.define(version: 20170421163414) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,21 +59,15 @@ ActiveRecord::Schema.define(version: 20170421061347) do
     t.string   "attendance"
     t.integer  "sample"
     t.float    "product_cost"
-    t.float    "total_expense"
-    t.string   "notes"
-    t.text     "images",         default: [],              array: true
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer  "user_id"
     t.integer  "brand_id"
     t.integer  "group_id"
     t.integer  "promo_category"
     t.integer  "client_id"
-    t.datetime "check_in"
-    t.datetime "check_out"
     t.integer  "max_users",      default: 0
     t.integer  "event_type_id"
-    t.string   "follow_up"
   end
 
   add_index "events", ["brand_id"], name: "index_events_on_brand_id", using: :btree
@@ -110,9 +104,16 @@ ActiveRecord::Schema.define(version: 20170421061347) do
   create_table "user_events", force: :cascade do |t|
     t.integer "event_id"
     t.integer "user_id"
-    t.string  "token"
+    t.string "token"
     t.integer "category", default: 0
-    t.integer "status",   default: 0
+    t.integer "status", default: 0
+    t.string "notes"
+    t.string "total_expense"
+    t.boolean "recommended", default: false
+    t.datetime "check_in"
+    t.datetime "check_out"
+    t.text "images", default: [], array: true
+    t.string "follow_up"
   end
 
   add_index "user_events", ["event_id"], name: "index_user_events_on_event_id", using: :btree

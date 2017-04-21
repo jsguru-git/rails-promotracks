@@ -9,5 +9,4 @@ class Event < ActiveRecord::Base
   belongs_to :event_type
   has_many :users, :through => :user_events
   accepts_nested_attributes_for :address, reject_if: :all_blank, allow_destroy: true
-  mount_uploaders :images ,ImagesUploader
 end

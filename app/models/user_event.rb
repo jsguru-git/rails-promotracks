@@ -3,4 +3,5 @@ class UserEvent < ActiveRecord::Base
   belongs_to :user
   enum category: [:promo_rep, :promo_group]
   enum status: [:invited, :accepted]
+  mount_uploaders :images, ImagesUploader
 end

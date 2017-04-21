@@ -7,11 +7,18 @@ class Api::V1::EventsController < Api::V1::ApiApplicationController
 
   def update
     @event=current_user.events.find(params[:id])
-    if @event.update_attributes(event_params.except(:images))
-      if params[:event][:images].nil?
+    if @event.promo_rep?
+      @user_event=UserEvent.where(user_id: current_user.id, event_id: @event.id, :category => 0).first
+    elsif @event.promo_group?
+      @user_event=UserEvent.where(user_id: current_user.id, event_id: @event.id, :category => 1).first
+    end
+
+    if @event.update_attributes(event_params)
+      @user_event.update_attributes(user_event_params)
+      if params[:user_event][:images].nil?
         render :show
       else
-        success, error= add_images(params[:event][:images], @event)
+        success, error= add_images(params[:user_event][:images], @user_event)
         if success
           render :show
         else
@@ -26,7 +33,11 @@ class Api::V1::EventsController < Api::V1::ApiApplicationController
 
   private
   def event_params
-    params.require(:event).permit(:images, :notes, :attendance, :sample, :total_expense, :follow_up, :check_in, :check_out)
+    params.require(:event).permit(:attendance, :sample)
+  end
+
+  def user_event_params
+    params.require(:user_event).permit(:notes, :total_expense, :check_in, :check_out, :images, :follow_up, :recommended)
   end
 
   def add_images(images, event)
