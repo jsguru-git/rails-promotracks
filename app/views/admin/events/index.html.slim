@@ -11,6 +11,8 @@
         tr
           th ID
           th Name
+          th Type
+          Th Venue
           th Start Time
           th End Time
       tbody
@@ -18,5 +20,7 @@
           tr
             td #{event.id}
             td #{event.name}
+            td #{event.event_type&.name}
+            td #{event.address&.city}
             td #{event.start_time&.strftime('%m/%d/%Y %I:%M %p')}
             td #{event.end_time&.strftime('%m/%d/%Y %I:%M %p')}
