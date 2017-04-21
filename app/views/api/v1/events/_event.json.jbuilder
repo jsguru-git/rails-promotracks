@@ -3,5 +3,5 @@ json.images do
   json.array! event.images.map { |image| image.url }
 end
 json.address do
-  json.extract! event.address, :city
+  json.extract! event.address, :city, :state, :zip, :country, :formatted_address, :latitude, :longitude
 end
