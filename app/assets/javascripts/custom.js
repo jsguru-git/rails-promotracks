@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).on('turbolinks:load', function () {
 
     $(".add_brands,.add_promo_reps").select2();
 
@@ -11,6 +11,21 @@ $(document).ready(function () {
 
     $('#end_time').datetimepicker({}).on("dp.change", function (e) {
         $('#start_time').data("DateTimePicker").maxDate(e.date);
+    });
+
+
+    $("#promo_rep_button").prop("checked", true);
+    $("#event_promo_category").val('promo_rep');
+    $('#promo_rep_button').on("click", function () {
+        $("#event_promo_category").val('promo_rep');
+        $('#promo_reps').show();
+        $('#promo_groups').hide();
+    });
+
+    $('#promo_group_button').on("click", function () {
+        $("#event_promo_category").val('promo_group');
+        $('#promo_reps').hide();
+        $('#promo_groups').show();
     });
 
 
