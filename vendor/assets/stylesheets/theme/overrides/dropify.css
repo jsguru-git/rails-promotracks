@@ -1,0 +1,12 @@
+/*
+ * DROPIFY
+ */
+.dropify-wrapper {
+    border: 1px solid #d2d9e5;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.dropify-wrapper.disabled {
+    opacity: .5;
+}

@@ -1,0 +1,176 @@
+/*
+ * JQUERY STEPS
+ */
+.cui-wizard--steps--icon, .cui-wizard .number {
+    border: 3px solid #01a8fe;
+    -webkit-border-radius: 100%;
+    border-radius: 100%;
+    width: 45px;
+    height: 45px;
+    display: inline-block;
+    text-align: center;
+    line-height: 37px;
+    color: #01a8fe;
+    font-size: 24px;
+    background: #ffffff;
+}
+
+.cui-wizard--steps--title {
+    display: block;
+}
+
+.cui-wizard > .content {
+    min-height: 150px;
+    margin: 0px 0px 15px;
+    background: transparent;
+}
+
+.cui-wizard > .content > .body {
+    background: transparent;
+    padding: 25px 0px;
+}
+
+.cui-wizard .steps ul {
+    width: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    -moz-box-orient: horizontal;
+    -moz-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+}
+
+.cui-wizard .steps ul li {
+    -webkit-box-flex: 200;
+    -webkit-flex-grow: 200;
+    -moz-box-flex: 200;
+    -ms-flex-positive: 200;
+    flex-grow: 200;
+    margin-bottom: 10px;
+    float: none;
+    width: auto;
+    position: relative;
+}
+
+.cui-wizard .steps ul li a {
+    background: transparent !important;
+    margin: 0px !important;
+    text-align: center;
+    color: #24222f !important;
+    line-height: 30px;
+    position: relative;
+    z-index: 2;
+}
+
+.cui-wizard .steps ul li a .number {
+    display: none;
+}
+
+.cui-wizard .steps ul li:before, .cui-wizard .steps ul li:after {
+    position: absolute;
+    content: '';
+    display: block;
+    width: 50%;
+    top: 36px;
+    right: 0px;
+    height: 3px;
+    background: #01a8fe;
+    z-index: 1;
+}
+
+.cui-wizard .steps ul li:after {
+    right: auto;
+    left: 0px;
+}
+
+.cui-wizard .steps ul li:first-child:after {
+    display: none;
+}
+
+.cui-wizard .steps ul li:last-child:before {
+    display: none;
+}
+
+.cui-wizard .steps ul li.disabled:before, .cui-wizard .steps ul li.disabled:after {
+    background: #dfe4ed;
+}
+
+.cui-wizard .steps ul li.disabled .cui-wizard--steps--icon, .cui-wizard .steps ul li.disabled .number {
+    border-color: #dfe4ed;
+    background: #dfe4ed;
+    color: #ffffff;
+}
+
+.cui-wizard .steps ul li.disabled a {
+    color: #bbb8cb !important;
+}
+
+@media (max-width: 991px) {
+    .cui-wizard .steps ul {
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -webkit-flex-direction: column;
+        -moz-box-orient: vertical;
+        -moz-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+    }
+}
+
+.cui-wizard .actions {
+    text-align: center;
+}
+
+.cui-wizard .actions li {
+    margin-left: 0px !important;
+}
+
+.cui-wizard .actions li a {
+    background-color: #acb7bf;
+    border-color: #acb7bf;
+    min-width: 120px;
+    text-align: center;
+}
+
+.cui-wizard .actions li a:hover, .cui-wizard .actions li a:active {
+    background-color: #bdc6cc;
+    border-color: #bdc6cc;
+}
+
+.cui-wizard .actions li.disabled a {
+    background-color: #acb7bf !important;
+    border-color: #acb7bf !important;
+    color: #ffffff !important;
+    cursor: not-allowed;
+    opacity: .65;
+}
+
+.cui-wizard__numbers .number {
+    padding-left: 3px;
+}
+
+.cui-wizard__numbers .steps ul li a .number {
+    display: inline-block !important;
+}
+
+.cui-wizard .content > .body input {
+    border-color: #dfe4ed;
+}
+
+.cui-wizard .content > .body input:focus {
+    border-color: #01a8fe;
+}
+
+.theme-inverse .cui-wizard .content > .body input {
+    border-color: #38354a !important;
+}
+
+.theme-inverse .cui-wizard .content > .body input:focus {
+    border-color: #01a8fe !important;
+}

@@ -2,10 +2,9 @@
 //= require jquery.turbolinks
 //= require jquery_ujs
 //= require jquery-ui
-//= require bootstrap
 //= require moment
-//= require bootstrap-datetimepicker
 //= require turbolinks
 //= require custom
 //= require autocomplete
 //= require select2
+//= require plugins

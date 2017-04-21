@@ -1,0 +1,35 @@
+@charset "UTF-8";
+@font-face {
+  font-family: 'dropify';
+  src: url(font-path("dropify/dropify.eot"));
+  src: url(font-path("dropify/dropify.eot") + '#iefix') format("embedded-opentype"),
+  url(font-path("dropify/dropify.woff")) format("woff"),
+  url(font-path("dropify/dropify.ttf")) format("truetype"),
+  url(font-path("dropify/dropify.svg")+"#dropify") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="dropify-font-"]:before, [class*=" dropify-font-"]:before, .dropify-font:before, .dropify-wrapper .dropify-message span.file-icon:before, .dropify-wrapper .dropify-preview .dropify-infos .dropify-infos-inner p.dropify-filename span.file-icon:before {
+  font-family: "dropify";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-left: .2em;
+  margin-right: .2em;
+  text-align: center;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1em;
+}
+
+.dropify-font-upload:before, .dropify-wrapper .dropify-message span.file-icon:before {
+  content: '\e800';
+}
+
+.dropify-font-file:before {
+  content: '\e801';
+}

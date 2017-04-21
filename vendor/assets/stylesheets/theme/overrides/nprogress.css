@@ -1,0 +1,37 @@
+/*
+ * NPROGRESS
+ */
+#nprogress .bar {
+    height: 3px;
+    background: #01a8fe;
+}
+
+#nprogress .spinner {
+    width: 140px;
+    padding: 8px 15px;
+    background: #ffffff;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    border: 1px solid #dfe4ed;
+    right: auto;
+    left: 50%;
+    top: 20px;
+    margin-left: -73px;
+}
+
+#nprogress .spinner:after {
+    content: "Loading...";
+    display: inline-block;
+    position: absolute;
+    top: 7px;
+    left: 48px;
+}
+
+#nprogress .spinner-icon {
+    border-top-color: #01a8fe;
+    border-left-color: #01a8fe;
+}
+
+body.menu-top #nprogress .bar {
+    height: 4px;
+}

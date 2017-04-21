@@ -1,0 +1,114 @@
+/*
+ * BREADCRUMBS
+ */
+.breadcrumb-custom {
+    display: inline-block;
+    padding: 0px;
+    margin-bottom: 0px;
+}
+
+.breadcrumb-custom li {
+    padding: 0px;
+}
+
+.breadcrumb-custom li > a, .breadcrumb-custom li > span {
+    display: inline-block;
+    padding: 9px 30px 9px 30px;
+    position: relative;
+    background: #eceff4;
+    margin: 0px 8px 6px;
+}
+
+.breadcrumb-custom li > a:before, .breadcrumb-custom li > span:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0px;
+    left: -10px;
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 39px 10px 0px 0px;
+    border-color: transparent #eceff4 transparent transparent;
+    -webkit-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+.breadcrumb-custom li > a:after, .breadcrumb-custom li > span:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0px;
+    right: -10px;
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 0px 0px 39px 10px;
+    border-color: transparent transparent transparent #eceff4;
+    -webkit-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+.breadcrumb-custom li > a {
+    -webkit-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+.breadcrumb-custom li > a:hover {
+    background: #0088ff;
+    color: #ffffff;
+}
+
+.breadcrumb-custom li > a:hover:before {
+    border-color: transparent #0088ff transparent transparent;
+}
+
+.breadcrumb-custom li > a:hover:after {
+    border-color: transparent transparent transparent #0088ff;
+}
+
+.breadcrumb-custom li:first-child > a, .breadcrumb-custom li:first-child > span {
+    margin-left: 0px;
+}
+
+.breadcrumb-custom li:first-child > a:before, .breadcrumb-custom li:first-child > span:before {
+    display: none;
+}
+
+.breadcrumb-custom li:last-child > a:after, .breadcrumb-custom li:last-child > span:after {
+    display: none;
+}
+
+.breadcrumb-custom li:after {
+    padding: 0px;
+    content: "";
+}
+
+.theme-inverse .breadcrumb-custom li > a, .theme-inverse .breadcrumb-custom li > span {
+    color: #bbb8cb;
+    background: #514d6a;
+}
+
+.theme-inverse .breadcrumb-custom li > a:before, .theme-inverse .breadcrumb-custom li > span:before {
+    border-color: transparent #514d6a transparent transparent;
+}
+
+.theme-inverse .breadcrumb-custom li > a:after, .theme-inverse .breadcrumb-custom li > span:after {
+    border-color: transparent transparent transparent #514d6a;
+}
+
+.theme-inverse .breadcrumb-custom li > a:hover {
+    background: #0088ff;
+    color: #ffffff;
+}
+
+.theme-inverse .breadcrumb-custom li > a:hover:before {
+    border-color: transparent #0088ff transparent transparent;
+}
+
+.theme-inverse .breadcrumb-custom li > a:hover:after {
+    border-color: transparent transparent transparent #0088ff;
+}

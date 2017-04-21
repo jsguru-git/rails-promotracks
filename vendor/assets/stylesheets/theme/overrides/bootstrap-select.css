@@ -1,0 +1,81 @@
+/*
+ * BOOTSTRAP SELECT
+ */
+.bootstrap-select .btn-default {
+    color: #514d6a !important;
+    background-color: #ffffff;
+    border-color: #eceff4;
+}
+
+.bootstrap-select .btn-default:hover {
+    border-color: #dfe4ed;
+    background: #ffffff !important;
+}
+
+.bootstrap-select .btn-default:focus, .bootstrap-select .btn-default:active {
+    border-color: #0088ff !important;
+    background: #ffffff !important;
+    color: #514d6a !important;
+}
+
+.bootstrap-select.open .btn-default {
+    border-color: #0088ff !important;
+    background: #ffffff !important;
+    color: #514d6a !important;
+}
+
+.bootstrap-select .dropdown-menu li a {
+    padding: 5px 15px;
+    outline: none;
+    display: block;
+}
+
+.bootstrap-select .dropdown-menu li.hidden {
+    display: none;
+}
+
+.bootstrap-select .dropdown-menu li.no-results {
+    margin-left: 8px;
+    margin-right: 8px;
+    padding: 8px 10px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background: #eceff4;
+}
+
+.bootstrap-select .filter-option {
+    text-overflow: ellipsis;
+}
+
+.bootstrap-select .dropdown-toggle:focus {
+    outline: none !important;
+}
+
+.theme-inverse .bootstrap-select .btn-default {
+    color: #bbb8cb !important;
+    background-color: #514d6a;
+    border-color: #514d6a;
+}
+
+.theme-inverse .bootstrap-select .btn-default:hover {
+    color: #bbb8cb !important;
+    background-color: #514d6a !important;
+    border-color: #514d6a !important;
+}
+
+.theme-inverse .bootstrap-select .btn-default:focus, .theme-inverse .bootstrap-select .btn-default:active {
+    color: #bbb8cb !important;
+    background-color: #514d6a !important;
+    border-color: #514d6a !important;
+}
+
+.theme-inverse .bootstrap-select.open .btn-default {
+    color: #bbb8cb !important;
+    background-color: #514d6a !important;
+    border-color: #514d6a !important;
+}
+
+.theme-inverse .bootstrap-select .dropdown-menu li.no-results {
+    background: #514d6a;
+    color: #bbb8cb !important;
+}
