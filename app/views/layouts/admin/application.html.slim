@@ -6,7 +6,6 @@ html
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"
     script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"
-    = javascript_include_tag "//maps.googleapis.com/maps/api/js?key=#{ENV['MAP_KEY']}&libraries=geometry"
     = csrf_meta_tags
   body
     p.notice = notice

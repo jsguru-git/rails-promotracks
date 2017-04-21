@@ -1,0 +1,29 @@
+.ui-autocomplete {
+  margin: 0px;
+  padding: 0;
+  float: left;
+  background-color: #eeeeee;;
+  border: solid 1px #cccccc;
+  z-index: 2;
+}
+
+.ui-autocomplete li {
+  list-style-type: none;
+  padding: 10px 8px;
+  border-bottom: solid 1px #cccccc;
+  background: #ffffff;
+  color: #212635;
+  cursor: pointer;
+  &:hover {
+    color: #ffffff;
+    background: #2B85C6;
+  }
+  &:last-child {
+    border: none;
+  }
+}
+
+
+
+
+

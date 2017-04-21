@@ -26,7 +26,6 @@ class Admin::EventsController < Admin::AdminApplicationController
     elsif event_params[:promo_category]=='promo_group'
       @event.group_id= params[:event][:group_id]
     end
-    @event.address= Location.new(city: event_params[:address_attributes][:city])
     @event.save
     email_data={}
     email_data[:body] = "Please find below the event details"
@@ -48,6 +47,6 @@ class Admin::EventsController < Admin::AdminApplicationController
 
   private
   def event_params
-    params.require(:event).permit(:name, :event_type_id, :promo_category, :start_time, :end_time, :brand_id, :user_ids, :max_users, address_attributes: [:address_1, :city, :state, :zip, :country])
+    params.require(:event).permit(:name, :event_type_id, :promo_category, :start_time, :end_time, :brand_id, :user_ids, :max_users, address_attributes: [:address_1, :city, :state, :zip, :country, :latitude, :longitude, :formatted_address])
   end
 end

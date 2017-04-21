@@ -74,6 +74,13 @@
                 = addr.text_field :city, class: 'city form-control ', :autocomplete => true, required: true
                 span.input-group-addon.btn-primary
                   .glyphicon.glyphicon-map-marker
+                =addr.hidden_field :state, class: 'state'
+                =addr.hidden_field :country, class: 'country'
+                =addr.hidden_field :zip, class: 'zip'
+                =addr.hidden_field :formatted_address, class: 'formatted_address'
+                =addr.hidden_field :latitude, class: 'latitude'
+                =addr.hidden_field :longitude, class: 'longitude'
+
 
       .panel-footer
         .text-right

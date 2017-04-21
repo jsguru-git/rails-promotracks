@@ -1,66 +1,64 @@
-var getAutoCompleteData = function (query, callback) {
-    var geocoder = new google.maps.Geocoder;
-    if (query.length > 2) {
-        geocoder.geocode({
-            'address': query,
-            "newForwardGeocoder": false,
-            componentRestrictions: {
-                country: 'US'
-            }
-        }, function (results) {
-            var locations = [];
-            if (results != null) {
-                results.forEach(function (result) {
-                    locations.push({label: result.formatted_address, value: getAddressFromGoogleResponse(result)});
-                });
-            }
-            callback(locations);
+var getAutoCompleteData = function (query) {
+    var locations = [];
+    if (query.length >= 3) {
+        $.get("http://maps.googleapis.com/maps/api/geocode/json?address=" + query, function (data) {
+            data.results.forEach(function (result) {
+                locations.push({label: result.formatted_address, value: getAddressFromGoogleResponse(result)});
+                //locations.push({label: result.formatted_address, value: result.formatted_address});
+            });
         });
     }
+    return locations;
 };
 
 var getAddressFromGoogleResponse = function (response) {
-    var address = {
-        lat: response.geometry.location.lat,
-        lng: response.geometry.location.lng,
-        city: "",
-        state: "",
-        zip: "",
-        country: "",
-        county: "",
-        route: "",
-        name: ""
-    };
+    var lat = response.geometry.location.lat;
+    var lng = response.geometry.location.lng;
+    var city = "";
+    var state = "";
+    var zip = "";
+    var country = "";
+    var county = "";
+    var route = "";
+    var formatted_address = response.formatted_address;
+    ;
+    console.log(response);
     response.address_components.forEach(function (addrComponent) {
-
+        //console.log(addrComponent.types[0]);
         switch (addrComponent.types[0]) {
             case "route":
-                address.route = addrComponent.long_name;
+                route = addrComponent.long_name;
                 break;
             case "locality":
-                address.city = addrComponent.long_name;
+                city = addrComponent.long_name;
                 break;
             case "administrative_area_level_2":
-                address.county = addrComponent.long_name;
+                county = addrComponent.long_name;
                 break;
             case "administrative_area_level_1":
-                address.state = addrComponent.short_name;
+                state = addrComponent.short_name;
                 break;
             case "country":
-                address.country = addrComponent.short_name;
+                country = addrComponent.short_name;
                 break;
             case "postal_code":
-                address.zip = addrComponent.long_name;
-                break;
-            case "establishment":
-                address.name = addrComponent.long_name;
+                zip = addrComponent.long_name;
                 break;
             default:
                 break;
         }
     });
-
-    return address;
+    return {
+        route: route,
+        city: city,
+        county: county,
+        state: state,
+        zip: zip,
+        country: country,
+        formatted_address: formatted_address,
+        lat: lat,
+        lng: lng
+    };
 };
 
 

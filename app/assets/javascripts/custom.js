@@ -12,26 +12,60 @@ $(document).ready(function () {
         $('#start_time').data("DateTimePicker").maxDate(e.date);
     });
 
-    //$(".city").keyup(function () {
-    //    var name=$(this);
-    //    //delay( function () {
-    //    //debugger
-    //    var searchElement = $(".city");
-    //    getAutoCompleteData($(".city").val(), function(results) {
-    //        $(this).autocomplete({
-    //            source: results,
-    //            select: function (event, ui) {
-    //                ['route', 'name', 'city', 'county', 'country', 'state', 'zip'].forEach(function (item) {
-    //                    if (ui.item.value[item].length > 0) {
-    //                        name.val(ui.item.value.city);
-    //
-    //                    }
-    //                });
-    //                return false;
-    //            }
-    //        });
-    //    });
-    //    //jQuery('.ui-autocomplete').css('z-index', 5000);
-    //    // },2000);
-    //});
+
+    $(".city").keyup(function () {
+        $(this).autocomplete({
+            source: getAutoCompleteData(this.value),
+            select: function (event, ui) {
+
+                ['route', 'city', 'county', 'country', 'state', 'zip'].forEach(function (item) {
+                    if (ui.item.value[item].length > 0) {
+                        var cityVal = ui.item.value.city;
+                        var stateVal = ui.item.value.state;
+                        var countryVal = ui.item.value.country;
+                        var zipVal = ui.item.value.zip;
+                        var routeVal = ui.item.value.route;
+                        var countyVal = ui.item.value.county;
+                        $('.latitude').val(ui.item.value.lat);
+                        $('.longitude').val(ui.item.value.lng);
+                        $(".formatted_address").val(ui.item.value.formatted_address);
+
+
+                        if (cityVal == '') {
+                            $('.city').val('');
+                        }
+                        else {
+                            $(".city").val(cityVal);
+                        }
+
+                        if (zipVal == '') {
+                            $('.zip').val('');
+                        }
+                        else {
+                            $(".zip").val(zipVal);
+                        }
+
+                        if (countryVal == '') {
+                            $('.country').val('');
+                        }
+                        else {
+                            $(".country").val(countryVal);
+
+                        }
+
+                        if (stateVal == '') {
+                            $('.state').val('');
+                        }
+                        else {
+                            $(".state").val(stateVal);
+
+                        }
+
+                    }
+                });
+                return false;
+            }
+        });
+        //jQuery('.ui-autocomplete').css('z-index', 5000);
+    });
 });
