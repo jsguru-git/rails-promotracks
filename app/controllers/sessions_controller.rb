@@ -1,7 +1,6 @@
 class SessionsController < Devise::SessionsController
   respond_to :json
   prepend_before_action :verify_user, only: [:destroy]
-  skip_before_filter :verify_authenticity_token
 
   def create
     self.resource = warden.authenticate(auth_options)

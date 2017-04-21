@@ -11,17 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170420105033) do
+ActiveRecord::Schema.define(version: 20170420114930) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "brands", force: :cascade do |t|
-    t.string "name"
-    t.string "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "user_id"
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "user_id"
   end
 
   add_index "brands", ["user_id"], name: "index_brands_on_user_id", using: :btree
@@ -35,41 +35,42 @@ ActiveRecord::Schema.define(version: 20170420105033) do
   add_index "client_brands", ["client_id"], name: "index_client_brands_on_client_id", using: :btree
 
   create_table "clients", force: :cascade do |t|
-    t.string "name"
-    t.string "phone"
+    t.string   "name"
+    t.string   "phone"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "event_types", force: :cascade do |t|
-    t.string "name"
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "events", force: :cascade do |t|
-    t.string "name"
-    t.string "type"
+    t.string   "name"
+    t.string   "type"
     t.datetime "start_time"
     t.datetime "end_time"
-    t.string "area"
-    t.string "attendance"
-    t.integer "sample"
-    t.float "product_cost"
-    t.float "total_expense"
-    t.string "notes"
-    t.text "images", default: [], array: true
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "user_id"
-    t.integer "brand_id"
-    t.integer "group_id"
-    t.integer "promo_category"
-    t.integer "client_id"
+    t.string   "area"
+    t.string   "attendance"
+    t.integer  "sample"
+    t.float    "product_cost"
+    t.float    "total_expense"
+    t.string   "notes"
+    t.text     "images",         default: [],              array: true
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.integer  "user_id"
+    t.integer  "brand_id"
+    t.integer  "group_id"
+    t.integer  "promo_category"
+    t.integer  "client_id"
     t.datetime "check_in"
     t.datetime "check_out"
-    t.integer "max_users", default: 0
-    t.integer "event_type_id"
+    t.integer  "max_users",      default: 0
+    t.integer  "event_type_id"
+    t.string   "follow_up"
   end
 
   add_index "events", ["brand_id"], name: "index_events_on_brand_id", using: :btree
@@ -81,24 +82,24 @@ ActiveRecord::Schema.define(version: 20170420105033) do
   create_table "groups", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "name"
-    t.integer "client_id"
+    t.string   "name"
+    t.integer  "client_id"
   end
 
   add_index "groups", ["client_id"], name: "index_groups_on_client_id", using: :btree
 
   create_table "locations", force: :cascade do |t|
-    t.string "formatted_address"
-    t.string "address_1"
-    t.string "city"
-    t.string "state"
-    t.string "zip"
-    t.string "country"
-    t.float "latitude"
-    t.float "longitude"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "event_id"
+    t.string   "formatted_address"
+    t.string   "address_1"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip"
+    t.string   "country"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.integer  "event_id"
   end
 
   add_index "locations", ["event_id"], name: "index_locations_on_event_id", using: :btree
@@ -106,9 +107,9 @@ ActiveRecord::Schema.define(version: 20170420105033) do
   create_table "user_events", force: :cascade do |t|
     t.integer "event_id"
     t.integer "user_id"
-    t.string "token"
+    t.string  "token"
     t.integer "category", default: 0
-    t.integer "status", default: 0
+    t.integer "status",   default: 0
   end
 
   add_index "user_events", ["event_id"], name: "index_user_events_on_event_id", using: :btree
@@ -123,25 +124,25 @@ ActiveRecord::Schema.define(version: 20170420105033) do
   add_index "user_groups", ["user_id"], name: "index_user_groups_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
+    t.string   "email",                             default: "", null: false
+    t.string   "encrypted_password",                default: "", null: false
+    t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer "sign_in_count", default: 0, null: false
+    t.integer  "sign_in_count",                     default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.inet "current_sign_in_ip"
-    t.inet "last_sign_in_ip"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "first_name"
-    t.string "last_name"
-    t.integer "role", default: 0
-    t.string "phone"
-    t.integer "client_id"
-    t.string "authentication_token", limit: 30
-    t.string "token"
+    t.inet     "current_sign_in_ip"
+    t.inet     "last_sign_in_ip"
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
+    t.string   "first_name"
+    t.string   "last_name"
+    t.integer  "role",                              default: 0
+    t.string   "phone"
+    t.integer  "client_id"
+    t.string   "authentication_token",   limit: 30
+    t.string   "token"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree

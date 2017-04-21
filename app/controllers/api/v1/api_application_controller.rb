@@ -4,7 +4,7 @@ class Api::V1::ApiApplicationController < ApplicationController
   protect_from_forgery with: :null_session
 
   acts_as_token_authentication_handler_for User
-  skip_before_filter :authenticate_user_from_token!
+  before_filter :authenticate_user_from_token!
 
   rescue_from Exception do |e|
     Rails.logger.error e.to_s

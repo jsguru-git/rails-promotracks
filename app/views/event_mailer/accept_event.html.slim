@@ -1,0 +1,9 @@
+p Name: #{@data[:event][:name]}
+
+p Timings: #{@data[:event][:start_time]&.strftime('%m/%d/%Y %I:%M %p')}  :  #{@data[:event][:end_time]&.strftime('%m/%d/%Y %I:%M %p')}
+
+p Brand : #{@data[:event][:brand_name]}
+
+p Location : #{@data[:event][:location]}
+
+p= link_to 'Accept', event_url(@data[:event][:id], token: @data[:token])

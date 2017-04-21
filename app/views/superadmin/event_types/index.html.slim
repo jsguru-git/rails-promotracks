@@ -1,0 +1,19 @@
+.col-md-offset-2.col-md-7
+  .panel.panel-primary
+    .panel-heading.panel-heading-with-button
+      .col-sm-6.panel-heading-label
+        h2.text-left.panel-title Event Types
+      .col-sm-6.text-right
+        =link_to "Add event type", new_superadmin_event_type_path, class: 'btn btn-info btn-sm'
+      .clearfix
+    table.table.table-striped
+      thead
+        tr
+          th ID
+          th Name
+
+      tbody
+        -@event_types.each do |event_type|
+          tr
+            td #{event_type.id}
+            td #{event_type.name}

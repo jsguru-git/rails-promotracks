@@ -16,7 +16,8 @@
             = f.label :type
             sup *
             .input-group
-              = f.text_field :type, class: 'form-control'
+              =f.select :event_type_id, options_for_select(EventType.all.collect { |u| [u.name, u.id] }, selected_key = @event.event_type_id), {}, {:class => 'form-control'}
+              .help-block.with-errors
         .form-group.row
           .col-md-6
             = f.label :brand
@@ -24,6 +25,11 @@
             .input-group
               =f.select :brand_id, options_for_select(@current_client.brands.collect { |u| [u.name, u.id] }, selected_key = @event.brand_id), {}, {:class => 'form-control'}
               .help-block.with-errors
+          .col-md-6
+            = f.label :max_users
+            sup *
+            .input-group
+              = f.number_field :max_users, class: 'form-control', required: true
         .form-group.row
           .col-md-3
             =label_tag :prom_rep

@@ -2,15 +2,6 @@ module EmailHelper
   include ActionView::Helpers::NumberHelper
 
 
-  def get_email_recipients(event, type)
-    case type
-      when 'accept'
-        event.group.users.map(&:email).reject(&:blank?).uniq
-      else
-        []
-    end
-  end
-
   def promo_ref_info(user)
     data={}
     data[:id]=user.id
@@ -28,7 +19,8 @@ module EmailHelper
     data[:end_time]=event.end_time
     data[:brand_name]=event.brand.name
     data[:location]=event.address&.city
-    data[:type]=event.type
+    data[:event_type]=event.event_type.name
+    data
   end
 
 

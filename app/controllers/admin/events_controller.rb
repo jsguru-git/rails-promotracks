@@ -1,4 +1,6 @@
+require 'platform/email_helper'
 class Admin::EventsController < Admin::AdminApplicationController
+  include EmailHelper
 
   def index
     @events=@current_client.events
@@ -26,15 +28,19 @@ class Admin::EventsController < Admin::AdminApplicationController
     end
     @event.address= Location.new(city: event_params[:address_attributes][:city])
     @event.save
-    unless @event.group.nil?
+    email_data={}
+    email_data[:body] = "Please find below the event details"
+    email_data[:subject]="#{@event.name} :#{@event.id}"
+    email_data[:event]=get_event(@event)
+    if !@event.group.nil?
       @event.group.users.each do |user|
-        @event.user_events.create(user_id: user.id, token: SecureRandom.hex[0, 6], category: :promo_group)
-        # email_data={}
-        # email_data[:body] = "Accept the event"
-        # email_data[:subject]="New Event :#{@event.id}"
-        # to_email = get_email_recipients(event, 'accept')
-        # email_data[:user]=get_event(@event)
-        # EventMailer.accept_event(to_email, email_data).deliver
+        token=SecureRandom.hex[0, 6]
+        @event.user_events.create(user_id: user.id, token: token, category: :promo_group)
+        EventMailer.accept_event(user.email, email_data, token).deliver
+      end
+    elsif !@event.user_events.nil?
+      @event.user_events.where(:category => 'promo_rep').each do |user_event|
+        EventMailer.accept_event(user_event.user.email, email_data, user_event.token).deliver
       end
     end
     redirect_to admin_events_path
@@ -42,6 +48,6 @@ class Admin::EventsController < Admin::AdminApplicationController
 
   private
   def event_params
-    params.require(:event).permit(:name, :type, :promo_category, :start_time, :end_time, :brand_id, :user_ids, address_attributes: [:address_1, :city, :state, :zip, :country])
+    params.require(:event).permit(:name, :event_type_id, :promo_category, :start_time, :end_time, :brand_id, :user_ids, :max_users, address_attributes: [:address_1, :city, :state, :zip, :country])
   end
 end
