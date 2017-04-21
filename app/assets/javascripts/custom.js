@@ -1,4 +1,5 @@
 $(document).ready(function () {
+
     $(".add_brands,.add_promo_reps").select2();
 
 

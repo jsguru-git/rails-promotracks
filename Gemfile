@@ -16,6 +16,7 @@ gem 'slim'
 gem 'slim-rails'
 gem 'simple_token_authentication'
 gem 'figaro'
+gem "select2-rails"
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 

@@ -8,3 +8,4 @@
 //= require turbolinks
 //= require custom
 //= require autocomplete
+//= require select2
