@@ -38,7 +38,11 @@ class RegistrationsController < Devise::RegistrationsController
   protected
 
   def after_sign_up_path_for(resource)
-    homes_path
+    if resource.client_admin?
+      admin_promo_reps_path
+    else
+      homes_path
+    end
   end
 
   def sign_up_params

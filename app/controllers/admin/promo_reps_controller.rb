@@ -3,7 +3,7 @@ class Admin::PromoRepsController < Admin::AdminApplicationController
   include EmailHelper
 
   def index
-    @promo_reps=@current_client.users.where(role: 'promo_rep')
+    @promo_reps=@current_client.users&.where(role: 'promo_rep')
   end
 
   def new

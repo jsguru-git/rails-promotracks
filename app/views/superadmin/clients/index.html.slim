@@ -12,7 +12,7 @@
           th ID
           th Name
           th Phone
-          th
+          th Actions
 
       tbody
         -@clients.each do |client|
@@ -23,3 +23,5 @@
             td
               a.btn.btn-success.btn-sm href=superadmin_client_users_path(client)
                 |Admins
+              '
+              a.btn.btn-sm.btn-primary href="#{edit_superadmin_client_path(client)}" Edit
