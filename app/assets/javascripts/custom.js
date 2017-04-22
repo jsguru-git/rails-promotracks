@@ -13,9 +13,15 @@ $(document).on('turbolinks:load', function () {
         $('#start_time').data("DateTimePicker").maxDate(e.date);
     });
 
-
-    $("#promo_rep_button").prop("checked", true);
-    $("#event_promo_category").val('promo_rep');
+    if ($('#promo_rep_button').is(':checked')) {
+        $("#event_promo_category").val('promo_rep');
+        $('#promo_reps').show();
+        $('.promo_groups').hide();
+    } else if ($('#promo_group_button').is(':checked')) {
+        $("#event_promo_category").val('promo_group');
+        $('#promo_reps').hide();
+        $('.promo_groups').show();
+    }
     $('#promo_rep_button').on("click", function () {
         $("#event_promo_category").val('promo_rep');
         $('#promo_reps').show();

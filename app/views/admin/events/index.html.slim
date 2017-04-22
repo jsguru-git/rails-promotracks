@@ -1,4 +1,4 @@
-.col-md-offset-2.col-md-7
+.col-md-offset-2.col-md-9
   .panel.panel-primary
     .panel-heading.panel-heading-with-button
       .col-sm-6.panel-heading-label
@@ -15,6 +15,7 @@
           Th Venue
           th Start Time
           th End Time
+          th Actions
       tbody
         -@events.each do |event|
           tr
@@ -24,3 +25,5 @@
             td #{event.address&.city}
             td #{event.start_time&.strftime('%m/%d/%Y %I:%M %p')}
             td #{event.end_time&.strftime('%m/%d/%Y %I:%M %p')}
+            td
+              a.btn.btn-sm.btn-primary href="#{edit_admin_event_path(event)}" Edit

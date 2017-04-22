@@ -32,19 +32,25 @@
               .input-group
                 = f.number_field :max_users, class: 'form-control', required: true
         .form-group.row
+          -if @event.promo_rep?
+            -rep_checked=true
+            -grp_checked=false
+          -elsif @event.promo_group?
+            -rep_checked=false
+            -grp_checked=true
           .col-md-3
             =label_tag :prom_rep
-            =radio_button_tag 'promo', true, true, class: 'form-control', placeholder: 'Name', :id => 'promo_rep_button'
+            =radio_button_tag 'promo', false, rep_checked, class: 'form-control', placeholder: 'Name', :id => 'promo_rep_button'
           .col-md-3
             =label_tag :prom_group
-            =radio_button_tag 'promo', false, true, class: 'form-control', placeholder: 'Name', :id => 'promo_group_button'
+            =radio_button_tag 'promo', false, grp_checked, class: 'form-control', placeholder: 'Name', :id => 'promo_group_button'
 
           .col-md-6
             #promo_reps
               = f.label :promo_reps
               sup *
               .input-group
-                =f.select :user_ids, options_for_select(@promo_reps.collect { |u| [u.full_name, u.id] }, selected_key = @event.users.where(category: :promo_rep)), {}, {:multiple => true, :class => 'form-control add_promo_reps'}
+                =f.select :user_ids, options_for_select(@promo_reps.collect { |u| [u.full_name, u.id] }, selected_key = @event.users.includes(:user_events).where(:user_events => {:category => 0}).ids), {}, {:multiple => true, :class => 'form-control add_promo_reps'}
                 .help-block.with-errors
             .promo_groups style= "display:none"
               = f.label :promo_groups
@@ -56,13 +62,13 @@
           .col-sm-6
             =f.label :start_time, 'Start Time'
             #start_time.input-group.date
-              =f.text_field :start_time, class: 'form-control', value: (@event&.start_time)
+              =f.text_field :start_time, class: 'form-control', value: (@event&.start_time&.strftime('%m/%d/%Y %I:%M %p'))
               span.input-group-addon
                 span.glyphicon.glyphicon-calendar
           .col-sm-6
             =f.label :end_time, 'End Time'
             #end_time.input-group.date
-              =f.text_field :end_time, class: 'form-control', value: (@event&.end_time)
+              =f.text_field :end_time, class: 'form-control', value: (@event&.end_time&.strftime('%m/%d/%Y %I:%M %p'))
               span.input-group-addon
                 span.glyphicon.glyphicon-calendar
 
