@@ -11,9 +11,12 @@
         tr
           th ID
           th Name
+          th Actions
 
       tbody
         -@groups.each do |group|
           tr
             td #{group.id}
             td #{group.name}
+            td
+              a.btn.btn-sm.btn-primary href="#{edit_admin_group_path(group)}" Edit
