@@ -11,9 +11,12 @@
         tr
           th ID
           th Name
+          th Actions
 
       tbody
         -@brands.each do |brand|
           tr
             td #{brand.id}
             td #{brand.name}
+            td
+              a.btn.btn-sm.btn-primary href="#{edit_superadmin_brand_path(brand)}" Edit
