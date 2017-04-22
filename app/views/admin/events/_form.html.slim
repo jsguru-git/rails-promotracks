@@ -25,11 +25,12 @@
             .input-group
               =f.select :brand_id, options_for_select(@current_client.brands.collect { |u| [u.name, u.id] }, selected_key = @event.brand_id), {}, {:class => 'form-control'}
               .help-block.with-errors
-          .col-md-6
-            = f.label :max_users
-            sup *
-            .input-group
-              = f.number_field :max_users, class: 'form-control', required: true
+          .promo_groups style= "display:none"
+            .col-md-6
+              = f.label :max_users
+              sup *
+              .input-group
+                = f.number_field :max_users, class: 'form-control', required: true
         .form-group.row
           .col-md-3
             =label_tag :prom_rep
@@ -45,7 +46,7 @@
               .input-group
                 =f.select :user_ids, options_for_select(@promo_reps.collect { |u| [u.full_name, u.id] }, selected_key = @event.users.where(category: :promo_rep)), {}, {:multiple => true, :class => 'form-control add_promo_reps'}
                 .help-block.with-errors
-            #promo_groups style= "display:none"
+            .promo_groups style= "display:none"
               = f.label :promo_groups
               sup *
               .input-group

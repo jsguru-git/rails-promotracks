@@ -20,7 +20,7 @@ class Admin::EventsController < Admin::AdminApplicationController
     if event_params[:promo_category]=='promo_rep'
       unless params[:event][:user_ids].delete_if { |x| x.empty? }.nil?
         params[:event][:user_ids].delete_if { |x| x.empty? }.each do |user_id|
-          @event.user_events.new(user_id: user_id, token: SecureRandom.hex[0, 6])
+          @event.user_events.new(user_id: user_id, token: SecureRandom.hex[0, 6], status: :accepted)
         end
       end
     elsif event_params[:promo_category]=='promo_group'
@@ -31,15 +31,11 @@ class Admin::EventsController < Admin::AdminApplicationController
     email_data[:body] = "Please find below the event details"
     email_data[:subject]="#{@event.name} :#{@event.id}"
     email_data[:event]=get_event(@event)
-    if !@event.group.nil?
+    unless @event.group.nil?
       @event.group.users.each do |user|
         token=SecureRandom.hex[0, 6]
         @event.user_events.create(user_id: user.id, token: token, category: :promo_group)
         EventMailer.accept_event(user.email, email_data, token).deliver
-      end
-    elsif !@event.user_events.nil?
-      @event.user_events.where(:category => 'promo_rep').each do |user_event|
-        EventMailer.accept_event(user_event.user.email, email_data, user_event.token).deliver
       end
     end
     redirect_to admin_events_path

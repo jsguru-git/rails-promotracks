@@ -19,13 +19,13 @@ $(document).on('turbolinks:load', function () {
     $('#promo_rep_button').on("click", function () {
         $("#event_promo_category").val('promo_rep');
         $('#promo_reps').show();
-        $('#promo_groups').hide();
+        $('.promo_groups').hide();
     });
 
     $('#promo_group_button').on("click", function () {
         $("#event_promo_category").val('promo_group');
         $('#promo_reps').hide();
-        $('#promo_groups').show();
+        $('.promo_groups').show();
     });
 
 
