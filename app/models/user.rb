@@ -9,10 +9,10 @@ class User < ActiveRecord::Base
   has_many :groups, :through => :user_groups
   has_many :user_events
   has_many :events, :through => :user_events
-
   enum role: [:promo_rep, :super_admin, :client_admin]
   has_many :brands
   belongs_to :client
+  accepts_nested_attributes_for :client, reject_if: :all_blank, allow_destroy: true
 
 
   def full_name

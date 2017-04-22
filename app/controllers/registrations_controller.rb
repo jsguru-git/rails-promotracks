@@ -5,13 +5,17 @@ class RegistrationsController < Devise::RegistrationsController
   skip_before_action :verify_authenticity_token, if: :json_request?
   respond_to :json
 
-
+  def new
+    @client=Client.new
+    super
+  end
   def create
     build_resource(sign_up_params)
     resource.token = SecureRandom.hex[0, 6]
     if resource.save
       sign_up(resource_name, resource)
       resource.update_attributes(update_params)
+      resource.client.update(admin_id: resource.id)
       respond_to do |format|
         format.html { redirect_to after_sign_up_path_for(resource), notice: "Signed Up Successfully" }
         format.json {
@@ -43,7 +47,7 @@ class RegistrationsController < Devise::RegistrationsController
 
 
   def update_params
-    params.require(:user).permit(:first_name, :last_name, :email)
+    params.require(:user).permit(:first_name, :last_name, :email, :role, client_attributes: [:name, :phone, :admin_id])
   end
 
   def json_request?
