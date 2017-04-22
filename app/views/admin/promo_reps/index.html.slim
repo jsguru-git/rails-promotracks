@@ -12,9 +12,12 @@
           th ID
           th Name
           th Email
+          th Actions
       tbody
         -@promo_reps.each do |user|
           tr
             td #{user.id}
             td #{user.full_name}
             td #{user.email}
+            td
+              a.btn.btn-sm.btn-primary href="#{edit_admin_promo_rep_path(user)}" Edit

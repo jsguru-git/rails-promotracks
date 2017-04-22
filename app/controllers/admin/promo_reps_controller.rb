@@ -28,6 +28,21 @@ class Admin::PromoRepsController < Admin::AdminApplicationController
     end
   end
 
+
+  def edit
+    @promo_rep=@current_client.users.find(params[:id])
+  end
+
+  def update
+    @promo_rep=@current_client.users.find(params[:id])
+    if @promo_rep.update_attributes(user_params)
+      redirect_to admin_promo_reps_path
+    else
+      flash[:error]=@promo_rep.errors.full_messages.join(', ')
+      redirect_to :back
+    end
+  end
+
   private
   def user_params
     params.require(:user).permit(:first_name, :last_name, :email, :role)
