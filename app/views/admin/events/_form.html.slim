@@ -56,7 +56,7 @@
               = f.label :promo_groups
               sup *
               .input-group
-                =f.select :group_id, options_for_select(@current_client.groups.collect { |u| [u.name, u.id] }, selected_key = @event.group_id), {}, {:class => 'form-control', :title => 'Select Group'}
+                =f.select :group_id, options_for_select(@current_client.groups.collect { |u| [u.name, u.id] }, selected_key = @event.group_id), {:include_blank => 'Nothing Selected'}, {:class => 'form-control', :title => 'Select Group'}
                 .help-block.with-errors
         .form-group.row
           .col-sm-6

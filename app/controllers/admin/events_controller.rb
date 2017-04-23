@@ -75,13 +75,9 @@ class Admin::EventsController < Admin::AdminApplicationController
         end
       end
     elsif event_params[:promo_category]=='promo_group' and @event.promo_category_was=='promo_rep'
-      @event.user_events.delete_all
-      @event.update_attribute(:group_id, event_params[:group_id]) unless event_params[:group_id].nil?
-    end
-    if @event.update_attributes(event_params)
-      @event.update_attribute(:start_time, DateTime.strptime(event_params[:start_time], '%m/%d/%Y %I:%M %p')) unless event_params[:start_time].nil?
-      @event.update_attribute(:end_time, DateTime.strptime(event_params[:end_time], '%m/%d/%Y %I:%M %p')) unless event_params[:end_time].nil?
-      if !@event.group_id.nil? and @event.promo_group?
+      unless event_params[:group_id].nil?
+        @event.user_events.delete_all
+        @event.update_attribute(:group_id, event_params[:group_id])
         email_data={}
         email_data[:body] = "Please find below the event details"
         email_data[:subject]="#{@event.name} :#{@event.id}"
@@ -92,6 +88,10 @@ class Admin::EventsController < Admin::AdminApplicationController
           EventMailer.accept_event(user.email, email_data, token).deliver
         end
       end
+    end
+    if @event.update_attributes(event_params)
+      @event.update_attribute(:start_time, DateTime.strptime(event_params[:start_time], '%m/%d/%Y %I:%M %p')) unless event_params[:start_time].nil?
+      @event.update_attribute(:end_time, DateTime.strptime(event_params[:end_time], '%m/%d/%Y %I:%M %p')) unless event_params[:end_time].nil?
       redirect_to admin_events_path
     else
       flash[:error]= @event.errors.full_messages.join(',')
