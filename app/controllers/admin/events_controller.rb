@@ -13,7 +13,7 @@ class Admin::EventsController < Admin::AdminApplicationController
   end
 
   def create
-    @event=@current_client.events.new(event_params.except(:group_id))
+    @event=@current_client.events.new(event_params)
     @event.creator= current_user
     @event.start_time= DateTime.strptime(event_params[:start_time], '%m/%d/%Y %I:%M %p')
     @event.end_time= DateTime.strptime(event_params[:end_time], '%m/%d/%Y %I:%M %p')
@@ -26,7 +26,7 @@ class Admin::EventsController < Admin::AdminApplicationController
       end
     elsif event_params[:promo_category]=='promo_group'
       @event.promo_category= :promo_group
-      @event.group_id= params[:event][:group_id]
+      @event.group_id= params[:event][:group_id] unless params[:event][:group_id].nil?
     end
     @event.save
     email_data={}
@@ -65,10 +65,24 @@ class Admin::EventsController < Admin::AdminApplicationController
         end
       end
     elsif event_params[:promo_category]=='promo_group' and @event.promo_category_was=='promo_group'
-      @event.update_attribute(:group_id, event_params[:group_id]) unless event_params[:group_id].nil?
+      unless event_params[:group_id].nil?
+        if @event.group_id_was!=event_params[:group_id].to_i
+          UserEvent.where(:event_id => @event.id).delete_all
+          @event.update_attribute(:group_id, event_params[:group_id])
+          email_data={}
+          email_data[:body] = "Please find below the event details"
+          email_data[:subject]="#{@event.name} :#{@event.id}"
+          email_data[:event]=get_event(@event)
+          @event.group.users.each do |user|
+            token=SecureRandom.hex[0, 6]
+            @event.user_events.create(user_id: user.id, token: token, category: :promo_group)
+            EventMailer.accept_event(user.email, email_data, token).deliver
+          end
+        end
+      end
     elsif event_params[:promo_category]=='promo_rep' and @event.promo_category_was=='promo_group'
       @event.update_attribute(:group_id, nil)
-      @event.user_events.delete_all
+      UserEvent.where(:event_id => @event.id).delete_all
       unless params[:event][:user_ids].delete_if { |x| x.empty? }.nil?
         params[:event][:user_ids].delete_if { |x| x.empty? }.each do |user_id|
           @event.user_events.create(user_id: user_id, token: SecureRandom.hex[0, 6], status: :accepted)
@@ -76,7 +90,7 @@ class Admin::EventsController < Admin::AdminApplicationController
       end
     elsif event_params[:promo_category]=='promo_group' and @event.promo_category_was=='promo_rep'
       unless event_params[:group_id].nil?
-        @event.user_events.delete_all
+        UserEvent.where(:event_id => @event.id).delete_all
         @event.update_attribute(:group_id, event_params[:group_id])
         email_data={}
         email_data[:body] = "Please find below the event details"
