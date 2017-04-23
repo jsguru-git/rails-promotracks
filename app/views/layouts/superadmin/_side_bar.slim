@@ -1,0 +1,18 @@
+nav.left-menu left-menu=""
+  .logo-container
+    a.logo href=''
+      img alt=("Promo Tracks") src=image_url("resort_pass_logo.png") /
+  .left-menu-inner.scroll-pane
+    ul.left-menu-list.left-menu-list-root.list-unstyled
+      li.left-menu-list class="#{active_class(superadmin_brands_path)}"
+        a.left-menu-link href=superadmin_brands_path
+          i.left-menu-link-icon.fa.fa-building
+          | Brands
+      li.left-menu-list class="#{active_class(superadmin_clients_path)}"
+        a.left-menu-link href=superadmin_clients_path
+          i.left-menu-link-icon.fa.fa-building
+          | Clients
+      li.left-menu-list class="#{active_class(superadmin_event_types_path)}"
+        a.left-menu-link href=superadmin_event_types_path
+          i.left-menu-link-icon.fa.fa-building
+          | Event Types

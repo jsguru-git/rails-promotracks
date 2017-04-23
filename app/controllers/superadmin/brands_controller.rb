@@ -14,6 +14,7 @@ class Superadmin::BrandsController < Superadmin::SuperadminApplicationController
     @brand=Brand.new(brand_params)
     if @brand.valid?
       @brand.save
+      flash[:notice]= "Brand created Successfully"
       redirect_to superadmin_brands_path
     else
       flash[:error]=@brand.errors.full_messages.join(', ')
