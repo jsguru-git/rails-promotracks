@@ -16,7 +16,7 @@
             = f.label :type
             sup *
             .input-group
-              =f.select :event_type_id, options_for_select(EventType.all.collect { |u| [u.name, u.id] }, selected_key = @event.event_type_id), {}, {:class => 'form-control'}
+              =f.select :event_type_id, options_for_select(EventType.all.collect { |u| [u.name, u.id] }, selected_key = @event.event_type_id), {:include_blank => 'Nothing Selected'}, {:class => 'form-control'}
               .help-block.with-errors
         .form-group.row
           .col-md-6

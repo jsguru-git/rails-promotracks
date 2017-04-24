@@ -1,22 +1,19 @@
 .col-md-offset-3.col-md-6
   = form_for [:superadmin, @brand] do |f|
-
     .panel.panel-primary
       .panel-heading
         h2.panel-title #{@brand.new_record? ? 'New ' : 'Edit '} Brand
       .panel-body
-        .form-group.row
+        .form-group.row#l0
           .col-md-12
             = f.label :name
-            sup *
-            .input-group
-              = f.text_field :name, class: 'name form-control ', :autocomplete => true, required: true
-        .form-group.row
+            sup.text-danger *
+            = f.text_field :name, class: 'name form-control', :autocomplete => true, required: true
+        .form-group.row#l0
           .col-md-12
             = f.label :description
-            sup *
-            .input-group
-              = f.text_area :description, class: 'form-control ', required: true, rows: 5
+            sup.text-danger *
+            = f.text_area :description, class: 'form-control', required: true, rows: 5
 
       .panel-footer
         .text-right

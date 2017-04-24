@@ -1,25 +1,23 @@
 .col-md-offset-3.col-md-6
   = form_for [:superadmin, @client] do |f|
 
-    .panel.panel-primary
+    .panel.panel-with-borders
       .panel-heading
-        h2.panel-title #{@client.new_record? ? 'New ' : 'Edit '} Client
+        h3.panel-title #{@client.new_record? ? 'New ' : 'Edit '} Client
       .panel-body
         .form-group.row
-          .col-md-6
+          .col-md-12
             = f.label :name
-            sup *
-            .input-group
-              = f.text_field :name, class: 'name form-control', :autocomplete => true, required: true
+            sup.text-danger *
+            = f.text_field :name, class: 'name form-control', :autocomplete => true, required: true
+        .form-group.row
           .col-md-6
             = f.label :phone
-            sup *
-            .input-group
-              = f.text_field :phone, class: 'form-control'
-        .form-group.row
-          .col-md-12
+            sup.text-danger *
+            = f.text_field :phone, class: 'form-control'
+          .col-md-6
             = f.label :brands
-            sup *
+            sup.text-danger *
             .input-group
               =f.select :brand_ids, options_for_select(Brand.all&.collect { |u| [u.name, u.id] }, selected_key = @client.brand_ids), {}, {:multiple => true, :class => 'form-control add_brands'}
               .help-block.with-errors
@@ -28,32 +26,27 @@
             .col-md-6
               =user.hidden_field :role, :value => 'client_admin'
               = user.label :first_name
-              sup *
-              .input-group
-                = user.text_field :first_name, class: 'form-control ', required: true
+              sup.text-danger *
+              = user.text_field :first_name, class: 'form-control ', required: true
             .col-md-6
               = user.label :last_name
-              sup *
-              .input-group
-                = user.text_field :last_name, class: 'form-control ', required: true
+              sup.text-danger *
+              = user.text_field :last_name, class: 'form-control ', required: true
           .form-group.row
             .col-md-12
               = user.label :email
-              sup *
-              .input-group
-                = user.email_field :email, class: 'form-control ', required: true
+              sup.text-danger *
+              = user.email_field :email, class: 'form-control ', required: true
           .form-group.row
             -required=@client.new_record? ? true : false
             .col-md-6
               = user.label :password
-              sup *
-              .input-group
-                = user.password_field :password, class: 'form-control ', required: required
+              sup.text-danger *
+              = user.password_field :password, class: 'form-control ', required: required
             .col-md-6
               = user.label :password_confirmation
-              sup *
-              .input-group
-                = user.password_field :password_confirmation, class: 'form-control ', required: required
+              sup.text-danger *
+              = user.password_field :password_confirmation, class: 'form-control ', required: required
 
       .panel-footer
         .text-right

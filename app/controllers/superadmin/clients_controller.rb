@@ -13,9 +13,14 @@ class Superadmin::ClientsController < Superadmin::SuperadminApplicationControlle
   def create
     @client=Client.new(client_params)
     @client.brand_ids = params[:client][:brand_ids].delete_if { |x| x.empty? }
-    @client.save
-    @client.admin.update(client_id: @client.id)
-    redirect_to superadmin_clients_path
+    if @client.save
+      @client.admin.update(client_id: @client.id)
+      redirect_to superadmin_clients_path
+    else
+      flash[:error]=@client.errors.full_messages.join(',')
+      redirect_to :back
+    end
+
   end
 
   def edit
