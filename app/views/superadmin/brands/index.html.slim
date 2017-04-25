@@ -1,22 +1,22 @@
 .col-md-offset-2.col-md-7
-  .panel.panel-primary
-    .panel-heading.panel-heading-with-button
-      .col-sm-6.panel-heading-label
-        h2.text-left.panel-title Brands
-      .col-sm-6.text-right
+  .panel
+    .panel-heading
+      .pull-right
         =link_to "Add Brand", new_superadmin_brand_path, class: 'btn btn-info btn-sm'
-      .clearfix
-    table.table.table-striped
-      thead
-        tr
-          th ID
-          th Name
-          th Actions
-
-      tbody
-        -@brands.each do |brand|
+      h4 Brands
+    .panel-body
+      table.table.table-striped
+        thead
           tr
-            td #{brand.id}
-            td #{brand.name}
-            td
-              a.btn.btn-sm.btn-primary href="#{edit_superadmin_brand_path(brand)}" Edit
+            th ID
+            th Name
+            th Actions
+
+        tbody
+          -@brands.each do |brand|
+            tr
+              td #{brand.id}
+              td #{brand.name}
+              td
+                =link_to edit_superadmin_brand_path(brand), class: 'btn btn-danger btn-sm' do
+                  span.glyphicon.glyphicon-pencil aria-hidden="true"

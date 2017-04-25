@@ -1,27 +1,26 @@
 .col-md-offset-2.col-md-7
-  .panel.panel-primary
-    .panel-heading.panel-heading-with-button
-      .col-sm-6.panel-heading-label
-        h2.text-left.panel-title Clients
-      .col-sm-6.text-right
+  .panel
+    .panel-heading
+      .pull-right
         =link_to "Add Client", new_superadmin_client_path, class: 'btn btn-info btn-sm'
-      .clearfix
-    table.table.table-striped
-      thead
-        tr
-          th ID
-          th Name
-          th Phone
-          th Actions
-
-      tbody
-        -@clients.each do |client|
+      h4 Brands
+    .panel-body
+      table.table.table-striped
+        thead
           tr
-            td #{client.id}
-            td #{client.name}
-            td #{client.phone}
-            td
-              a.btn.btn-success.btn-sm href=superadmin_client_users_path(client)
-                |Admins
-              '
-              a.btn.btn-sm.btn-primary href="#{edit_superadmin_client_path(client)}" Edit
+            th ID
+            th Name
+            th Phone
+            th Actions
+        tbody
+          -@clients.each do |client|
+            tr
+              td #{client.id}
+              td #{client.name}
+              td #{client.phone}
+              td
+                a.btn.btn-success.btn-sm href=superadmin_client_users_path(client)
+                  |Admins
+                '
+                =link_to edit_superadmin_client_path(client), class: 'btn btn-danger btn-sm' do
+                  span.glyphicon.glyphicon-pencil aria-hidden="true"
