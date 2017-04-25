@@ -8,14 +8,16 @@ gem 'pg', '~> 0.15'
 # Use SCSS for stylesheets
 # gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.1.0'
 gem 'devise'
 gem 'slim'
 gem 'slim-rails'
 gem 'simple_token_authentication'
 gem 'figaro'
+
+gem 'thin'
+gem 'settingslogic'
+
 gem "select2-rails"
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
@@ -59,3 +61,35 @@ group :development do
   gem 'spring'
 end
 
+
+gem 'capistrano-bundler'
+
+group :development do
+  gem 'capistrano', '~> 3.0'
+  gem 'capistrano-rvm'
+  gem 'capistrano-rails', '~> 1.1.0'
+  gem 'capistrano-thin'
+  gem 'capistrano-sidekiq'
+end
+
+#Slack integreation
+gem 'slackistrano'
+
+#Assets
+gem 'asset_sync'
+gem "fog-aws"
+
+group :assets do
+  gem "fog", "~>1.20", require: "fog/aws/storage"
+  gem 'coffee-rails', '~> 4.1.0'
+  gem 'uglifier', '>= 1.3.0'
+end
+
+#SES
+gem 'aws-ses', '~> 0.6.0', :require => 'aws/ses'
+
+#exception notification
+gem 'exception_notification'
+
+#newrelic monitoring
+gem 'newrelic_rpm'
