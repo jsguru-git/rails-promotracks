@@ -1,0 +1,43 @@
+development: &development
+  store: 'Local'
+  s3_access_key_id: <%= ENV['aws_access_key_id'] %>
+  s3_secret_access_key: <%= ENV['aws_secret_access_key'] %>
+  s3_region: us-west-2
+  s3_media_region: us-west-2
+  s3_media_root: https://promotracks-stage-media.s3.amazonaws.com
+  s3_media_bucket: promotracks-stage-media
+  s3_assets_bucket: promotracks-stage-asset
+  s3_assets_host: https://promotracks-stage-asset.s3.amazonaws.com
+
+staging:
+  store: 'AWS'
+  s3_access_key_id: <%= ENV['aws_access_key_id'] %>
+  s3_secret_access_key: <%= ENV['aws_secret_access_key'] %>
+  s3_region: us-west-2
+  s3_media_region: us-west-2
+  s3_media_root: https://promotracks-stage-media.s3.amazonaws.com
+  s3_media_bucket: promotracks-stage-media
+  s3_assets_bucket: promotracks-stage-asset
+  s3_assets_host: https://promotracks-stage-asset.s3.amazonaws.com
+
+production:
+  store: 'AWS'
+  s3_access_key_id: <%= ENV['aws_access_key_id'] %>
+  s3_secret_access_key: <%= ENV['aws_secret_access_key'] %>
+  s3_region: us-west-2
+  s3_media_region: us-west-2
+  s3_media_root: https://promotracks-media.s3.amazonaws.com
+  s3_media_bucket: promotracks-media
+  s3_assets_bucket: promotracks-asset
+  s3_assets_host: https://promotracks-asset.s3.amazonaws.com
+
+test:
+  store: 'Local'
+  s3_access_key_id: <%= ENV['aws_access_key_id'] %>
+  s3_secret_access_key: <%= ENV['aws_secret_access_key'] %>
+  s3_region: us-west-2
+  s3_media_region: us-west-2
+  s3_media_root: https://promotracks-stage-media.s3.amazonaws.com
+  s3_media_bucket: promotracks-stage-media
+  s3_assets_bucket: promotracks-stage-asset
+  s3_assets_host: https://promotracks-stage-asset.s3.amazonaws.com

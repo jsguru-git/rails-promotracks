@@ -1,0 +1,19 @@
+development: &development
+  access_key_id: ENV['aws_access_key_id']
+  secret_access_key: ENV['aws_secret_access_key']
+  host: email.us-west-2.amazonaws.com
+
+test:
+  access_key_id: ENV['aws_access_key_id']
+  secret_access_key: ENV['aws_secret_access_key']
+  host: email.us-west-2.amazonaws.com
+
+staging:
+  access_key_id: ENV['aws_access_key_id']
+  secret_access_key: ENV['aws_secret_access_key']
+  host: email.us-west-2.amazonaws.com
+
+production:
+  host: email.us-west-2.amazonaws.com
+  access_key_id: ENV['aws_access_key_id']
+  secret_access_key: ENV['aws_secret_access_key']
