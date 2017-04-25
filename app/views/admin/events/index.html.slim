@@ -1,29 +1,31 @@
-.col-md-offset-2.col-md-9
-  .panel.panel-primary
-    .panel-heading.panel-heading-with-button
-      .col-sm-6.panel-heading-label
-        h2.text-left.panel-title Events
-      .col-sm-6.text-right
+div
+  .clearfix
+  .panel
+    .panel-heading
+      .pull-right
         =link_to "Add Event", new_admin_event_path, class: 'btn btn-info btn-sm'
-      .clearfix
-    table.table.table-striped
-      thead
-        tr
-          th ID
-          th Name
-          th Type
-          Th Venue
-          th Start Time
-          th End Time
-          th Actions
-      tbody
-        -@events.each do |event|
-          tr
-            td #{event.id}
-            td #{event.name}
-            td #{event.event_type&.name}
-            td #{event.address&.city}
-            td #{event.start_time&.strftime('%m/%d/%Y %I:%M %p')}
-            td #{event.end_time&.strftime('%m/%d/%Y %I:%M %p')}
-            td
-              a.btn.btn-sm.btn-primary href="#{edit_admin_event_path(event)}" Edit
+      h4 Events List
+    .panel-body
+      table.table
+        thead
+          tr.active
+            th ID
+            th Event Name
+            th Event Type
+            Th Venue
+            th Start Time
+            th End Time
+            th Brand
+            th Actions
+        tbody
+          -@events.each do |event|
+            tr
+              td #{event.id}
+              td.text-danger #{event.name}
+              td #{event.event_type&.name}
+              td #{event.address&.city}
+              td #{event.start_time&.strftime('%m/%d/%Y %I:%M %p')}
+              td #{event.end_time&.strftime('%m/%d/%Y %I:%M %p')}
+              td #{event.brand.name}
+              td
+                a.btn.btn-sm.btn-primary href="#{edit_admin_event_path(event)}" Edit

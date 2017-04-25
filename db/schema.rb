@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170422142339) do
+ActiveRecord::Schema.define(version: 20170425062445) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,17 +21,15 @@ ActiveRecord::Schema.define(version: 20170422142339) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.integer  "user_id"
+    t.index ["user_id"], name: "index_brands_on_user_id", using: :btree
   end
-
-  add_index "brands", ["user_id"], name: "index_brands_on_user_id", using: :btree
 
   create_table "client_brands", id: false, force: :cascade do |t|
     t.integer "client_id"
     t.integer "brand_id"
+    t.index ["brand_id"], name: "index_client_brands_on_brand_id", using: :btree
+    t.index ["client_id"], name: "index_client_brands_on_client_id", using: :btree
   end
-
-  add_index "client_brands", ["brand_id"], name: "index_client_brands_on_brand_id", using: :btree
-  add_index "client_brands", ["client_id"], name: "index_client_brands_on_client_id", using: :btree
 
   create_table "clients", force: :cascade do |t|
     t.string   "name"
@@ -40,9 +37,8 @@ ActiveRecord::Schema.define(version: 20170422142339) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "admin_id"
+    t.index ["admin_id"], name: "index_clients_on_admin_id", using: :btree
   end
-
-  add_index "clients", ["admin_id"], name: "index_clients_on_admin_id", using: :btree
 
   create_table "event_types", force: :cascade do |t|
     t.string   "name"
@@ -56,8 +52,6 @@ ActiveRecord::Schema.define(version: 20170422142339) do
     t.datetime "start_time"
     t.datetime "end_time"
     t.string   "area"
-    t.string   "attendance"
-    t.integer  "sample"
     t.float    "product_cost"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -68,22 +62,20 @@ ActiveRecord::Schema.define(version: 20170422142339) do
     t.integer  "client_id"
     t.integer  "max_users",      default: 0
     t.integer  "event_type_id"
+    t.index ["brand_id"], name: "index_events_on_brand_id", using: :btree
+    t.index ["client_id"], name: "index_events_on_client_id", using: :btree
+    t.index ["event_type_id"], name: "index_events_on_event_type_id", using: :btree
+    t.index ["group_id"], name: "index_events_on_group_id", using: :btree
+    t.index ["user_id"], name: "index_events_on_user_id", using: :btree
   end
-
-  add_index "events", ["brand_id"], name: "index_events_on_brand_id", using: :btree
-  add_index "events", ["client_id"], name: "index_events_on_client_id", using: :btree
-  add_index "events", ["event_type_id"], name: "index_events_on_event_type_id", using: :btree
-  add_index "events", ["group_id"], name: "index_events_on_group_id", using: :btree
-  add_index "events", ["user_id"], name: "index_events_on_user_id", using: :btree
 
   create_table "groups", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "name"
     t.integer  "client_id"
+    t.index ["client_id"], name: "index_groups_on_client_id", using: :btree
   end
-
-  add_index "groups", ["client_id"], name: "index_groups_on_client_id", using: :btree
 
   create_table "locations", force: :cascade do |t|
     t.string   "formatted_address"
@@ -97,9 +89,8 @@ ActiveRecord::Schema.define(version: 20170422142339) do
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
     t.integer  "event_id"
+    t.index ["event_id"], name: "index_locations_on_event_id", using: :btree
   end
-
-  add_index "locations", ["event_id"], name: "index_locations_on_event_id", using: :btree
 
   create_table "user_events", force: :cascade do |t|
     t.integer "event_id"
@@ -108,24 +99,25 @@ ActiveRecord::Schema.define(version: 20170422142339) do
     t.integer "category", default: 0
     t.integer "status", default: 0
     t.string "notes"
-    t.string "total_expense"
     t.boolean "recommended", default: false
     t.datetime "check_in"
     t.datetime "check_out"
     t.text "images", default: [], array: true
     t.string "follow_up"
+    t.integer "attendance"
+    t.integer "sample"
+    t.boolean "deleted", default: false
+    t.integer "total_expense", default: 0
+    t.index ["event_id"], name: "index_user_events_on_event_id", using: :btree
+    t.index ["user_id"], name: "index_user_events_on_user_id", using: :btree
   end
-
-  add_index "user_events", ["event_id"], name: "index_user_events_on_event_id", using: :btree
-  add_index "user_events", ["user_id"], name: "index_user_events_on_user_id", using: :btree
 
   create_table "user_groups", force: :cascade do |t|
     t.integer "group_id"
     t.integer "user_id"
+    t.index ["group_id"], name: "index_user_groups_on_group_id", using: :btree
+    t.index ["user_id"], name: "index_user_groups_on_user_id", using: :btree
   end
-
-  add_index "user_groups", ["group_id"], name: "index_user_groups_on_group_id", using: :btree
-  add_index "user_groups", ["user_id"], name: "index_user_groups_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                             default: "", null: false
@@ -147,12 +139,11 @@ ActiveRecord::Schema.define(version: 20170422142339) do
     t.integer  "client_id"
     t.string   "authentication_token",   limit: 30
     t.string   "token"
+    t.index ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree
+    t.index ["client_id"], name: "index_users_on_client_id", using: :btree
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
-
-  add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree
-  add_index "users", ["client_id"], name: "index_users_on_client_id", using: :btree
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   add_foreign_key "brands", "users"
   add_foreign_key "clients", "users", column: "admin_id"

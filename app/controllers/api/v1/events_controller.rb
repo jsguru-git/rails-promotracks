@@ -13,8 +13,8 @@ class Api::V1::EventsController < Api::V1::ApiApplicationController
       @user_event=UserEvent.where(user_id: current_user.id, event_id: @event.id, :category => 1).first
     end
 
-    if @event.update_attributes(event_params)
-      @user_event.update_attributes(user_event_params)
+
+    if @user_event.update_attributes(user_event_params)
       if params[:user_event][:images].nil?
         render :show
       else
@@ -27,7 +27,7 @@ class Api::V1::EventsController < Api::V1::ApiApplicationController
         end
       end
     else
-      render 'global/error', :locals => {:code => 701, :message => @event.errors.full_messages.join(', ')}
+      render 'global/error', :locals => {:code => 701, :message => @user_event.errors.full_messages.join(', ')}
     end
   end
 

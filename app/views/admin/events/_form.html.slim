@@ -1,36 +1,27 @@
-.col-md-offset-3.col-md-6
+div
   = form_for [:admin, @event] do |f|
 
     .panel.panel-primary
       .panel-heading
-        h2.panel-title #{@event.new_record? ? 'New ' : 'Edit '} Event
+        h4.panel-title #{@event.new_record? ? 'Create ' : 'Edit '} Events
       .panel-body
         =f.hidden_field :promo_category
         .form-group.row
-          .col-md-6
-            = f.label :name
-            sup *
-            .input-group
-              = f.text_field :name, class: 'name form-control', :autocomplete => true, required: true
-          .col-md-6
-            = f.label :type
-            sup *
-            .input-group
-              =f.select :event_type_id, options_for_select(EventType.all.collect { |u| [u.name, u.id] }, selected_key = @event.event_type_id), {:include_blank => 'Nothing Selected'}, {:class => 'form-control'}
-              .help-block.with-errors
+          .col-md-12
+            = f.label :name, 'Event Name'
+            sup.text-danger *
+            = f.text_field :name, class: 'name form-control', :autocomplete => true, required: true
         .form-group.row
           .col-md-6
-            = f.label :brand
-            sup *
-            .input-group
-              =f.select :brand_id, options_for_select(@current_client.brands.collect { |u| [u.name, u.id] }, selected_key = @event.brand_id), {}, {:class => 'form-control'}
-              .help-block.with-errors
-          .promo_groups style= "display:none"
-            .col-md-6
-              = f.label :max_users
-              sup *
-              .input-group
-                = f.number_field :max_users, class: 'form-control', required: true
+            = f.label :type, 'Event Type'
+            sup.text-danger *
+            =f.select :event_type_id, options_for_select(EventType.all.collect { |u| [u.name, u.id] }, selected_key = @event.event_type_id), {:include_blank => 'Nothing Selected'}, {:class => 'form-control pointer'}
+            .help-block.with-errors
+          .col-md-6
+            = f.label :brand, 'Brand Name'
+            sup.text-danger *
+            =f.select :brand_id, options_for_select(@current_client.brands.collect { |u| [u.name, u.id] }, selected_key = @event.brand_id), {}, {:class => 'form-control pointer'}
+            .help-block.with-errors
         .form-group.row
           -if @event.promo_rep?
             -rep_checked=true
@@ -39,47 +30,55 @@
             -rep_checked=false
             -grp_checked=true
           .col-md-3
-            =label_tag :prom_rep
-            =radio_button_tag 'promo', false, rep_checked, class: 'form-control', placeholder: 'Name', :id => 'promo_rep_button'
+            label Reps/Groups
+            .input-group
+              .input-group-addon
+                =radio_button_tag 'promo', false, rep_checked, class: 'form-control pointer', placeholder: 'Name', :id => 'promo_rep_button'
+              .form-control Promo Reps
           .col-md-3
-            =label_tag :prom_group
-            =radio_button_tag 'promo', false, grp_checked, class: 'form-control', placeholder: 'Name', :id => 'promo_group_button'
-
-          .col-md-6
+            label &nbsp;
+            .input-group
+              .input-group-addon
+                =radio_button_tag 'promo', false, grp_checked, class: 'form-control pointer', placeholder: 'Name', :id => 'promo_group_button'
+              .form-control Promo Groups
+          .col-md-3
             #promo_reps
-              = f.label :promo_reps
-              sup *
-              .input-group
-                =f.select :user_ids, options_for_select(@promo_reps.collect { |u| [u.full_name, u.id] }, selected_key = @event.users.includes(:user_events).where(:user_events => {:category => 0}).ids), {}, {:multiple => true, :class => 'form-control add_promo_reps'}
-                .help-block.with-errors
+              = f.label :promo_reps, 'Promo Reps'
+              sup.text-danger *
+              =f.select :user_ids, options_for_select(@promo_reps.collect { |u| [u.full_name, u.id] }, selected_key = @event.users.includes(:user_events).where(:user_events => {:category => 0}).ids), {}, {:multiple => true, :class => 'form-control add_promo_reps'}
+              .help-block.with-errors
             .promo_groups style= "display:none"
-              = f.label :promo_groups
-              sup *
-              .input-group
-                =f.select :group_id, options_for_select(@current_client.groups.collect { |u| [u.name, u.id] }, selected_key = @event.group_id), {:include_blank => 'Nothing Selected'}, {:class => 'form-control', :title => 'Select Group'}
-                .help-block.with-errors
+              = f.label :promo_groups, 'Promo Groups'
+              sup.text-danger *
+              =f.select :group_id, options_for_select(@current_client.groups.collect { |u| [u.name, u.id] }, selected_key = @event.group_id), {:include_blank => 'Nothing Selected'}, {:class => 'form-control pointer', :title => 'Select Group'}
+              .help-block.with-errors
+          .col-md-3
+            .promo_groups style= "display:none"
+              = f.label :max_users, 'Max Users'
+              sup.text-danger *
+              = f.number_field :max_users, class: 'form-control', required: true
         .form-group.row
           .col-sm-6
             =f.label :start_time, 'Start Time'
             #start_time.input-group.date
               =f.text_field :start_time, class: 'form-control', value: (@event&.start_time&.strftime('%m/%d/%Y %I:%M %p'))
-              span.input-group-addon
+              span.input-group-addon.pointer
                 span.glyphicon.glyphicon-calendar
           .col-sm-6
             =f.label :end_time, 'End Time'
             #end_time.input-group.date
               =f.text_field :end_time, class: 'form-control', value: (@event&.end_time&.strftime('%m/%d/%Y %I:%M %p'))
-              span.input-group-addon
+              span.input-group-addon.pointer
                 span.glyphicon.glyphicon-calendar
 
         = f.fields_for :address do |addr|
           .form-group.row
             .col-md-12
-              = f.label :city
-              sup *
+              = f.label :city, 'Event Venue Address'
+              sup.text-danger *
               .input-group
                 = addr.text_field :city, class: 'city form-control ', :autocomplete => true, required: true
-                span.input-group-addon.btn-primary
+                span.input-group-addon.btn-primary.pointer
                   .glyphicon.glyphicon-map-marker
                 =addr.hidden_field :state, class: 'state'
                 =addr.hidden_field :country, class: 'country'
