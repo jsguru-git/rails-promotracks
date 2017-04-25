@@ -1,4 +1,4 @@
-set :branch, :deployment
+set :branch, :master
 
 server '34.208.235.177', roles: %w(app db), user: 'ubuntu'
 
