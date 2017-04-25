@@ -1,23 +1,24 @@
-.col-md-offset-2.col-md-7
-  .panel.panel-primary
-    .panel-heading.panel-heading-with-button
-      .col-sm-6.panel-heading-label
-        h2.text-left.panel-title Promo Reps
-      .col-sm-6.text-right
+.col-md-offset-2.col-md-8
+  .clearfix
+  .panel
+    .panel-heading
+      .pull-right
         =link_to "Add Promo Rep", new_admin_promo_rep_path, class: 'btn btn-info btn-sm'
-      .clearfix
-    table.table.table-striped
-      thead
-        tr
-          th ID
-          th Name
-          th Email
-          th Actions
-      tbody
-        -@promo_reps.each do |user|
-          tr
-            td #{user.id}
-            td #{user.full_name}
-            td #{user.email}
-            td
-              a.btn.btn-sm.btn-primary href="#{edit_admin_promo_rep_path(user)}" Edit
+      h4 Promo Reps
+    .panel-body
+      table.table
+        thead
+          tr.active
+            th ID
+            th Name
+            th Email
+            th Actions
+        tbody
+          -@promo_reps.each do |user|
+            tr
+              td #{user.id}
+              td #{user.full_name}
+              td #{user.email}
+              td
+                =link_to edit_admin_promo_rep_path(user), class: 'btn btn-danger btn-sm' do
+                  span.glyphicon.glyphicon-pencil aria-hidden="true"

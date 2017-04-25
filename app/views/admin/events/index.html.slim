@@ -28,4 +28,5 @@ div
               td #{event.end_time&.strftime('%m/%d/%Y %I:%M %p')}
               td #{event.brand.name}
               td
-                a.btn.btn-sm.btn-primary href="#{edit_admin_event_path(event)}" Edit
+                =link_to edit_admin_event_path(event), class: 'btn btn-danger btn-sm' do
+                  span.glyphicon.glyphicon-pencil aria-hidden="true"

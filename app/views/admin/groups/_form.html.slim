@@ -1,9 +1,9 @@
 .col-md-offset-3.col-md-6
   = form_for [:admin, @group] do |f|
-
-    .panel.panel-primary
+    .clearfix
+    .panel
       .panel-heading
-        h2.panel-title #{@group.new_record? ? 'New ' : 'Edit '} Group
+        h4.panel-title #{@group.new_record? ? 'New ' : 'Edit '} Group
       .panel-body
         .form-group.row
           .col-md-12
