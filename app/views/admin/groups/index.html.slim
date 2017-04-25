@@ -1,22 +1,22 @@
 .col-md-offset-2.col-md-7
-  .panel.panel-primary
-    .panel-heading.panel-heading-with-button
-      .col-sm-6.panel-heading-label
-        h2.text-left.panel-title Promo Groups
-      .col-sm-6.text-right
-        =link_to "Add Group", new_admin_group_path, class: 'btn btn-info btn-sm'
-      .clearfix
-    table.table.table-striped
-      thead
-        tr
-          th Id
-          th Name
-          th Actions
+  .clearfix
+    .panel
+      .panel-heading
+        .pull-right
+          =link_to "Add Group", new_admin_group_path, class: 'btn btn-info btn-sm'
+        h4 Promo Groups
+      .panel-body
+        table.table
+          thead
+            tr.active
+              th Id
+              th Name
+              th Actions
 
-      tbody
-        -@groups.each do |group|
-          tr
-            td #{group.id}
-            td #{group.name}
-            td
-              a.btn.btn-sm.btn-primary href="#{edit_admin_group_path(group)}" Edit
+          tbody
+            -@groups.each do |group|
+              tr
+                td #{group.id}
+                td #{group.name}
+                td
+                  a.btn.btn-sm.btn-primary href="#{edit_admin_group_path(group)}" Edit
