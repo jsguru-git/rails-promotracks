@@ -89,7 +89,7 @@ Rails.application.configure do
   Rails.application.config.middleware.use ExceptionNotification::Rack,
                                           :email => {
                                               :email_prefix => 'Promo Tracks  | Broken Link | Staging',
-                                              :sender_address => %{dev@bitcot.com},
+                                              :sender_address => %{admin@promotracks.com},
                                               :exception_recipients => %w{manjula@bitcot.com}
                                           }
 end
