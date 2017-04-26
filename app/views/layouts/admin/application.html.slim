@@ -11,5 +11,6 @@ html
     section.page-content
       section.page-content-inner
       -if flash.present?
-        =render 'layouts/flash_msg_template' = yield
+        =render 'layouts/flash_msg_template'
+      = yield
   =render partial: 'layouts/superadmin/footer'

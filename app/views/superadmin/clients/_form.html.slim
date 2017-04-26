@@ -1,6 +1,5 @@
 .col-md-offset-3.col-md-6
   = form_for [:superadmin, @client] do |f|
-
     .panel.panel-with-borders
       .panel-heading
         h3.panel-title #{@client.new_record? ? 'New ' : 'Edit '} Client
@@ -53,3 +52,5 @@
           =f.submit 'Submit', class: 'btn btn-success'
           '
           a.btn.btn-danger href="#{superadmin_clients_path}" Cancel
+    br
+    br
