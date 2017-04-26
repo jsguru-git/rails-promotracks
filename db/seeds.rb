@@ -38,16 +38,17 @@ end
     # email_data[:user]=promo_ref_info(promo_rep)
     # UserMailer.send_email(promo_rep.email, email_data).deliver
   end
-
+  promo_reps=client.users.where(role: 'promo_rep')
+  rep_ids=promo_reps.ids.sample(3)
   6.times do |k|
     group=client.groups.new(:name => Faker::Name.name)
-    group.user_ids = user_ids
+    group.user_ids = rep_ids
     group.save
   end
   6.times do |l|
     rep_event=client.events.new(:promo_category => 'promo_rep', :name => Faker::Name.name, :event_type_id => event_type, :end_time => Faker::Time.forward(23, :morning), :start_time => Faker::Time.backward(14, :evening), :brand_id => brand)
     rep_event.creator = client.admin
-    user_ids.each do |id|
+    rep_ids.each do |id|
       rep_event.user_events.new(user_id: id, token: SecureRandom.hex[0, 6], status: :accepted)
     end
     rep_event.address=Location.new(:city => 'San Diego')

@@ -44,7 +44,8 @@ div
             #promo_reps
               = f.label :promo_reps, 'Promo Reps'
               sup.text-danger *
-              =f.select :user_ids, options_for_select(@promo_reps.collect { |u| [u.full_name, u.id] }, selected_key = @event.users.includes(:user_events).where(:user_events => {:category => 0}).ids), {}, {:multiple => true, :class => 'form-control add_promo_reps'}
+              -selected=@event.user_events.collect { |c| c[:user_id] }
+              =f.select :user_ids, options_for_select(@promo_reps.collect { |u| [u.full_name, u.id] }, selected_key = selected), {}, {:multiple => true, :class => 'form-control add_promo_reps'}
               .help-block.with-errors
             .promo_groups style= "display:none"
               = f.label :promo_groups, 'Promo Groups'
