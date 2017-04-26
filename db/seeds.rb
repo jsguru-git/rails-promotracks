@@ -10,7 +10,7 @@ User.create(email: 'dev@bitcot.com', password: '12345', password_confirmation: '
 end
 
 # Create client and associated events ,group ,reps
-5.times do |i|
+10.times do |i|
   brand_ids=Brand.all.ids
   client=Client.new(:name => Faker::Company.name, :phone => Faker::PhoneNumber.cell_phone)
   client.brand_ids = brand_ids.sample(3)
@@ -25,7 +25,7 @@ end
   event_type_ids=EventType.all.ids
   event_type = event_type_ids.sample
   brand=brand_ids.sample
-  3.times do |j|
+  6.times do |j|
     promo_rep=client.users.new(:first_name => Faker::Name.first_name, :last_name => Faker::Name.last_name, :email => Faker::Internet.safe_email, password: password, password_confirmation: password, :token => password, :role => 'promo_rep')
     if promo_rep.valid?
       promo_rep.save
@@ -39,12 +39,12 @@ end
     # UserMailer.send_email(promo_rep.email, email_data).deliver
   end
 
-  3.times do |k|
+  6.times do |k|
     group=client.groups.new(:name => Faker::Name.name)
     group.user_ids = user_ids
     group.save
   end
-  4.times do |l|
+  6.times do |l|
     rep_event=client.events.new(:promo_category => 'promo_rep', :name => Faker::Name.name, :event_type_id => event_type, :end_time => Faker::Time.forward(23, :morning), :start_time => Faker::Time.backward(14, :evening), :brand_id => brand)
     rep_event.creator = client.admin
     user_ids.each do |id|
@@ -55,7 +55,7 @@ end
   end
 
 
-  4.times do |l|
+  6.times do |l|
     rep_event=client.events.new(:promo_category => 'promo_group', :name => Faker::Name.name, :event_type_id => event_type, :end_time => Faker::Time.forward(23, :morning), :start_time => Faker::Time.backward(14, :evening), :brand_id => brand, :max_users => 2, :group_id => group_id)
     rep_event.creator = client.admin
     rep_event.address=Location.new(:city => 'San Diego')
