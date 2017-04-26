@@ -1,0 +1,57 @@
+body.theme-default.single-page
+  section.page-content
+    .page-content-inner.single-page-login-alpha#login_screen
+      /! Login Alpha Page
+      .single-page-block-header
+        .row
+          .col-lg-4
+          /.logo
+          /  a href=("javascript: history.back();")
+          /    img alt=("Clean UI Admin Template") src="../assets/common/img/logo-inverse.png"
+          .col-lg-8
+            .single-page-block-header-menu
+              ul.list-unstyled.list-inline
+                li.active
+                  a href=("javascript: void(0);")  Login
+      .single-page-block
+        .single-page-block-inner
+          .single-page-block-form
+            h3.text-center
+              i.icmn-enter.margin-right-10
+              | Login Form
+            br
+            =form_for(resource, as: resource_name, url: session_path(resource_name), html: {method: :post, id: 'form-validation'}) do |f|
+              .form-group
+                label for="user_email"  Email
+                br
+                input#user_email.form-control data-validation="[EMAIL]" autofocus="autofocus" name="user[email]" type="email" value=""
+              .form-group
+                label for="user_password"  Password
+                br
+                input#user_password.form-control.password data-validation="[L>=5]" data-validation-message=("$ must be at least 5 characters") autocomplete="off" name="user[password]" type="password"
+              .form-group
+                a.pull-right.link-blue.link-underlined href=new_password_path(resource_name)  Forgot Password?
+                .checkbox
+                  label
+                    input.checkbox_align name="user[remember_me]" type="hidden" value="0"
+                    input.checkbox_align checked="" name="user[remember_me]" type="checkbox"
+                    |&nbsp; Remember Me
+              .form-actions
+                input.button.btn.btn-primary.width-150 data-disable-with=("Log in") name="commit" type="submit" value=("Sign in")
+                span.register-link
+                  |Don't have an account?
+                  a.link-blue.link-underlined href=""  Sign Up
+      .single-page-block-footer.text-center
+        ul.list-unstyled.list-inline
+          li
+            a href=("javascript: void(0);")  Terms of Use
+          li.active
+            a href=("javascript: void(0);")  Compliance
+          li
+            a href=("javascript: void(0);")  Confidential Information
+          li
+            a href=("javascript: void(0);")  Support
+          li
+            a href=("javascript: void(0);")  Contacts
+              /! End Login Alpha Page
+              /! Page Scripts

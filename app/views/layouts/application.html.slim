@@ -6,7 +6,5 @@ html
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   body
-    p.notice = notice
-    p.alert = alert
+    =flash_messages
     = yield
-    =render partial: 'layouts/superadmin/footer'
