@@ -1,5 +1,5 @@
-require 'platform/email_helper'
-include EmailHelper
+# require 'platform/email_helper'
+# include EmailHelper
 
 User.create(email: 'dev@bitcot.com', password: '12345', password_confirmation: '12345', first_name: 'Dev', last_name: 'Bitcot', role: :super_admin)
 
@@ -32,11 +32,11 @@ end
     else
       puts promo_rep.errors.full_messages.join(',')
     end
-    email_data={}
-    email_data[:body] = "find below the passcode for the promo rep"
-    email_data[:subject]="New Promo Rep :#{promo_rep.id}"
-    email_data[:user]=promo_ref_info(promo_rep)
-    UserMailer.send_email(promo_rep.email, email_data).deliver
+    # email_data={}
+    # email_data[:body] = "find below the passcode for the promo rep"
+    # email_data[:subject]="New Promo Rep :#{promo_rep.id}"
+    # email_data[:user]=promo_ref_info(promo_rep)
+    # UserMailer.send_email(promo_rep.email, email_data).deliver
   end
 
   3.times do |k|
@@ -60,15 +60,15 @@ end
     rep_event.creator = client.admin
     rep_event.address=Location.new(:city => 'San Diego')
     rep_event.save
-    email_data={}
-    email_data[:body] = "Please find below the event details"
-    email_data[:subject]="#{rep_event.name} :#{rep_event.id}"
-    email_data[:event]=get_event(rep_event)
+    # email_data={}
+    # email_data[:body] = "Please find below the event details"
+    # email_data[:subject]="#{rep_event.name} :#{rep_event.id}"
+    # email_data[:event]=get_event(rep_event)
     unless rep_event.group_id.nil?
       rep_event.group.users.each do |user|
         token=SecureRandom.hex[0, 6]
         rep_event.user_events.create(user_id: user.id, token: token, category: :promo_group)
-        EventMailer.accept_event(user.email, email_data, token).deliver
+        # EventMailer.accept_event(user.email, email_data, token).deliver
       end
     end
   end
