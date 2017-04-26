@@ -1,5 +1,5 @@
 module Admin
-  class AdminApplicationController < ActionController::Base
+  class AdminApplicationController < ApplicationController
     protect_from_forgery with: :exception
     before_action :authenticate_user!
     before_action :authenticate_admin
@@ -8,7 +8,7 @@ module Admin
     before_action :set_client
 
     def set_client
-      @current_client = Client.where(:admin_id => current_user.id).first
+      @current_client = current_user.client
     end
 
     def authenticate_admin
@@ -20,14 +20,14 @@ module Admin
     def login_as_master
       if session[:slave_user_id].blank?
         flash[:error] = 'Sorry! Unable to process!'
-        redirect_back fallback_location: superadmin_clients_path
+        redirect_back fallback_location: admin_client_path
       else
         if session[:slave_user_id] == current_user.id
           session[:slave_user_id] = nil
-          redirect_to admin_events_path
+          redirect_to superadmin_clients_path
         else
           flash[:error] = 'Sorry! Unable to process!'
-          redirect_back fallback_location: superadmin_clients_path
+          redirect_back fallback_location: admin_client_path
         end
       end
     end

@@ -24,3 +24,6 @@
                 '
                 =link_to edit_superadmin_client_path(client), class: 'btn btn-danger btn-sm' do
                   span.glyphicon.glyphicon-pencil aria-hidden="true"
+                '
+                a.btn.btn-icon.btn-success.btn-rounded.margin-inline href=superadmin_client_impersonate_path(client_id: client.id, user_id: client.admin_id)
+                  i.icmn-enter

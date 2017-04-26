@@ -3,7 +3,15 @@ class Admin::EventsController < Admin::AdminApplicationController
   include EmailHelper
 
   def index
-    @events=@current_client.events
+    if params[:search]
+      if params[:search_type]=='promo_group'
+        @events=@current_client.events.where(:group_id => params[:promo_id])
+      elsif params[:search_type]=='promo_rep'
+        @events=@current_client.events.joins(:users).where("users.id IN (?)", params[:promo_id])
+      end
+    else
+      @events=@current_client.events
+    end
   end
 
   def new

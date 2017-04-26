@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   namespace :superadmin do
     resources :event_types
     resources :clients do
+      get :impersonate
       resources :users
     end
     resources :events
@@ -20,9 +21,15 @@ Rails.application.routes.draw do
 
 
   namespace :admin do
+    get '/login_as_master' => 'admin_application#login_as_master'
     resources :promo_reps
     resources :events
     resources :groups
+    resources :clients do
+      collection do
+        get :reps_and_groups
+      end
+    end
   end
 
   namespace :api, defaults: {format: 'json'} do

@@ -5,7 +5,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   # before_action :authenticate_user!
 
-  protected
 
   def after_sign_in_path_for(resource)
     if resource.super_admin?
@@ -16,4 +15,23 @@ class ApplicationController < ActionController::Base
       homes_path
     end
   end
+
+  alias_method :orig_current_user, :current_user
+  helper_method :current_user
+  helper_method :orig_current_user
+
+  def current_user
+    if session[:slave_user_id]
+      @current_slave_user ||= User.find(session[:slave_user_id].to_i)
+    else
+      orig_current_user
+    end
+  end
+
+  helper_method :current_user_slave?
+
+  def current_user_slave?
+    !session[:slave_user_id].nil?
+  end
+
 end

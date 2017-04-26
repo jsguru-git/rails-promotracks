@@ -4,6 +4,12 @@ div
       .pull-right
         =link_to "Add Event", new_admin_event_path, class: 'btn btn-info btn-sm'
       h4 Events List
+      .col-md-5
+        =form_tag admin_events_path, method: :get, class: 'search_form' do
+          =hidden_field_tag 'search_type'
+          =hidden_field_tag 'promo_id'
+          =text_field_tag "search", nil, placeholder: "Enter Reps or Groups", class: 'form-control search_rep'
+        br
     .panel-body
       table.table
         thead

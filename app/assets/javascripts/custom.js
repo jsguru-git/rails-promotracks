@@ -90,7 +90,19 @@ $(document).on('turbolinks:load', function () {
         });
         //jQuery('.ui-autocomplete').css('z-index', 5000);
     });
-
+    $(".search_rep").autocomplete({
+        source: '/admin/clients/reps_and_groups',
+        minLength: 3,
+        select: function (event, ui) {
+            if (ui.item.type == "promo_rep") {
+                $('#promo_id').val(ui.item.id);
+                $('#search_type').val(ui.item.type);
+            } else if (ui.item.type == "promo_group") {
+                $('#promo_id').val(ui.item.id);
+                $('#search_type').val(ui.item.type);
+            }
+        }
+    });
     //Form Validation
     $('#form-validation').validate({
         submit: {
