@@ -1,0 +1,10 @@
+.bottom-right.notifications
+  .flash-message
+    -flash.each do |msg_type, message|
+      javascript:
+        $(document).ready(function () {
+          $('.bottom-right').notify({
+            message: {text: "#{message}"},
+            type: "#{bootstrap_class_for(msg_type.to_sym)}"
+          }).show();
+        });

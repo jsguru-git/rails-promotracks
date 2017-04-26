@@ -6,5 +6,6 @@ html
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   body
-    =flash_messages
+    -if flash.present?
+      =render 'layouts/flash_msg_template'
     = yield

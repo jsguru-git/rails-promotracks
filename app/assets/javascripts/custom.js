@@ -91,26 +91,21 @@ $(document).on('turbolinks:load', function () {
         //jQuery('.ui-autocomplete').css('z-index', 5000);
     });
 
-    $(document).ready(function () {
-        // Add class to body for change layout settings
-        //$('body').addClass('single-page');
-
-        // Form Validation
-        $('#form-validation').validate({
-            submit: {
-                settings: {
-                    inputContainer: '.form-group',
-                    errorListClass: 'form-control-error',
-                    errorClass: 'has-danger'
-                }
+    //Form Validation
+    $('#form-validation').validate({
+        submit: {
+            settings: {
+                inputContainer: '.form-group',
+                errorListClass: 'form-control-error',
+                errorClass: 'has-danger'
             }
-        });
+        }
+    });
 
-        // Show/Hide Password
-        $('.password').password({
-            eyeClass: '',
-            eyeOpenClass: 'icmn-eye',
-            eyeCloseClass: 'icmn-eye-blocked'
-        });
+    //Show/Hide Password
+    $('.password').password({
+        eyeClass: '',
+        eyeOpenClass: 'icmn-eye',
+        eyeCloseClass: 'icmn-eye-blocked'
     });
 });

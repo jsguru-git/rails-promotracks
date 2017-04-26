@@ -10,6 +10,6 @@ html
     =render partial: 'layouts/admin/top_bar'
     section.page-content
       section.page-content-inner
-      =flash_messages
-      = yield
+      -if flash.present?
+        =render 'layouts/flash_msg_template' = yield
   =render partial: 'layouts/superadmin/footer'
