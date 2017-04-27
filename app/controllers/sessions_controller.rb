@@ -43,7 +43,7 @@ class SessionsController < Devise::SessionsController
         flash[:error] = message
       }
       format.json {
-        render 'global/error', :locals => {:code => 701, :message => "Invalid Email or Password"}
+        render 'global/error', :locals => {:code => 701, :message => "Invalid Password"}
       }
     end
 
