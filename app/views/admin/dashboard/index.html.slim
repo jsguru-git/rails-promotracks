@@ -15,19 +15,37 @@ div
             th Recommended
             th Follow up
             th Notes
+            th Sample
+            th Attendance
+        tfoot
+          tr.active
+            th &nbsp;
+            th &nbsp;
+            th Events Data Summary
+            th &nbsp;
+            th  &nbsp;
+            th  #{@total}
+            th  &nbsp;
+            th  &nbsp;
+            th  &nbsp;
+            th #{@total_sample}
+            th #{@total_attendance}
+
         tbody
           -@events.each do |event|
             -first=event.user_events[0]
             tr
-              td rowspan="6" #{event.start_time&.strftime('%m/%d/%Y %I:%M %p')}
-              td rowspan="6" #{event.name}
-              td rowspan="6" #{event&.event_type&.name}
-              td rowspan="6" #{event.address&.city}
+              td rowspan="#{event.user_events.count+1}" #{event.start_time&.strftime('%m/%d/%Y %I:%M %p')}
+              td rowspan="#{event.user_events.count+1}" #{event.name}
+              td rowspan="#{event.user_events.count+1}" #{event&.event_type&.name}
+              td rowspan="#{event.user_events.count+1}" #{event.address&.city}
               td #{first.user.full_name}
               td #{first.total_expense}
               td #{first.recommended}
               td #{first.follow_up}
               td #{first.notes}
+              td #{first.sample}
+              td #{first.attendance}
               -event.user_events.where.not(:id => first.id).each do |uv|
                 tr
                   td #{uv.user.full_name}
@@ -35,6 +53,8 @@ div
                   td #{uv.recommended}
                   td #{uv.follow_up}
                   td #{uv.notes}
+                  td #{uv.sample}
+                  td #{uv.attendance}
                 tr/
             tr/
 
