@@ -12,13 +12,13 @@
           tr
             th ID
             th Name
-            th Actions
+            th.text-center Actions
 
         tbody
           -@brands.each do |brand|
             tr
               td #{brand.id}
               td #{brand.name}
-              td
+              td.text-center
                 = link_to edit_superadmin_brand_path(brand), class: 'btn-sm  btn-icon btn btn-rounded btn-warning' do
                   i.fa.fa-edit

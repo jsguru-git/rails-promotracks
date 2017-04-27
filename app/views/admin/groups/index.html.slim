@@ -14,13 +14,13 @@
             tr.active
               th Id
               th Name
-              th Actions
+              th.text-center Actions
 
           tbody
             -@groups.each do |group|
               tr
                 td #{group.id}
                 td #{group.name}
-                td
+                td.text-center
                   = link_to edit_admin_group_path(group), class: 'btn-sm  btn-icon btn btn-rounded btn-warning' do
                     i.fa.fa-edit

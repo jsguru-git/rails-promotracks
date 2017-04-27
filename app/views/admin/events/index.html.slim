@@ -25,7 +25,7 @@ div
             th Start Time
             th End Time
             th Brand
-            th Actions
+            th.text-center Actions
         tbody
           -@events.each do |event|
             tr
@@ -36,6 +36,6 @@ div
               td #{event.start_time&.strftime('%m/%d/%Y %I:%M %p')}
               td #{event.end_time&.strftime('%m/%d/%Y %I:%M %p')}
               td #{event.brand.name}
-              td
+              td.text-center
                 = link_to edit_admin_event_path(event), class: 'btn-sm  btn-icon btn btn-rounded btn-warning' do
                   i.fa.fa-edit

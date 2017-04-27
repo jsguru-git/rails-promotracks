@@ -14,13 +14,13 @@
             th ID
             th Name
             th Email
-            th Actions
+            th.text-center Actions
         tbody
           -@promo_reps.each do |user|
             tr
               td #{user.id}
               td #{user.full_name}
               td #{user.email}
-              td
+              td.text-center
                 = link_to edit_admin_promo_rep_path(user), class: 'btn-sm  btn-icon btn btn-rounded btn-warning' do
                   i.fa.fa-edit

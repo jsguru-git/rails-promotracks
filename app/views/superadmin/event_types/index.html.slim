@@ -12,13 +12,13 @@
           tr
             th ID
             th Name
-            th Actions
+            th.text-center Actions
 
         tbody
           -@event_types.each do |event_type|
             tr
               td #{event_type.id}
               td #{event_type.name}
-              td
+              td.text-center
                 = link_to edit_superadmin_event_type_path(event_type), class: 'btn-sm  btn-icon btn btn-rounded btn-warning' do
                   i.fa.fa-edit

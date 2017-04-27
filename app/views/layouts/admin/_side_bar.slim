@@ -4,6 +4,10 @@ nav.left-menu left-menu=""
       img alt=("Promo Tracks") src=image_url("resort_pass_logo.png") /
   .left-menu-inner.scroll-pane
     ul.left-menu-list.left-menu-list-root.list-unstyled
+      li.left-menu-list class="#{active_class(admin_dashboard_index_path)}"
+        a.left-menu-link href=admin_dashboard_index_path
+          i.left-menu-link-icon.fa.fa.fa-tachometer
+          | Dashboards
       li.left-menu-list class="#{active_class(admin_events_path)}"
         a.left-menu-link href=admin_events_path
           i.left-menu-link-icon.icmn-calendar

@@ -13,14 +13,14 @@
             th ID
             th Name
             th Phone
-            th Actions
+            th.text-center Actions
         tbody
           -@clients.each do |client|
             tr
               td #{client.id}
               td #{client.name}
               td #{client.phone}
-              td
+              td.text-center
                 = link_to superadmin_client_impersonate_path(client_id: client.id, user_id: client.admin_id), class: 'btn-sm  btn-icon btn btn-rounded btn-success', :data => {:toggle => 'tooltip', :placement => 'top'}, :title => "login" do
                   i.icmn-enter
                 '
