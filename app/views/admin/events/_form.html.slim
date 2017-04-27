@@ -14,7 +14,7 @@ div
           .col-md-6
             = f.label :type, 'Event Type'
             sup.text-danger *
-            =f.select :event_type_id, options_for_select(EventType.all.collect { |u| [u.name, u.id] }, selected_key = @event.event_type_id), {:include_blank => 'Nothing Selected'}, {:class => 'form-control pointer'}
+            =f.select :event_type_id, options_for_select(EventType.all.collect { |u| [u.name, u.id] }, selected_key = @event.event_type_id), {}, {:class => 'form-control pointer'}
             .help-block.with-errors
           .col-md-6
             = f.label :brand, 'Brand Name'

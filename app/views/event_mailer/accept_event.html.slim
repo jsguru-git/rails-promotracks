@@ -5,5 +5,5 @@ p Timings: #{@data[:event][:start_time]&.strftime('%m/%d/%Y %I:%M %p')}  :  #{@d
 p Brand : #{@data[:event][:brand_name]}
 
 p Location : #{@data[:event][:location]}
-
-p= link_to 'Accept', event_url(@data[:event][:id], token: @data[:token])
+-if @data[:event][:category]=='promo_group'
+  p= link_to 'Accept', event_url(@data[:event][:id], token: @data[:token])
