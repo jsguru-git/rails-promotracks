@@ -18,3 +18,4 @@
 //= require TweenMax.min
 //= require common
 //= require fullcalendar.min
+//= require data-confirm-modal
