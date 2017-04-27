@@ -12,7 +12,7 @@
             = f.text_field :name, class: 'name form-control', :autocomplete => true, required: true
         .form-group.row
           .col-md-12
-            = f.label :promo_reps
+            = f.label :promo_reps, 'Promo Reps'
             sup.text-danger *
             =f.select :user_ids, options_for_select(@promo_reps.collect { |u| [u.full_name, u.id] }, selected_key = @group.user_ids), {}, {:multiple => true, :class => 'form-control add_promo_reps'}
             .help-block.with-errors

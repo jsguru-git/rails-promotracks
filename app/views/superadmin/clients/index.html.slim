@@ -21,11 +21,11 @@
               td #{client.name}
               td #{client.phone}
               td
-                = link_to superadmin_client_impersonate_path(client_id: client.id, user_id: client.admin_id), class: 'btn-sm  btn-icon btn btn-rounded btn-success  ' do
+                = link_to superadmin_client_impersonate_path(client_id: client.id, user_id: client.admin_id), class: 'btn-sm  btn-icon btn btn-rounded btn-success', :data => {:toggle => 'tooltip', :placement => 'top'}, :title => "login" do
                   i.icmn-enter
                 '
-                = link_to edit_superadmin_client_path(client), class: 'btn-sm  btn-icon btn btn-rounded btn-warning' do
+                = link_to edit_superadmin_client_path(client), class: 'btn-sm  btn-icon btn btn-rounded btn-warning', :data => {:toggle => 'tooltip', :placement => 'top'}, :title => "edit" do
                   i.fa.fa-edit
                 '
-                a.btn.btn-primary.btn-sm href=superadmin_client_users_path(client)
-                  |Admins
+                = link_to superadmin_client_users_path(client), class: 'btn-sm  btn-icon btn btn-rounded btn-primary', :data => {:toggle => 'tooltip', :placement => 'top'}, :title => "admins" do
+                  i.icmn-user3

@@ -64,14 +64,14 @@ div
             #start_time.input-group.date
               =f.text_field :start_time, class: 'form-control', required: true, value: (@event&.start_time&.strftime('%m/%d/%Y %I:%M %p'))
               span.input-group-addon.pointer
-                span.glyphicon.glyphicon-calendar
+                i.icmn-calendar4
           .col-sm-6
             =f.label :end_time, 'End Time'
             sup.text-danger *
             #end_time.input-group.date
               =f.text_field :end_time, class: 'form-control', required: true, value: (@event&.end_time&.strftime('%m/%d/%Y %I:%M %p'))
               span.input-group-addon.pointer
-                span.glyphicon.glyphicon-calendar
+                i.icmn-calendar4
 
         = f.fields_for :address do |addr|
           .form-group.row
@@ -81,7 +81,7 @@ div
               .input-group
                 = addr.text_field :city, class: 'city form-control ', :autocomplete => true, required: true
                 span.input-group-addon.btn-primary.pointer
-                  .glyphicon.glyphicon-map-marker
+                  i.fa.fa-map-marker
                 =addr.hidden_field :state, class: 'state'
                 =addr.hidden_field :country, class: 'country'
                 =addr.hidden_field :zip, class: 'zip'
