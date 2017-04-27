@@ -13,6 +13,12 @@ class Api::V1::EventsController < Api::V1::ApiApplicationController
       @user_event=UserEvent.where(user_id: current_user.id, event_id: @event.id, :category => 1).first
     end
 
+    unless user_event_params[:check_in].nil?
+      if current_user.events.includes(:user_events).where(:user_events => {:status => UserEvent::statuses[:accepted], :check_out => nil}).where.not(:user_events => {:check_in => nil}).size>0
+        render 'global/error', :locals => {:code => 701, :message => 'can check in only one event at a time'}
+        return
+      end
+    end
 
     if @user_event.update_attributes(user_event_params)
       if params[:user_event][:images].nil?
@@ -29,6 +35,11 @@ class Api::V1::EventsController < Api::V1::ApiApplicationController
     else
       render 'global/error', :locals => {:code => 701, :message => @user_event.errors.full_messages.join(', ')}
     end
+  end
+
+  def active
+    @events = current_user.events.includes(:user_events).where(:user_events => {:status => UserEvent::statuses[:accepted], :check_out => nil}).where.not(:user_events => {:check_in => nil})
+    render :index
   end
 
   private
