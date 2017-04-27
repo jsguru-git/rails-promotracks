@@ -120,4 +120,6 @@ $(document).on('turbolinks:load', function () {
         eyeOpenClass: 'icmn-eye',
         eyeCloseClass: 'icmn-eye-blocked'
     });
+
+    $('#us-phone-mask-input').mask('(000) 000-0000', {placeholder: "(___) ___-____"});
 });

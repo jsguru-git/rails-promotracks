@@ -11,9 +11,9 @@
             = f.text_field :name, class: 'name form-control', :autocomplete => true, required: true
         .form-group.row
           .col-md-6
-            = f.label :phone
-            sup
-            = f.text_field :phone, class: 'form-control'
+            fieldset.form-group
+              =f.label :phone
+              = f.text_field :phone, class: 'form-control', id: 'us-phone-mask-input'
           .col-md-6
             = f.label :brands
             sup.text-danger *
