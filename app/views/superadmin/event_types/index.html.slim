@@ -2,7 +2,9 @@
   .panel
     .panel-heading
       .pull-right
-        =link_to "Add event type", new_superadmin_event_type_path, class: 'btn btn-info btn-sm'
+        = link_to new_superadmin_event_type_path, class: "btn btn-info btn-sm" do
+          i.left-menu-link-icon.fa.fa-plus-square
+          |&nbsp;&nbsp;Event Type
       h4 Event Types
     .panel-body
       table.table.table-striped
