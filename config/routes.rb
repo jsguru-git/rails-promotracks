@@ -22,6 +22,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     get '/login_as_master' => 'admin_application#login_as_master'
+    resources :dashboard
     resources :promo_reps
     resources :events
     resources :groups
