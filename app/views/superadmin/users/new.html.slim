@@ -1,39 +1,33 @@
 .col-md-offset-3.col-md-6
   = form_for [:superadmin, :client, @user] do |f|
-
-    .panel.panel-primary
+    .panel.panel-with-borders
       .panel-heading
         h2.panel-title #{@user.new_record? ? 'New ' : 'Edit '} Admin
       .panel-body
         .form-group.row
           .col-md-6
             = f.label :first_name
-            sup *
-            .input-group
-              =f.hidden_field :role, :value => :client_admin
-              = f.text_field :first_name, class: 'name form-control ', required: true
+            sup.text-danger *
+            =f.hidden_field :role, :value => :client_admin
+            = f.text_field :first_name, class: 'name form-control ', required: true
           .col-md-6
             = f.label :last_name
-            sup *
-            .input-group
-              = f.text_field :last_name, class: 'name form-control ', required: true
+            sup.text-danger *
+            = f.text_field :last_name, class: 'name form-control ', required: true
         .form-group.row
           .col-md-12
             = f.label :email
-            sup *
-            .input-group
-              = f.email_field :email, class: 'form-control ', required: true
+            sup.text-danger *
+            = f.email_field :email, class: 'form-control ', required: true
         .form-group.row
           .col-md-6
             = f.label :password
-            sup *
-            .input-group
-              = f.password_field :password, class: 'form-control ', required: true
+            sup.text-danger *
+            = f.password_field :password, class: 'form-control ', required: true
           .col-md-6
             = f.label :password_confirmation
-            sup *
-            .input-group
-              = f.password_field :password_confirmation, class: 'form-control ', required: true
+            sup.text-danger *
+            = f.password_field :password_confirmation, class: 'form-control ', required: true
 
       .panel-footer
         .text-right

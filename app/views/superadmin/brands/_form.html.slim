@@ -1,6 +1,6 @@
 .col-md-offset-3.col-md-6
   = form_for [:superadmin, @brand] do |f|
-    .panel.panel-primary
+    .panel.panel-with-borders
       .panel-heading
         h2.panel-title #{@brand.new_record? ? 'New ' : 'Edit '} Brand
       .panel-body

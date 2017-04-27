@@ -1,6 +1,6 @@
 div
   = form_for [:admin, @event] do |f|
-    .panel
+    .panel.panel-with-borders
       .panel-heading
         h4.panel-title #{@event.new_record? ? 'Create ' : 'Edit '} Events
       .panel-body

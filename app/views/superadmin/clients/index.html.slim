@@ -3,7 +3,7 @@
     .panel-heading
       .pull-right
         =link_to "Add Client", new_superadmin_client_path, class: 'btn btn-info btn-sm'
-      h4 Brands
+      h4 Clients
     .panel-body
       table.table.table-striped
         thead
@@ -19,11 +19,11 @@
               td #{client.name}
               td #{client.phone}
               td
-                a.btn.btn-success.btn-sm href=superadmin_client_users_path(client)
-                  |Admins
-                '
-                =link_to edit_superadmin_client_path(client), class: 'btn btn-danger btn-sm' do
-                  span.glyphicon.glyphicon-pencil aria-hidden="true"
-                '
-                a.btn.btn-icon.btn-success.btn-rounded.margin-inline href=superadmin_client_impersonate_path(client_id: client.id, user_id: client.admin_id)
+                = link_to superadmin_client_impersonate_path(client_id: client.id, user_id: client.admin_id), class: 'btn-sm  btn-icon btn btn-rounded btn-success  ' do
                   i.icmn-enter
+                '
+                = link_to edit_superadmin_client_path(client), class: 'btn-sm  btn-icon btn btn-rounded btn-warning' do
+                  i.fa.fa-edit
+                '
+                a.btn.btn-primary.btn-sm href=superadmin_client_users_path(client)
+                  |Admins

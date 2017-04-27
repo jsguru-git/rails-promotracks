@@ -1,7 +1,7 @@
 -url=@promo_rep.new_record? ? admin_promo_reps_path(@promo_rep) : admin_promo_rep_path(@promo_rep)
 .col-md-offset-3.col-md-6
   =form_for @promo_rep, url: url, :html => {:"data-toggle" => "validator"} do |f|
-    .panel
+    .panel.panel-with-borders
       .panel-heading
         h4.panel-title #{@promo_rep.new_record? ? 'New ' : 'Edit '} Admin
       .panel-body
