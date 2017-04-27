@@ -1,0 +1,33 @@
+body.theme-default.single-page
+  section.page-content
+    .page-content-inner.single-page-login-alpha#login_screen
+      /! Login Alpha Page
+      .single-page-block-header
+        .row
+          .col-lg-4
+          /.logo
+          /  a href=("javascript: history.back();")
+          /    img alt=("Clean UI Admin Template") src="../assets/common/img/logo-inverse.png"
+          .col-lg-8
+            .single-page-block-header-menu
+              ul.list-unstyled.list-inline
+                li.active
+                  a href=("javascript: void(0);")  Login
+      .single-page-block#align
+        .single-page-block-inner
+          .single-page-block-form
+            h3.text-center
+              i.icmn-enter.margin-right-10
+              | Forgot Your Password?
+            = form_for(resource, as: resource_name, url: password_path(resource_name), html: {method: :post}) do |f|
+              = devise_error_messages!
+              .form-group
+                = f.label :email
+                br
+                = f.email_field :email, :class => 'form-control', autofocus: true
+              .form-actions
+                input.button.btn.btn-primary.width-150 data-disable-with=("Submit") name="commit" type="submit" value=("Submit")
+                span.register-link
+                  a.link-blue.link-underlined href="/users/sign_in"  Log In
+                  |&nbsp; or
+                  a.link-blue.link-underlined href="/users/sign_up"  Sign Up
