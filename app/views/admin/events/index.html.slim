@@ -27,15 +27,19 @@ div
             th Brand
             th.text-center Actions
         tbody
-          -@events.each do |event|
-            tr
-              td #{event.id}
-              td.text-danger #{event.name}
-              td #{event.event_type&.name}
-              td #{event.address&.city}
-              td #{event.start_time&.strftime('%m/%d/%Y %I:%M %p')}
-              td #{event.end_time&.strftime('%m/%d/%Y %I:%M %p')}
-              td #{event.brand.name}
-              td.text-center
-                = link_to edit_admin_event_path(event), class: 'btn-sm  btn-icon btn btn-rounded btn-warning' do
-                  i.fa.fa-edit
+          -if @events
+            -@events.each do |event|
+              tr
+                td #{event.id}
+                td.text-danger #{event.name}
+                td #{event.event_type&.name}
+                td #{event.address&.city}
+                td #{event.start_time&.strftime('%m/%d/%Y %I:%M %p')}
+                td #{event.end_time&.strftime('%m/%d/%Y %I:%M %p')}
+                td #{event.brand.name}
+                td.text-center
+                  = link_to edit_admin_event_path(event), class: 'btn-sm  btn-icon btn btn-rounded btn-warning' do
+                    i.fa.fa-edit
+          -else
+            td
+              | No events

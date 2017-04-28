@@ -19,7 +19,7 @@
             = f.label :email
             sup.text-danger *
             = f.email_field :email, class: 'form-control ', required: true
-        .form-group.row
+      /.form-group.row
           .col-md-6
             = f.label :password
             sup.text-danger *
@@ -31,6 +31,6 @@
 
       .panel-footer
         .text-right
-          =f.submit 'Submit', class: 'btn btn-success'
+          =f.submit 'Invite', class: 'btn btn-success'
           '
           a.btn.btn-danger href="#{superadmin_client_users_path}" Cancel

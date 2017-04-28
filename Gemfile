@@ -40,6 +40,8 @@ gem 'aws-sdk'
 gem 'carrierwave'
 gem 'activemodel-serializers-xml'
 gem 'data-confirm-modal'
+
+gem 'devise_invitable', '~> 1.7.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

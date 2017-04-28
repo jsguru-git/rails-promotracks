@@ -2,7 +2,7 @@ class Admin::DashboardController < Admin::AdminApplicationController
 
 
   def index
-    @events=@current_client.events.order("created_at asc").limit(2)
+    @events=@current_client.events.order("created_at desc").limit(2)
     @total=0
     @total_attendance=0
     @total_sample=0
