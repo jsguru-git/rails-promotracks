@@ -45,12 +45,12 @@ class Admin::EventsController < Admin::AdminApplicationController
       @event.group.users.each do |user|
         token=SecureRandom.hex[0, 6]
         @event.user_events.create(user_id: user.id, token: token, category: :promo_group)
-        EventMailer.accept_event(user.email, email_data, token).deliver
+        # EventMailer.accept_event(user.email, email_data, token).deliver
       end
     end
     if @event.promo_rep?
       @event.users.each do |user|
-        EventMailer.accept_event(user.email, email_data).deliver
+        # EventMailer.accept_event(user.email, email_data).deliver
       end
     end
     redirect_to admin_events_path
@@ -94,7 +94,7 @@ class Admin::EventsController < Admin::AdminApplicationController
             @event.group.users.each do |user|
               token=SecureRandom.hex[0, 6]
               @event.user_events.create(user_id: user.id, token: token, category: :promo_group)
-              EventMailer.accept_event(user.email, email_data, token).deliver
+              # EventMailer.accept_event(user.email, email_data, token).deliver
             end
           end
         end
@@ -119,7 +119,7 @@ class Admin::EventsController < Admin::AdminApplicationController
           @event.group.users.each do |user|
             token=SecureRandom.hex[0, 6]
             @event.user_events.create(user_id: user.id, token: token, category: :promo_group)
-            EventMailer.accept_event(user.email, email_data, token).deliver
+            # EventMailer.accept_event(user.email, email_data, token).deliver
           end
         end
       end
