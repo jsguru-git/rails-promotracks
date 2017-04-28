@@ -20,7 +20,7 @@ class Admin::PromoRepsController < Admin::AdminApplicationController
       email_data[:body] = "find below the passcode for the promo rep"
       email_data[:subject]="New Promo Rep :#{pro_rep.id}"
       email_data[:user]=promo_ref_info(pro_rep)
-      # UserMailer.send_email(pro_rep.email, email_data).deliver
+      UserMailer.send_email(pro_rep.email, email_data).deliver
       redirect_to admin_promo_reps_path
     else
       flash[:error]=pro_rep.errors.full_messages.join(', ')
