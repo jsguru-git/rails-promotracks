@@ -4,7 +4,7 @@ $(document).on('turbolinks:load', function () {
 
 
     $('#start_time').datetimepicker({
-        useCurrent: false,
+        minDate: new Date()
     }).on("dp.change", function (e) {
         $('#end_time').data("DateTimePicker").minDate(e.date);
     });
