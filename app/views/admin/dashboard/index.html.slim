@@ -46,7 +46,7 @@ div
               td #{first&.notes}
               td #{first&.sample}
               td #{first&.attendance}
-              -event.user_events.where.not(:id => first.id).each do |uv|
+              -event.user_events.where.not(:id => first&.id).each do |uv|
                 tr
                   td #{uv.user.full_name}
                   td #{uv.total_expense}
