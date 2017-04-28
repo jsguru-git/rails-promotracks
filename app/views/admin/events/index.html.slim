@@ -8,11 +8,11 @@ div
       .col-sm-4.pull-right
         =form_tag admin_events_path, method: :get, class: 'search_form' do
           .input-group
-            span.input-group-addon
-              i.icmn-search
             =hidden_field_tag 'search_type'
             =hidden_field_tag 'promo_id'
             =text_field_tag "search", nil, placeholder: "Enter Reps or Groups", class: 'form-control search_rep'
+            span.input-group-addon#addon-color
+              =submit_tag "Search", id: 'search-event', class: 'btn btn-info'
       h3 Events List
     .panel-body
       table.table

@@ -64,6 +64,10 @@
   bottom: 120px;
 }
 
+#align1 {
+  bottom: 80px;
+}
+
 #rem {
   padding: 11%;
   width: 120%;
@@ -71,4 +75,16 @@
 
 #left {
   right: inherit;
+}
+
+#addon-color {
+  background-color: cornflowerblue;
+}
+
+#search-event {
+  padding: 1%;
+}
+
+.radio-button {
+  vertical-align: top;
 }

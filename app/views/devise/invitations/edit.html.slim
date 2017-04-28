@@ -1,0 +1,36 @@
+body.theme-default.single-page
+  section.page-content
+    .page-content-inner.single-page-login-alpha#login_screen
+      /! Login Alpha Page
+      .single-page-block-header
+        .row
+          .col-lg-4
+          /.logo
+          /  a href=("javascript: history.back();")
+          /    img alt=("Clean UI Admin Template") src="../assets/common/img/logo-inverse.png"
+          .col-lg-8
+            .single-page-block-header-menu
+              ul.list-unstyled.list-inline
+                li.active
+                  a href=("/users/sign_in")  Login
+      .single-page-block#align1
+        .single-page-block-inner
+          .single-page-block-form
+            h3.text-center
+              i.icmn-enter.margin-right-10
+              | Set Your Password
+            br
+            = form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :put} do |f|
+              = devise_error_messages!
+              = f.hidden_field :invitation_token
+              -if f.object.class.require_password_on_accepting
+              .form-group
+                = f.label :password
+                br
+                = f.password_field :password, class: 'form-control'
+              .form-group
+                = f.label :password_confirmation, 'Password Confirmation'
+                br
+                = f.password_field :password_confirmation, class: 'form-control'
+              .form-actions
+                input.button.btn.btn-primary.width-150 data-disable-with=("Set my password") name="commit" type="submit" value=("Set my password")
