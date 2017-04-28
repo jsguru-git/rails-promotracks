@@ -48,7 +48,7 @@ div
             .promo_groups style= "display:none"
               = f.label :promo_groups, 'Promo Groups'
               sup.text-danger *
-              =f.select :group_id, options_for_select(@current_client.groups.collect { |u| [u.name, u.id] }, selected_key = @event.group_id), {:include_blank => 'Nothing Selected'}, {:class => 'form-control pointer', :title => 'Select Group'}
+              =f.select :group_id, options_for_select(@current_client.groups.collect { |u| [u.name, u.id] }, selected_key = @event.group_id), {}, {:class => 'form-control pointer', :title => 'Select Group'}
               .help-block.with-errors
           .col-md-3
             .promo_groups style= "display:none"

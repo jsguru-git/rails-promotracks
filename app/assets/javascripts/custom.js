@@ -1,17 +1,55 @@
 $(document).on('turbolinks:load', function () {
 
-    $(".add_brands,.add_promo_reps").select2();
+    $(".add_brands,.add_promo_reps").select2({
+        allowClear: true,
+        closeOnSelect: false,
+        placeholder: "Nothing Selected"
+    });
 
-
-    $('#start_time').datetimepicker({
+    var start_date_props = {
+        format: 'MM/DD/YYYY hh:mm A',
         minDate: new Date()
-    }).on("dp.change", function (e) {
-        $('#end_time').data("DateTimePicker").minDate(e.date);
-    });
+    };
+    var start_date = "";
 
-    $('#end_time').datetimepicker({}).on("dp.change", function (e) {
-        $('#start_time').data("DateTimePicker").maxDate(e.date);
-    });
+    var end_date_props = {
+        format: 'MM/DD/YYYY hh:mm A'
+    };
+    end_date_props.useCurrent = false;
+    var end_date = "";
+
+    if (end_date != "") {
+
+        end_date_props.defaultDate = end_date;
+
+        start_date_props.maxDate = end_date;
+    }
+
+    if (start_date != "") {
+        start_date_props.defaultDate = start_date;
+        end_date_props.minDate = start_date;
+    }
+
+    $('#start_time')
+        .datetimepicker(start_date_props)
+        .on("dp.change", function (e) {
+            $('#end_time').data("DateTimePicker").minDate(e.date);
+        });
+    $('#end_time')
+        .datetimepicker(end_date_props)
+        .on("dp.change", function (e) {
+            $('#start_time').data("DateTimePicker").maxDate(e.date);
+        });
+
+    //$('#start_time').datetimepicker({
+    //    minDate: new Date()
+    //}).on("dp.change", function (e) {
+    //    $('#end_time').data("DateTimePicker").minDate(e.date);
+    //});
+    //
+    //$('#end_time').datetimepicker({}).on("dp.change", function (e) {
+    //    $('#start_time').data("DateTimePicker").maxDate(e.date);
+    //});
 
     if ($('#promo_rep_button').is(':checked')) {
         $("#event_promo_category").val('promo_rep');
