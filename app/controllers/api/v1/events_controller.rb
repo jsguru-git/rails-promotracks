@@ -2,7 +2,7 @@ class Api::V1::EventsController < Api::V1::ApiApplicationController
 
 
   def index
-    @events = current_user.events.includes(:user_events).where(:user_events => {:status => UserEvent::statuses[:accepted]})
+    @events = current_user.events.includes(:user_events).where(:user_events => {:status => UserEvent::statuses[:accepted], :check_out => nil})
   end
 
   def update
