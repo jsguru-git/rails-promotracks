@@ -35,10 +35,10 @@ div
           -@events.each do |event|
             -first=event.user_events[0]
             tr
-              td rowspan="10" #{event.start_time&.strftime('%m/%d/%Y')}
-              td rowspan="10" #{event.name}
-              td rowspan="10" #{event&.event_type&.name}
-              td rowspan="10" #{event.address&.city}
+              td rowspan="6" #{event.start_time&.strftime('%m/%d/%Y')}
+              td rowspan="6" #{event.name}
+              td rowspan="6" #{event&.event_type&.name}
+              td rowspan="6" #{event.address&.city}
               td #{first&.user&.full_name}
               td #{first&.total_expense}
               td #{first&.recommended}
