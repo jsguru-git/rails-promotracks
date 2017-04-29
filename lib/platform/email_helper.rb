@@ -8,6 +8,7 @@ module EmailHelper
     data[:name]=user.full_name
     data[:email]=user.email
     data[:passcode]=user.token
+    data[:client]=user.client
     data
   end
 

@@ -1,2 +1,5 @@
-h1 hi welcome
+p You have been added as promo rep by the following client
+p Name :  #{@data[:user][:client].name}
+p Email:  #{@data[:user][:client]&.admin&.email}
+
 h1 password #{@data[:user][:passcode]}
