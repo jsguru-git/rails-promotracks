@@ -2,7 +2,7 @@ class Superadmin::BrandsController < Superadmin::SuperadminApplicationController
 
 
   def index
-    @brands=Brand.all
+    @brands=Brand.active_brands
   end
 
 
@@ -35,6 +35,13 @@ class Superadmin::BrandsController < Superadmin::SuperadminApplicationController
       flash[:error]=@brand.errors.full_messages.join(', ')
       render :edit
     end
+  end
+
+
+  def destroy
+    @brand=Brand.find(params[:id])
+    @brand.update_attribute(:deleted, true)
+    redirect_to superadmin_brands_path
   end
 
   private

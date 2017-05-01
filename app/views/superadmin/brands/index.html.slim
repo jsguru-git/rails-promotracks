@@ -22,3 +22,6 @@
               td.text-center
                 = link_to edit_superadmin_brand_path(brand), class: 'btn-sm  btn-icon btn btn-rounded btn-warning' do
                   i.fa.fa-edit
+                '
+                = link_to superadmin_brand_path(brand), data: {confirm: "Are you sure to cancel this brand ?"}, title: 'delete', :class => 'btn btn-danger', :method => 'delete' do
+                  i.fa.fa-trash
