@@ -8,9 +8,14 @@ nav.top-menu
       .dropdown.dropdown-avatar
         a.dropdown-toggle aria-expanded="false" data-toggle="dropdown" href=("javascript: void(0);")
           span.avatar href="javascript:void(0);"
-            = image_tag "default-user.jpg", alt: "Super Admin"
+            -image=current_user.image.blank? ? "default-user.jpg" : current_user.image.url
+            = image_tag image, alt: "Image"
         ul.dropdown-menu.dropdown-menu-right aria-labelledby="" role="menu"
           .dropdown-item
+            -if Client.where(:admin_id => current_user.id).exists?
+              li
+                =link_to "Edit profile", edit_admin_client_path(current_user.client_id)
+
             li
               -if @current_slave_user
                 = link_to admin_login_as_master_path, data: {confirm: "Are you sure?"}, title: 'Back to Super Admin'

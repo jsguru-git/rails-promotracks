@@ -1,5 +1,5 @@
 .col-md-offset-3.col-md-6
-  = form_for [:superadmin, @client] do |f|
+  = form_for [:superadmin, @client], :html => {:multipart => true} do |f|
     .panel.panel-with-borders
       .panel-heading
         h3.panel-title #{@client.new_record? ? 'New ' : 'Edit '} Client
@@ -32,10 +32,15 @@
               sup.text-danger *
               = user.text_field :last_name, class: 'form-control ', required: true
           .form-group.row
-            .col-md-12
+            .col-md-6
               = user.label :email
               sup.text-danger *
               = user.email_field :email, class: 'form-control ', required: true
+            .col-md-6
+              = user.label :image
+              sup.text-danger *
+              = user.file_field :image, class: 'file'
+              =link_to @admin.image.url&.split('/').last, @admin.image&.url, :target => '_new', :download => '' unless @admin.image.blank?
           .form-group.row
             -required=@client.new_record? ? true : false
             .col-md-6

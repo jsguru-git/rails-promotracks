@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   has_many :brands
   belongs_to :client
   accepts_nested_attributes_for :client, reject_if: :all_blank, allow_destroy: true
+  mount_uploader :image, ImageUploader
 
 
   def full_name
