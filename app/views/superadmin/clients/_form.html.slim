@@ -39,7 +39,10 @@
             .col-md-6
               = user.label :email
               sup.text-danger *
-              = user.email_field :email, class: 'form-control ', required: true
+              -if @client.new_record?
+                = user.email_field :email, class: 'form-control ', required: true
+              -else
+                = user.email_field :email, class: 'form-control ', disabled: true
             .col-md-6
               = user.label :image
               sup.text-danger *
