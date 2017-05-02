@@ -52,21 +52,29 @@ $(document).on('turbolinks:load', function () {
     //});
 
     if ($('#promo_rep_button').is(':checked')) {
+        $('#event_user_ids').prop('required', true);
+        $('#event_group_id').prop('required', false);
         $("#event_promo_category").val('promo_rep');
         $('#promo_reps').show();
         $('.promo_groups').hide();
     } else if ($('#promo_group_button').is(':checked')) {
+        $('#event_user_ids').prop('required', false);
+        $('#event_group_id').prop('required', true);
         $("#event_promo_category").val('promo_group');
         $('#promo_reps').hide();
         $('.promo_groups').show();
     }
     $('#promo_rep_button').on("click", function () {
+        $('#event_user_ids').prop('required', true);
+        $('#event_group_id').prop('required', false);
         $("#event_promo_category").val('promo_rep');
         $('#promo_reps').show();
         $('.promo_groups').hide();
     });
 
     $('#promo_group_button').on("click", function () {
+        $('#event_user_ids').prop('required', false);
+        $('#event_group_id').prop('required', true);
         $("#event_promo_category").val('promo_group');
         $('#promo_reps').hide();
         $('.promo_groups').show();
