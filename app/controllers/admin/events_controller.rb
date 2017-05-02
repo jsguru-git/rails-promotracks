@@ -10,7 +10,7 @@ class Admin::EventsController < Admin::AdminApplicationController
         @events=@current_client.events.joins(:users).where("users.id IN (?)", params[:promo_id])
       end
     else
-      @events=@current_client.events
+      @events=@current_client.events.page(params[:page]).per(10)
     end
   end
 

@@ -24,3 +24,6 @@
                 td.text-center
                   = link_to edit_admin_group_path(group), class: 'btn-sm  btn-icon btn btn-rounded btn-warning' do
                     i.fa.fa-edit
+        .pull-right
+          = paginate @groups
+        .padding-35

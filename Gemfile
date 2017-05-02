@@ -65,7 +65,7 @@ group :development do
   gem 'spring'
 end
 
-
+gem 'kaminari'
 gem 'capistrano-bundler'
 
 group :development do

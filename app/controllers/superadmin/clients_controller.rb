@@ -2,7 +2,7 @@ class Superadmin::ClientsController < Superadmin::SuperadminApplicationControlle
 
 
   def index
-    @clients=Client.all
+    @clients=Client.all.page(params[:page]).per(10)
   end
 
   def new

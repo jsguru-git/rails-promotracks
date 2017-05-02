@@ -3,7 +3,12 @@ class Admin::PromoRepsController < Admin::AdminApplicationController
   include EmailHelper
 
   def index
-    @promo_reps=@current_client.users&.where(role: 'promo_rep')
+    @promo_reps=@current_client.users&.where(role: 'promo_rep').collect { |u| u }
+    unless @promo_reps.kind_of?(Array)
+      @promo_reps = @promo_reps.page(params[:page]).per(10)
+    else
+      @promo_reps = Kaminari.paginate_array(@promo_reps.uniq).page(params[:page]).per(4)
+    end
   end
 
   def new

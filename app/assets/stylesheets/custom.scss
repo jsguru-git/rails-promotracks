@@ -68,11 +68,6 @@
   bottom: 80px;
 }
 
-#rem {
-  padding: 11%;
-  width: 120%;
-}
-
 #left {
   right: inherit;
 }
@@ -81,10 +76,60 @@
   background-color: cornflowerblue;
 }
 
+#rem {
+  padding: 12%;
+  width: 120%;
+}
+
 #search-event {
   padding: 1%;
 }
 
 .radio-button {
   vertical-align: top;
+}
+
+.pagination a, .pagination span.current, .pagination span.gap {
+  float: left;
+  padding: 0 14px;
+  line-height: 38px;
+  text-decoration: none;
+  background-color: white;
+  border: 1px solid #DDD;
+  border-left-width: 0;
+}
+
+.pagination {
+  border-left: 1px solid #ddd;
+
+  .first {
+    padding: 0;
+    float: none;
+    border: none;
+  }
+
+  .prev {
+    padding: 0;
+    float: none;
+    border: none;
+  }
+
+  .page {
+    padding: 0;
+    float: none;
+    border: none;
+  }
+
+  .next {
+    padding: 0;
+    float: none;
+    border: none;
+  }
+
+  .last {
+    padding: 0;
+    float: none;
+    border: none;
+  }
+
 }

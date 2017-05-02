@@ -24,3 +24,6 @@
               td.text-center
                 = link_to edit_admin_promo_rep_path(user), class: 'btn-sm  btn-icon btn btn-rounded btn-warning' do
                   i.fa.fa-edit
+      .pull-right
+        = paginate @promo_reps
+      .padding-35

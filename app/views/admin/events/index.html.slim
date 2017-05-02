@@ -36,10 +36,13 @@ div
                 td #{event.address&.city}
                 td #{event.start_time&.strftime('%m/%d/%Y %I:%M %p')}
                 td #{event.end_time&.strftime('%m/%d/%Y %I:%M %p')}
-                td #{event.brand&.name}
+                td #{event.brand.name}
                 td.text-center
                   = link_to edit_admin_event_path(event), class: 'btn-sm  btn-icon btn btn-rounded btn-warning' do
                     i.fa.fa-edit
           -else
             td
               | No events
+      .pull-right
+        = paginate @events
+      .padding-35

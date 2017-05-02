@@ -2,7 +2,7 @@ class Superadmin::EventTypesController < Superadmin::SuperadminApplicationContro
 
 
   def index
-    @event_types=EventType.all
+    @event_types=EventType.all.page(params[:page]).per(10)
   end
 
 

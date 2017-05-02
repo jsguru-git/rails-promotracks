@@ -2,7 +2,7 @@ class Admin::GroupsController < Admin::AdminApplicationController
 
 
   def index
-    @groups=@current_client.groups
+    @groups=@current_client.groups.page(params[:page]).per(10)
   end
 
   def new
