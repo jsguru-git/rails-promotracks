@@ -31,10 +31,10 @@ class Admin::ClientsController < Admin::AdminApplicationController
       client_call_params = client_update_params
     end
     if @client.update_attributes(client_call_params)
-      redirect_to admin_dashboard_path
+      redirect_to admin_dashboard_index_path
     else
       flash[:error]=@client.errors.full_messages.join(', ')
-      redirect_to :back
+      redirect_to edit_admin_client_path(@client)
     end
   end
 
