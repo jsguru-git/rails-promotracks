@@ -21,11 +21,11 @@ set :pty, false
 
 after "deploy", "deploy:restart"
 
-# set :slackistrano, {
-#     klass: Slackistrano::SlackistranoMessaging,
-#     channel: %w(#resort-pass),
-#     webhook: 'https://hooks.slack.com/services/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'
-# }
+set :slackistrano, {
+    klass: Slackistrano::SlackistranoMessaging,
+    channel: %w(#promo-tracks),
+    webhook: 'https://hooks.slack.com/services/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'
+}
 
 namespace :deploy do
   after 'deploy:publishing', 'thin:restart'
