@@ -7,7 +7,7 @@ class Admin::PromoRepsController < Admin::AdminApplicationController
     unless @promo_reps.kind_of?(Array)
       @promo_reps = @promo_reps.page(params[:page]).per(10)
     else
-      @promo_reps = Kaminari.paginate_array(@promo_reps.uniq).page(params[:page]).per(4)
+      @promo_reps = Kaminari.paginate_array(@promo_reps.uniq).page(params[:page]).per(10)
     end
   end
 
