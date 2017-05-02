@@ -2,7 +2,7 @@ class Api::V1::EventsController < Api::V1::ApiApplicationController
 
 
   def index
-    @events = current_user.events.includes(:user_events).where(:user_events => {:status => UserEvent::statuses[:accepted], :check_out => nil})
+    @events = current_user.events.includes(:user_events).where(:user_events => {:status => UserEvent::statuses[:accepted], :check_out => nil}).where('(end_time ISNULL AND start_time >= ?) or (end_time NOTNULL AND end_time >= ?)', Time.now, Time.now)
   end
 
   def update
@@ -14,6 +14,10 @@ class Api::V1::EventsController < Api::V1::ApiApplicationController
     end
 
     unless user_event_params[:check_in].nil?
+      if user_event_params[:check_in] < @event.start_time
+        render 'global/error', :locals => {:code => 701, :message => 'cant check in before the event starts'}
+        return
+      end
       if current_user.events.includes(:user_events).where(:user_events => {:status => UserEvent::statuses[:accepted], :check_out => nil}).where.not(:user_events => {:check_in => nil}).size>0
         render 'global/error', :locals => {:code => 701, :message => 'can check in only one event at a time'}
         return
@@ -38,7 +42,7 @@ class Api::V1::EventsController < Api::V1::ApiApplicationController
   end
 
   def active
-    @events = current_user.events.includes(:user_events).where(:user_events => {:status => UserEvent::statuses[:accepted], :check_out => nil}).where.not(:user_events => {:check_in => nil})
+    @events = current_user.events.includes(:user_events).where(:user_events => {:status => UserEvent::statuses[:accepted], :check_out => nil}).where.not(:user_events => {:check_in => nil}).where('(end_time ISNULL AND start_time >= ?) or (end_time NOTNULL AND end_time >= ?)', Time.now, Time.now)
     render :index
   end
 
