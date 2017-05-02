@@ -5,4 +5,9 @@ class UserMailer < ApplicationMailer
     mail(:to => to_email, :subject => @data[:subject])
   end
 
+  def send_code(to_email, data)
+    @data = data
+    mail(:to => to_email, :subject => @data[:subject])
+  end
+
 end

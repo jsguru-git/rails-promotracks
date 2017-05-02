@@ -48,6 +48,20 @@ class Admin::PromoRepsController < Admin::AdminApplicationController
     end
   end
 
+
+  def resend
+    @promo_rep=@current_client.users.find(params[:promo_rep_id])
+    @promo_rep.update_attribute(:token, (10000..99999).to_a.sample)
+    email_data={}
+    email_data[:body] = "find below the new passcode for the promo rep"
+    email_data[:subject]="New  passcode for Promo Rep :#{@promo_rep.id}"
+    email_data[:user]=promo_ref_info(@promo_rep)
+    UserMailer.send_code(@promo_rep.email, email_data).deliver
+    flash[:notice]="Password sent!"
+    redirect_to admin_promo_reps_path
+  end
+
+
   private
   def user_params
     params.require(:user).permit(:first_name, :last_name, :email, :role)

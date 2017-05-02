@@ -24,6 +24,9 @@
               td.text-center
                 = link_to edit_admin_promo_rep_path(user), class: 'btn-sm  btn-icon btn btn-rounded btn-warning' do
                   i.fa.fa-edit
+                '
+                = link_to admin_promo_rep_resend_path(user), class: 'btn-sm  btn-icon btn btn-rounded btn-primary', :data => {:toggle => 'tooltip', :placement => 'top'}, :title => "resend invitation" do
+                  i.icmn-envelop5
       .pull-right
         = paginate @promo_reps
       .padding-35
