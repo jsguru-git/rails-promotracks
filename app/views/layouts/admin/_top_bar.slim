@@ -11,7 +11,7 @@ nav.top-menu
             -image=current_user.image.blank? ? "default-user.jpg" : current_user.image.url
             = image_tag image, alt: "Image"
           .dropdown style="bottom:5px;"
-            p #{} #{current_user.full_name}
+            p #{current_user.full_name}
 
 
         ul.dropdown-menu.dropdown-menu-right aria-labelledby="" role="menu"
@@ -22,8 +22,8 @@ nav.top-menu
                   i.dropdown-icon.fa.fa-edit
                   |Edit Profile
             .dropdown-divider
-            li
               -if @current_slave_user
+                li
                 = link_to admin_login_as_master_path, data: {confirm: "Are you sure?"}, title: 'Back to Super Admin'
                   i.dropdown-icon.icmn-enter
                   |Back to SuperAdmin
