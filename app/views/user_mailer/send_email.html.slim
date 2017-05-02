@@ -34,8 +34,10 @@ html
                   div
                     p Name :  #{@data[:user][:client].name}
                     p Email:  #{@data[:user][:client]&.admin&.email}
-                    div style=("text-align: center")
-                    h1 password : #{@data[:user][:passcode]}
+                    p
+                      | Use the following passcode to login in app :
+                      strong
+                        | #{@data[:user][:passcode]}
                   p
                     | Please use below link to download app and login.
                   div
