@@ -5,12 +5,12 @@ class Admin::EventsController < Admin::AdminApplicationController
   def index
     if params[:search]
       if params[:search_type]=='promo_group'
-        @events=@current_client.events.where(:group_id => params[:promo_id])
+        @events=@current_client.events.where(:group_id => params[:promo_id]).order('updated_at desc')
       elsif params[:search_type]=='promo_rep'
-        @events=@current_client.events.joins(:users).where("users.id IN (?)", params[:promo_id])
+        @events=@current_client.events.joins(:users).where("users.id IN (?)", params[:promo_id]).order('updated_at desc')
       end
     else
-      @events=@current_client.events.page(params[:page]).per(10)
+      @events=@current_client.events.page(params[:page]).per(10).order('updated_at desc')
     end
   end
 
@@ -23,8 +23,8 @@ class Admin::EventsController < Admin::AdminApplicationController
   def create
     @event=@current_client.events.new(event_params)
     @event.creator= current_user
-    @event.start_time= DateTime.strptime(event_params[:start_time], '%m/%d/%Y %I:%M %p')
-    @event.end_time= DateTime.strptime(event_params[:end_time], '%m/%d/%Y %I:%M %p')
+    @event.start_time= Time.zone.strptime(event_params[:start_time], '%m/%d/%Y %I:%M %p')
+    @event.end_time= Time.zone.strptime(event_params[:end_time], '%m/%d/%Y %I:%M %p')
     if event_params[:promo_category]=='promo_rep'
       @event.promo_category= :promo_rep
       unless params[:event][:user_ids].delete_if { |x| x.empty? }.nil?
