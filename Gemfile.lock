@@ -75,6 +75,10 @@ GEM
       sass (>= 3.3.4)
     bootstrap3-datetimepicker-rails (4.17.47)
       momentjs-rails (>= 2.8.1)
+    browser-timezone-rails (1.0.1)
+      js_cookie_rails
+      jstz-rails3-plus
+      rails (>= 3.1)
     builder (3.2.3)
     byebug (9.0.6)
     capistrano (3.8.1)
@@ -291,7 +295,11 @@ GEM
       turbolinks
     jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
+    js_cookie_rails (2.1.4)
+      railties (>= 3.1)
     json (1.8.6)
+    jstz-rails3-plus (1.0.5)
+      railties (>= 3.1)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.4)
@@ -436,6 +444,7 @@ DEPENDENCIES
   aws-ses (~> 0.6.0)
   bootstrap-sass (~> 3.3.6)
   bootstrap3-datetimepicker-rails (~> 4.17.47)
+  browser-timezone-rails
   byebug
   capistrano (~> 3.0)
   capistrano-bundler

@@ -17,6 +17,7 @@ gem 'figaro'
 
 gem 'thin'
 gem 'settingslogic'
+gem 'browser-timezone-rails'
 
 gem "select2-rails"
 # See https://github.com/rails/execjs#readme for more supported runtimes
