@@ -16,7 +16,7 @@ module EmailHelper
     data={}
     data[:id]=event.id
     data[:category]=event.promo_category
-    data[:name]=event.name
+    data[:name]=event&.name
     data[:start_time]=event.start_time
     data[:end_time]=event.end_time
     data[:brand_name]=event.brand.name
