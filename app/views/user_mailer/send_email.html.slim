@@ -1,5 +1,55 @@
-p You have been added as promo rep by the following client
-p Name :  #{@data[:user][:client].name}
-p Email:  #{@data[:user][:client]&.admin&.email}
-
-h1 password #{@data[:user][:passcode]}
+doctype html
+html
+  head
+    title
+    link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" /
+    css:
+      | body {
+      | font-family : 'Lato', sans-serif;
+      |
+      }
+  body
+    div style=("background: #eceff4; padding: 50px 20px; color: #514d6a;") width="100%"
+      div style=("max-width: 700px; margin: 0px auto; font-size: 14px")
+        table border="0" cellpadding="0" cellspacing="0" style=("width: 100%; margin-bottom: 20px")
+          tbody
+            tr
+              td style=("vertical-align: top;")
+                span style=("color:#00B9D6;font-size: 1rem")  Promo
+                span style=("color:#6F6E6F;font-size: 1rem")  Tracks
+              td style=("text-align: right; vertical-align: middle;")
+                span style=("color: #a09bb9;")
+        div style=("padding: 40px 40px 20px 40px; background: #fff;")
+          table border="0" cellpadding="0" cellspacing="0" style=("width: 100%;")
+            tbody
+              tr
+                td
+                  h5 style=("margin-bottom: 20px; color: #24222f; font-size: 1.25rem ; font-weight: 600")  Hello,
+                  p
+                    | You have been added as promo rep for
+                    strong
+                      span style="color:#01a8fe;"  Promo
+                      span style="color:#acb7bf;"  Tracks
+                    |  by the following client
+                  div
+                    p Name :  #{@data[:user][:client].name}
+                    p Email:  #{@data[:user][:client]&.admin&.email}
+                    div style=("text-align: center")
+                    h1 password : #{@data[:user][:passcode]}
+                  p
+                    | Please use below link to download app and login.
+                  div
+                    a href="#" style="padding-right:15px;" target="_blank"
+                      img border="0" src=image_url("app-store.png") /
+                    a href="#" style="padding-right:15px;" target="_blank"
+                      img border="0" src=image_url("google-play.png") /
+                  p
+                    | Regards,
+                    br
+                    span style="color:#01a8fe;"  Promo
+                    span style="color:#acb7bf;"  Tracks
+        div style=("text-align: center; font-size: 12px; color: #a09bb9; margin-top: 20px")
+          p
+            | &copy; 2017 PromoTracks,
+            br
+            | All rights reserved.
