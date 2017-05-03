@@ -45,7 +45,6 @@
                 = user.email_field :email, class: 'form-control ', disabled: true
             .col-md-6
               = user.label :image
-              sup.text-danger *
               = user.file_field :image, class: 'file'
               =link_to @admin.image.url&.split('/').last, @admin.image&.url, :target => '_new', :download => '' unless @admin.image.blank?
           .form-group.row
