@@ -139,3 +139,17 @@
   }
 
 }
+
+.field {
+  font-family: arial, sans-serif;
+  border-color: #d9d9d9;
+  border-top: solid 1px #c0c0c0;
+}
+
+input.field {
+  width: 100%;
+}
+
+.fieldwrapper {
+  white-space: nowrap;
+}
