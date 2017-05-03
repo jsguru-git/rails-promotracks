@@ -16,3 +16,7 @@ nav.left-menu left-menu=""
         a.left-menu-link href=superadmin_event_types_path
           i.left-menu-link-icon.fa.fa-sitemap
           | Event Types
+      li.left-menu-list
+        a.left-menu-link href=destroy_user_session_path data= {:confirm => "Are you sure?", :method => :delete} title= 'Logout'
+          i.left-menu-link-icon.icmn-exit
+          | Logout

@@ -56,7 +56,7 @@
   margin: 0;
   vertical-align: bottom;
   position: relative;
-  top: -3px;
+  top: -1px;
   *overflow: hidden;
 }
 
@@ -68,12 +68,12 @@
   bottom: 80px;
 }
 
-#left {
-  right: inherit;
+#user-name-align {
+  top: -10px;
 }
 
-#addon-color {
-  background-color: cornflowerblue;
+#left {
+  right: inherit;
 }
 
 #rem {
@@ -81,8 +81,14 @@
   width: 120%;
 }
 
+#addon-color {
+  background-color: #ffffff;
+  padding: 0;
+}
+
 #search-event {
-  padding: 1%;
+  padding: 12%;
+  width: 120%;
 }
 
 .radio-button {

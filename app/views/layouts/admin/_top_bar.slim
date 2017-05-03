@@ -10,10 +10,8 @@ nav.top-menu
           span.avatar href="javascript:void(0);"
             -image=current_user.image.blank? ? "default-user.jpg" : current_user.image.url
             = image_tag image, alt: "Image"
-          .dropdown style="bottom:5px;"
+          .dropdown#user-name-align style="bottom:5px;"
             p #{current_user.full_name}
-
-
         ul.dropdown-menu.dropdown-menu-right aria-labelledby="" role="menu"
           .dropdown-item
             -if Client.where(:admin_id => current_user.id).exists?

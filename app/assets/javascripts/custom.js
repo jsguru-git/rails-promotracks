@@ -168,4 +168,6 @@ $(document).on('turbolinks:load', function () {
     });
 
     $('#us-phone-mask-input').mask('(000) 000-0000', {placeholder: "(___) ___-____"});
+
+    $('[data-toggle="popover"]').popover();
 });

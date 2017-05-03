@@ -43,9 +43,17 @@ div
                 tr rowspan="0"
                   td #{uv.user.full_name}
                   td #{uv.total_expense}
-                  td #{uv.recommended}
+                  td
+                    -if uv.recommended
+                      p Yes
+                    -else
+                      p No
                   td #{uv.follow_up}
-                  td #{uv.notes}
+                  td
+                    -if uv.notes.blank?
+                      p Not available
+                    -else
+                      a href="javascript:void" title="Notes" data-toggle="popover" data-placement="bottom" data-content="#{uv.notes}" View
                   td #{uv.sample}
                   td #{uv.attendance}
                 tr/
