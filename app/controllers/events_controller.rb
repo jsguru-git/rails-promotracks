@@ -9,9 +9,9 @@ class EventsController < ApplicationController
       if @event.max_users > @event.user_events.where(:status => UserEvent::statuses[:accepted]).count
         user_event.status = :accepted
         user_event.save
-        @msg= "Event accepted sucessfully"
+        flash[:notice]= "Event accepted sucessfully"
       else
-        @msg= "Event reached max no of users"
+        flash[:notice]= "Event reached max no of users"
       end
     end
   end
