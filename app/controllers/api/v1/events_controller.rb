@@ -47,12 +47,10 @@ class Api::V1::EventsController < Api::V1::ApiApplicationController
   end
 
   private
-  def event_params
-    params.require(:event).permit(:attendance, :sample)
-  end
+
 
   def user_event_params
-    params.require(:user_event).permit(:notes, :total_expense, :check_in, :check_out, :images, :follow_up, :recommended)
+    params.require(:user_event).permit(:notes, :total_expense, :check_in, :check_out, :images, :follow_up, :recommended, :attendance, :sample)
   end
 
   def add_images(images, event)
