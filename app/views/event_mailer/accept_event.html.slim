@@ -34,7 +34,7 @@ html
                     p Location : #{@data[:event][:location]}
                   div style=("text-align: center")
                     -if @data[:event][:category]=='promo_group'
-                      p= link_to 'Accept', event_path(@data[:event][:id], token: @data[:token]), :method => :get
+                      p= link_to 'Accept', event_url(@data[:event][:id], token: @data[:token]), :method => :get
                   p
                     | Regards,
                     br
