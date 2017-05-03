@@ -26,5 +26,6 @@
                 = link_to superadmin_brand_path(brand), data: {confirm: "Are you sure to cancel this brand ?"}, title: 'Delete', :method => 'delete' do
                   i.fa.fa-trash
       .pull-right
-        = paginate @brands
+        -if @brands.count>0
+          = paginate @brands
       .padding-35

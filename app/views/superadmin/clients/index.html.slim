@@ -30,5 +30,6 @@
                 = link_to superadmin_client_users_path(client), class: 'btn-sm  btn-icon btn btn-rounded btn-primary', :data => {:toggle => 'tooltip', :placement => 'top'}, :title => "admins" do
                   i.icmn-user3
       .pull-right
-        = paginate @clients
+        -if @clients.count>0
+          = paginate @clients
       .padding-35

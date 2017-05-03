@@ -28,5 +28,6 @@
                 = link_to admin_promo_rep_resend_path(user), class: 'btn-sm  btn-icon btn btn-rounded btn-primary', :data => {:toggle => 'tooltip', :placement => 'top'}, :title => "resend invitation" do
                   i.icmn-envelop5
       .pull-right
-        = paginate @promo_reps
+        -if @promo_reps.count>0
+          = paginate @promo_reps
       .padding-35
