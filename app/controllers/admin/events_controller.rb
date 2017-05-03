@@ -29,7 +29,7 @@ class Admin::EventsController < Admin::AdminApplicationController
       @event.promo_category= :promo_rep
       unless params[:event][:user_ids].delete_if { |x| x.empty? }.nil?
         params[:event][:user_ids].delete_if { |x| x.empty? }.each do |user_id|
-          @event.user_events.new(user_id: user_id, token: SecureRandom.hex[0, 6], status: :accepted)
+          @event.user_events.new(user_id: user_id, token: SecureRandom.hex[0, 6])
         end
       end
     elsif event_params[:promo_category]=='promo_group'
@@ -50,8 +50,9 @@ class Admin::EventsController < Admin::AdminApplicationController
     end
     if @event.promo_rep?
       @event.users.each do |user|
+        token=@event.user_events.where(:user_id => user.id).first.token
         email_data[:event]=get_event(@event, user)
-        EventMailer.accept_event(user.email, email_data).deliver
+        EventMailer.accept_event(user.email, email_data, token).deliver
       end
     end
     redirect_to admin_events_path
@@ -78,7 +79,7 @@ class Admin::EventsController < Admin::AdminApplicationController
           create_users=(params[:event][:user_ids].map(&:to_i))-delete_users
           create_users.each do |user_id|
             if @event.user_ids.exclude? user_id
-              @event.user_events.create(user_id: user_id, token: SecureRandom.hex[0, 6], status: :accepted)
+              @event.user_events.create(user_id: user_id, token: SecureRandom.hex[0, 6])
             end
           end
         end
@@ -105,7 +106,7 @@ class Admin::EventsController < Admin::AdminApplicationController
         @event.update_attribute(:promo_category, :promo_rep)
         unless params[:event][:user_ids].delete_if { |x| x.empty? }.nil?
           params[:event][:user_ids].delete_if { |x| x.empty? }.each do |user_id|
-            @event.user_events.create(user_id: user_id, token: SecureRandom.hex[0, 6], status: :accepted)
+            @event.user_events.create(user_id: user_id, token: SecureRandom.hex[0, 6])
           end
         end
       elsif event_params[:promo_category]=='promo_group' and @event.promo_category_was=='promo_rep'

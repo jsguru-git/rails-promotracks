@@ -2,9 +2,9 @@ json.success :true
 json.events @events do |event|
   json.partial! 'api/v1/events/event', event: event
   if event.promo_rep?
-    user_event=event.user_events.where(user_id: current_user.id, category: 0).first
+    user_event=event.user_events.where(user_id: current_user.id, category: 0, status: UserEvent::statuses[:accepted]).first
   elsif event.promo_group?
-    user_event=event.user_events.where(user_id: current_user.id, category: 1).first
+    user_event=event.user_events.where(user_id: current_user.id, category: 1, status: UserEvent::statuses[:accepted]).first
   end
   json.user_event do
     unless user_event.nil?

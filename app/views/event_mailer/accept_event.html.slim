@@ -33,8 +33,9 @@ html
                     p Brand : #{@data[:event][:brand_name]}
                     p Location : #{@data[:event][:location]}
                   div style=("text-align: center")
-                    -if @data[:event][:category]=='promo_group'
-                      =link_to 'Accept', event_url(@data[:event][:id], token: @data[:token])
+                    =link_to 'Accept', event_url(@data[:event][:id], token: @data[:token], status: "accept")
+                    '
+                    =link_to 'Decline', event_url(@data[:event][:id], token: @data[:token], status: "decline")
                   p
                     | Regards,
                     br

@@ -33,13 +33,12 @@ div
 
         tbody
           -@events.each do |event|
-            -first=event.user_events[0]
             tr
               td rowspan="#{event.user_events.count+event.user_events.count}" #{event.start_time&.strftime('%m/%d/%Y')}
               td rowspan="#{event.user_events.count+event.user_events.count}" #{event.name}
               td rowspan="#{event.user_events.count+event.user_events.count}" #{event&.event_type&.name}
               td rowspan="#{event.user_events.count+event.user_events.count}" #{event.address&.city}
-              -event.user_events.each do |uv|
+              -event.user_events.where(:status => UserEvent::statuses[:accepted]).each do |uv|
                 tr rowspan="0"
                   td #{uv.user.full_name}
                   td #{uv.total_expense}
