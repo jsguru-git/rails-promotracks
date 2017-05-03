@@ -18,7 +18,11 @@ class Api::V1::EventsController < Api::V1::ApiApplicationController
         render 'global/error', :locals => {:code => 701, :message => 'cant check in before the event starts'}
         return
       end
+      user_event=current_user.events.includes(:user_events).where(:user_events => {:status => UserEvent::statuses[:accepted], :user_id => current_user.id}).first
+      Rails.logger.info "checked_out value : #{user_event.check_out}"
+      Rails.logger.info "checked_out value : #{user_event.check_out.nil?}"
       if current_user.events.includes(:user_events).where(:user_events => {:user_id => current_user.id}).where(:user_events => {:status => UserEvent::statuses[:accepted], :check_out => nil}).where.not(:user_events => {:check_in => nil}).size>0
+        Rails.logger.info "checked_out nil"
         render 'global/error', :locals => {:code => 701, :message => 'can check in only one event at a time'}
         return
       end
