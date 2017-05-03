@@ -50,6 +50,7 @@ class Admin::EventsController < Admin::AdminApplicationController
     end
     if @event.promo_rep?
       @event.users.each do |user|
+        email_data[:event]=get_event(@event, user)
         EventMailer.accept_event(user.email, email_data).deliver
       end
     end
