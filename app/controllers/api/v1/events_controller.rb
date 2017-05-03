@@ -14,7 +14,7 @@ class Api::V1::EventsController < Api::V1::ApiApplicationController
     end
 
     unless user_event_params[:check_in].nil?
-      if user_event_params[:check_in] < @event.start_time
+      if user_event_params[:check_in] < (@event.start_time-1.hour)
         render 'global/error', :locals => {:code => 701, :message => 'cant check in before the event starts'}
         return
       end
