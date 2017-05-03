@@ -14,12 +14,12 @@ div
           .col-md-6
             = f.label :type, 'Event Type'
             sup.text-danger *
-            =f.select :event_type_id, options_for_select(EventType.all.collect { |u| [u.name, u.id] }, selected_key = @event.event_type_id), {}, {:class => 'form-control pointer'}
+            =f.select :event_type_id, options_for_select(EventType.all.collect { |u| [u.name, u.id] }, selected_key = @event.event_type_id), {:include_blank => 'Nothing Selected'}, {:class => 'form-control pointer', required: true}
             .help-block.with-errors
           .col-md-6
             = f.label :brand, 'Brand Name'
             sup.text-danger *
-            =f.select :brand_id, options_for_select(@current_client.brands.active_brands.collect { |u| [u.name, u.id] }, selected_key = @event.brand_id), {}, {:class => 'form-control pointer'}
+            =f.select :brand_id, options_for_select(@current_client.brands.active_brands.collect { |u| [u.name, u.id] }, selected_key = @event.brand_id), {:include_blank => 'Nothing Selected'}, {:class => 'form-control pointer', required: true}
             .help-block.with-errors
         .form-group.row
           -if @event.promo_rep?
