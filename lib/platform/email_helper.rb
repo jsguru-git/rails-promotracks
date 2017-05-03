@@ -12,8 +12,9 @@ module EmailHelper
     data
   end
 
-  def get_event(event)
+  def get_event(event, user)
     data={}
+    data[:user]=user.first_name
     data[:id]=event.id
     data[:category]=event.promo_category
     data[:name]=event&.name

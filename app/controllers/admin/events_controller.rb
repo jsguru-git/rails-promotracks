@@ -40,9 +40,9 @@ class Admin::EventsController < Admin::AdminApplicationController
     email_data={}
     email_data[:body] = "Please find below the event details"
     email_data[:subject]="#{@event.name} :#{@event.id}"
-    email_data[:event]=get_event(@event)
     unless @event.group_id.nil?
       @event.group.users.each do |user|
+        email_data[:event]=get_event(@event, user)
         token=SecureRandom.hex[0, 6]
         @event.user_events.create(user_id: user.id, token: token, category: :promo_group)
         EventMailer.accept_event(user.email, email_data, token).deliver
@@ -90,8 +90,8 @@ class Admin::EventsController < Admin::AdminApplicationController
             email_data={}
             email_data[:body] = "Please find below the event details"
             email_data[:subject]="#{@event.name} :#{@event.id}"
-            email_data[:event]=get_event(@event)
             @event.group.users.each do |user|
+              email_data[:event]=get_event(@event, user)
               token=SecureRandom.hex[0, 6]
               @event.user_events.create(user_id: user.id, token: token, category: :promo_group)
               EventMailer.accept_event(user.email, email_data, token).deliver
@@ -115,8 +115,8 @@ class Admin::EventsController < Admin::AdminApplicationController
           email_data={}
           email_data[:body] = "Please find below the event details"
           email_data[:subject]="#{@event.name} :#{@event.id}"
-          email_data[:event]=get_event(@event)
           @event.group.users.each do |user|
+            email_data[:event]=get_event(@event, user)
             token=SecureRandom.hex[0, 6]
             @event.user_events.create(user_id: user.id, token: token, category: :promo_group)
             EventMailer.accept_event(user.email, email_data, token).deliver
