@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
 
-  skip_before_filter :authenticate_user_from_token!, :only => [:show]
+  # skip_before_filter :authenticate_user_from_token!, :only => [:show]
 
   def show
     @event=Event.find(params[:id])
