@@ -21,7 +21,7 @@ div
             th ID
             th Event Name
             th Event Type
-            Th Venue
+            th Venue
             th Start Time
             th End Time
             th Brand
@@ -44,5 +44,6 @@ div
             td
               | No events
       .pull-right
-        = paginate @events
+        -if @events.count>0
+          = paginate @events
       .padding-35

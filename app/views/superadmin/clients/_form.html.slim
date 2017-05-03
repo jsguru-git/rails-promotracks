@@ -38,8 +38,8 @@
           .form-group.row
             .col-md-6
               = user.label :email
-              sup.text-danger *
               -if @client.new_record?
+                sup.text-danger *
                 = user.email_field :email, class: 'form-control ', required: true
               -else
                 = user.email_field :email, class: 'form-control ', disabled: true
@@ -52,12 +52,18 @@
             -required=@client.new_record? ? true : false
             .col-md-6
               = user.label :password
-              sup.text-danger *
-              = user.password_field :password, class: 'form-control ', required: required
+              -if @client.new_record?
+                sup.text-danger *
+                = user.password_field :password, class: 'form-control ', required: required
+              -else
+                = user.password_field :password, class: 'form-control ', required: required
             .col-md-6
               = user.label :password_confirmation
-              sup.text-danger *
-              = user.password_field :password_confirmation, class: 'form-control ', required: required
+              -if @client.new_record?
+                sup.text-danger *
+                = user.password_field :password_confirmation, class: 'form-control ', required: required
+              -else
+                = user.password_field :password_confirmation, class: 'form-control ', required: required
 
       .panel-footer
         .text-right

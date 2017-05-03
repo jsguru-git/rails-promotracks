@@ -54,7 +54,7 @@ div
             .promo_groups style= "display:none"
               = f.label :max_users, 'Max Users'
               sup.text-danger *
-              = f.number_field :max_users, class: 'form-control', required: true
+              = f.number_field :max_users, min: 1, class: 'form-control', required: true
         .form-group.row
           .col-sm-6
             =f.label :start_time, 'Start Time'
