@@ -48,7 +48,7 @@ class Superadmin::ClientsController < Superadmin::SuperadminApplicationControlle
     if slave_user
       session[:slave_user_id] = slave_user.id
       session[:role] = 'super_admin'
-      redirect_to admin_promo_reps_path, :notice => "Logged in as #{slave_user.full_name}"
+      redirect_to admin_dashboard_index_path, :notice => "Logged in as #{slave_user.full_name}"
     else
       flash[:notice] = 'Sorry! You cannot login as this user'
       redirect_back fallback_location: superadmin_clients_path

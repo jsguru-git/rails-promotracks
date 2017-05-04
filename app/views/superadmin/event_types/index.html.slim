@@ -21,7 +21,7 @@
               td #{event_type.name}
               td.text-center
                 = link_to edit_superadmin_event_type_path(event_type), class: 'btn-sm  btn-icon btn btn-rounded btn-warning' do
-                  i.fa.fa-edit
+                  i.icmn-pencil4
 .pull-right
   -if @event_types.count>0
     = paginate @event_types
