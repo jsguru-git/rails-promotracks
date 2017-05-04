@@ -23,7 +23,7 @@ after "deploy", "deploy:restart"
 
 set :slackistrano, {
     klass: Slackistrano::SlackistranoMessaging,
-    channel: %w(#promo-tracks),
+    channel: %w(#promo-tracks #promotracks),
     webhook: 'https://hooks.slack.com/services/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'
 }
 
