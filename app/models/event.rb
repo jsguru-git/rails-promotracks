@@ -9,4 +9,16 @@ class Event < ActiveRecord::Base
   belongs_to :event_type
   has_many :users, :through => :user_events
   accepts_nested_attributes_for :address, reject_if: :all_blank, allow_destroy: true
+
+
+  def self.active_events
+    self.where('(end_time NOTNULL AND end_time >= ?)', Time.now)
+        .where(:user_events => {:status => UserEvent::statuses[:accepted], :check_out => nil})
+  end
+
+
+  def self.checkedin_events
+    self.where('(end_time NOTNULL AND end_time >= ?)', Time.now)
+        .where(:user_events => {:status => UserEvent::statuses[:accepted], :check_out => nil}).where.not(:user_events => {:check_in => nil})
+  end
 end
