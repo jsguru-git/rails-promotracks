@@ -39,6 +39,6 @@ production:
   <<: *default
   user: promo
   password: <%= ENV['db_password'] %>
-  host: #TODO
+  host: localhost
   port: 5432
   database: promo-rails
