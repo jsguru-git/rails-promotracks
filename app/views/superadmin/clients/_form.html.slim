@@ -64,9 +64,8 @@
                 = user.password_field :password_confirmation, class: 'form-control ', required: required
 
       .panel-footer
-        .text-right
-          =f.submit 'Submit', class: 'btn btn-success'
-          '
-          a.btn.btn-danger href="#{superadmin_clients_path}" Cancel
-    br
-    br
+        .form-group.row
+          .col-md-9.col-md-offset-3
+            =f.submit 'Submit', class: 'button btn width-150 btn-primary'
+            '
+            a.button.btn.btn-default href="#{admin_events_path}" Cancel

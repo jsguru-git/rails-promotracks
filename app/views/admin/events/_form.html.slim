@@ -91,10 +91,10 @@ div
                 =addr.hidden_field :latitude, class: 'latitude'
                 =addr.hidden_field :longitude, class: 'longitude'
 
-
       .panel-footer
-        .text-right
-          =f.submit 'Submit', class: 'btn btn-success'
-          '
-          a.btn.btn-danger href="#{admin_events_path}" Cancel
-    br
+        .form-group.row
+          .col-md-9.col-md-offset-3
+            =f.submit 'Submit', class: 'button btn width-150 btn-primary'
+            '
+            a.button.btn.btn-default href="#{admin_events_path}" Cancel
+.padding-bottom-25
