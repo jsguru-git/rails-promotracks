@@ -67,8 +67,8 @@ class Admin::EventsController < Admin::AdminApplicationController
   def update
     @event=Event.find(params[:id])
     if @event.update_attributes(event_params.except(:promo_category))
-      @event.update_attribute(:start_time, DateTime.strptime(event_params[:start_time], '%m/%d/%Y %I:%M %p')) unless event_params[:start_time].nil?
-      @event.update_attribute(:end_time, DateTime.strptime(event_params[:end_time], '%m/%d/%Y %I:%M %p')) unless event_params[:end_time].nil?
+      @event.update_attribute(:start_time, Time.zone.strptime(event_params[:start_time], '%m/%d/%Y %I:%M %p')) unless event_params[:start_time].nil?
+      @event.update_attribute(:end_time, Time.zone.strptime(event_params[:end_time], '%m/%d/%Y %I:%M %p')) unless event_params[:end_time].nil?
       if event_params[:promo_category]=='promo_rep' and @event.promo_category_was=='promo_rep'
         unless params[:event][:user_ids].delete_if { |x| x.empty? }.nil?
           @event.update_attribute(:promo_category, :promo_rep)
