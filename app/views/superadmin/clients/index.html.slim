@@ -21,7 +21,7 @@
               td #{client.name}
               td #{client.phone}
               td.text-center
-                = link_to superadmin_client_impersonate_path(client_id: client.id, user_id: client.admin_id), class: 'btn-sm  btn-icon btn btn-rounded btn-success', :data => {:toggle => 'tooltip', :placement => 'top'}, :title => "login" do
+                = link_to superadmin_client_impersonate_path(client_id: client.id, user_id: client.admin_id), class: 'btn-sm  btn-icon btn btn-rounded btn-success', :data => {:toggle => 'tooltip', :placement => 'top'}, :title => "impersonate" do
                   i.icmn-enter
                 '
                 = link_to edit_superadmin_client_path(client), class: 'btn-sm  btn-icon btn btn-rounded btn-warning', :data => {:toggle => 'tooltip', :placement => 'top'}, :title => "edit" do
