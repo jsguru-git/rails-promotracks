@@ -2,7 +2,7 @@ class Superadmin::BrandsController < Superadmin::SuperadminApplicationController
 
 
   def index
-    @brands=Brand.active_brands.page(params[:page]).per(10)
+    @brands=Brand.active_brands.page(params[:page]).per(20)
   end
 
 

@@ -44,7 +44,6 @@ div
           -else
             td
               | No events
-      .pull-right
-        -unless @events.nil?
-          = paginate @events
-      .padding-35
+.pull-right
+  -unless @events.nil?
+    = paginate @events

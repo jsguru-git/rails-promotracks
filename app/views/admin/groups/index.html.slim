@@ -23,8 +23,7 @@
                 td #{group.name}
                 td.text-center
                   = link_to edit_admin_group_path(group), class: 'btn-sm  btn-icon btn btn-rounded btn-warning' do
-                    i.fa.fa-edit
-        .pull-right
-          -if @groups.count>0
-            = paginate @groups
-        .padding-35
+                    i.icmn-pencil4
+.pull-right
+  -if @groups.count>0
+    = paginate @groups

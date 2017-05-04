@@ -31,33 +31,23 @@
   cursor: pointer;
 }
 
-.copyrights {
+.cwt__footer.visible-footer.copyrights {
+  display: block;
   clear: both;
-  position: fixed;
-  z-index: 100;
-  height: 3em;
-  bottom: 0;
-  right: 0;
-  left: 0;
+  position: relative;
+  height: 4rem;
   margin-top: -3em;
-  background-color: #fa252d;
+  background-color: #d43f3a;
   color: white;
-  padding: 1rem;
+  padding: 1.5rem;
 }
 
-#login-form {
-  top: -3rem;
+#text-color {
+  color: #d43f3a;
 }
 
 .checkbox_align {
-  width: 13px;
-  height: 13px;
-  padding: 0;
-  margin: 0;
-  vertical-align: bottom;
-  position: relative;
-  top: -1px;
-  *overflow: hidden;
+  left: -0.5rem;
 }
 
 #align {

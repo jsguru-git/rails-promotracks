@@ -21,11 +21,10 @@
               td #{brand.name}
               td.text-center
                 = link_to edit_superadmin_brand_path(brand), class: 'btn-sm  btn-icon btn btn-rounded btn-warning' do
-                  i.fa.fa-edit
+                  i.icmn-pencil4
                 '
-                = link_to superadmin_brand_path(brand), data: {confirm: "Are you sure to cancel this brand ?"}, title: 'Delete', :method => 'delete' do
+                = link_to superadmin_brand_path(brand), class: 'btn-sm  btn-icon btn btn-rounded btn-danger', data: {confirm: "Are you sure to cancel this brand ?"}, title: 'Delete', :method => 'delete' do
                   i.fa.fa-trash
-      .pull-right
-        -if @brands.count>0
-          = paginate @brands
-      .padding-35
+.pull-right
+  -if @brands.count>0
+    = paginate @brands

@@ -1,6 +1,6 @@
 body.theme-default.single-page
   section.page-content
-    .page-content-inner.single-page-login-alpha#login_screen
+    .page-content-inner.single-page-login-alpha
       /! Login Alpha Page
       .single-page-block-header
         .row
@@ -8,31 +8,40 @@ body.theme-default.single-page
             .logo
               a href=root_path
                 img src=image_url("logo.png")
-      .single-page-block#login-form
-        .single-page-block-inner
-          .single-page-block-form
-            h3.text-center
-              i.icmn-enter.margin-right-10
-              | Login Form
-            br
-            =form_for(resource, as: resource_name, url: session_path(resource_name), html: {method: :post, id: 'form-validation'}) do |f|
-              .form-group
-                label for="user_email"  Email
+      .single-page-block
+        .row
+          .col-xl-12
+            .promo-text
+              h1#text-color Welcome to PromoTracks
+            .single-page-block-inner
+              .single-page-block-form
+                h3.text-center
+                  i.icmn-enter.margin-right-10
+                  | Login Form
                 br
-                input#user_email.form-control data-validation="[EMAIL]" autofocus="autofocus" name="user[email]" type="email" value=""
-              .form-group
-                label for="user_password"  Password
-                br
-                input#user_password.form-control.password data-validation="[L>=5]" data-validation-message=("$ must be at least 5 characters") autocomplete="off" name="user[password]" type="password"
-              .form-group
-                a.pull-right.link-blue.link-underlined href=new_password_path(resource_name)  Forgot Password?
-                .checkbox
-                  label
-                    input.checkbox_align name="user[remember_me]" type="hidden" value="0"
-                    input.checkbox_align checked="" name="user[remember_me]" type="checkbox"
-                    |&nbsp; Remember Me
-              .form-actions
-                input.button.btn.btn-primary.width-150 data-disable-with=("Log in") name="commit" type="submit" value=("Sign in")
-                span.register-link
-                  |Don't have an account?
-                  a.link-blue.link-underlined href="/users/sign_up"  Sign Up
+                =form_for(resource, as: resource_name, url: session_path(resource_name), html: {method: :post, id: 'form-validation'}) do |f|
+                  .form-group
+                    label for="user_email"  Email
+                    br
+                    .input-group
+                      input#user_email.form-control data-validation="[EMAIL]" autofocus="autofocus" name="user[email]" type="email" value=""
+                        .input-group-addon
+                          i.icmn-envelop5
+                  .form-group
+                    label for="user_password"  Password
+                    br
+                    input#user_password.form-control.password data-validation="[L>=5]" data-validation-message=("$ must be at least 5 characters") autocomplete="off" name="user[password]" type="password"
+                  .form-group
+                    a.pull-right.link-blue href=new_password_path(resource_name)  Forgot Password?
+                    label &nbsp;
+                    .col-md-5.checkbox_align
+                      .input-group
+                        .input-group-addon
+                          input name="user[remember_me]" type="hidden" value="0"
+                          input checked="" name="user[remember_me]" type="checkbox"
+                        .form-control Remember Me
+                  .form-actions
+                    input.button.btn.btn-primary.width-150 data-disable-with=("Log in") name="commit" type="submit" value=("Sign in")
+                    span.register-link
+                      |No account?
+                      a.link-blue href="/users/sign_up"  Create one!

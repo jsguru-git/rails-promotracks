@@ -21,9 +21,8 @@
           .col-md-6
             = f.label :brands
             sup.text-danger *
-            .input-group
-              =f.select :brand_ids, options_for_select(Brand.all&.collect { |u| [u.name, u.id] }, selected_key = @client.brand_ids), {}, {:multiple => true, required: true, :class => 'form-control add_brands'}
-              .help-block.with-errors
+            =f.select :brand_ids, options_for_select(Brand.all&.collect { |u| [u.name, u.id] }, selected_key = @client.brand_ids), {}, {:multiple => true, required: true, :class => 'form-control add_brands'}
+            .help-block.with-errors
         = f.fields_for :admin, @admin do |user|
           .form-group.row
             .col-md-6

@@ -5,9 +5,9 @@ class Admin::PromoRepsController < Admin::AdminApplicationController
   def index
     @promo_reps=@current_client.users&.where(role: 'promo_rep').collect { |u| u }
     unless @promo_reps.kind_of?(Array)
-      @promo_reps = @promo_reps.page(params[:page]).per(10)
+      @promo_reps = @promo_reps.page(params[:page]).per(20)
     else
-      @promo_reps = Kaminari.paginate_array(@promo_reps.uniq).page(params[:page]).per(10)
+      @promo_reps = Kaminari.paginate_array(@promo_reps.uniq).page(params[:page]).per(20)
     end
   end
 
