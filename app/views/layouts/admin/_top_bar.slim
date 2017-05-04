@@ -16,7 +16,7 @@ nav.top-menu
             -if Client.where(:admin_id => current_user.id).exists?
               li
                 =link_to edit_admin_client_path(current_user.client_id)
-                  i.dropdown-icon.icmn-user2
+                  i.dropdown-icon.fa.fa-user
                   |Profile
             .dropdown-divider
             -if @current_slave_user
