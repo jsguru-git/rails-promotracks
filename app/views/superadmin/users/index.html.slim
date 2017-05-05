@@ -1,9 +1,16 @@
 .col-md-offset-2.col-md-7
   .panel
+    .container#breadcrumb-align
+      ul.list-unstyled.breadcrumb
+        li
+          a href='#{superadmin_clients_path}'   Clients
+        li
+          span Admins
+  .panel
     .panel-heading
       .pull-right
         =link_to "Invite Admin", new_superadmin_client_user_path, class: 'btn btn-info btn-sm'
-      h4 Clients
+      h4 Admins
     .panel-body
       table.table.table-striped
         thead

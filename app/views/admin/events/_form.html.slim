@@ -1,9 +1,12 @@
 div
-  /ol.breadcrumb
-  /  li.breadcrumb-item
-  /    a href='#{admin_events_path}'   Events
-  /  li.breadcrumb-item.active #{@event.new_record? ? 'Create ' : 'Edit '} Event
   = form_for [:admin, @event] do |f|
+    .panel
+      .container#breadcrumb-align
+        ul.list-unstyled.breadcrumb
+          li
+            a href='#{admin_events_path}'   Events
+          li
+            span #{@event.new_record? ? 'Create ' : 'Edit '} Event
     .panel.panel-with-borders
       .panel-heading
         h4.panel-title #{@event.new_record? ? 'Create ' : 'Edit '} Event

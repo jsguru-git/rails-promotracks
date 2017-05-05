@@ -4,6 +4,13 @@
   -object=:admin
 .col-md-offset-3.col-md-6
   = form_for [object, @client], :html => {:multipart => true} do |f|
+    .panel
+      .container#breadcrumb-align
+        ul.list-unstyled.breadcrumb
+          li
+            a href='#{superadmin_clients_path}'   Clients
+          li
+            span #{@client.new_record? ? 'New ' : 'Edit '} Client
     .panel.panel-with-borders
       .panel-heading
         h3.panel-title #{@client.new_record? ? 'New ' : 'Edit '} Client
