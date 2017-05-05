@@ -32,7 +32,7 @@ div
             -@events.each do |event|
               tr
                 td #{event.id}
-                td.text-danger #{event.name}
+                td #{event.name}
                 td #{event.event_type&.name}
                 td #{event.address&.city}
                 td #{event.start_time&.strftime('%m/%d/%Y %I:%M %p')}
