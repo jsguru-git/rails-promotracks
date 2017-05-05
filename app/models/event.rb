@@ -12,13 +12,13 @@ class Event < ActiveRecord::Base
 
 
   def self.active_events
-    self.where('(end_time NOTNULL AND end_time >= ?)', Time.now)
+    self.where('(end_time NOTNULL AND end_time > ?)', Time.now)
         .where(:user_events => {:status => UserEvent::statuses[:accepted], :check_out => nil})
   end
 
 
   def self.checkedin_events
-    self.where('(end_time NOTNULL AND end_time >= ?)', Time.now)
+    self.where('(end_time NOTNULL AND end_time > ?)', Time.now)
         .where(:user_events => {:status => UserEvent::statuses[:accepted], :check_out => nil}).where.not(:user_events => {:check_in => nil})
   end
 
