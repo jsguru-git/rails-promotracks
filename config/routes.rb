@@ -40,6 +40,7 @@ Rails.application.routes.draw do
       resources :events do
         collection do
           get :active
+          get :expired
         end
       end
     end
