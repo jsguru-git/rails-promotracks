@@ -173,5 +173,6 @@ $(document).on('turbolinks:load', function () {
     $('[data-toggle="popover"]').popover();
 
     $('.selectpicker').selectpicker();
+    $('#provider_list_services_offer').selectpicker('refresh');
 
 });
