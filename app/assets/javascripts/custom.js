@@ -41,15 +41,17 @@ $(document).on('turbolinks:load', function () {
     //        $('#start_time').data("DateTimePicker").maxDate(e.date);
     //    });
 
-    $('#start_time').datetimepicker({
-        //minDate: new Date()
-    }).on("dp.change", function (e) {
+    $('#start_time').datetimepicker();
+    $('#end_time').datetimepicker({
+        useCurrent: false //Important! See issue #1075
+    });
+    $("#start_time").on("dp.change", function (e) {
         $('#end_time').data("DateTimePicker").minDate(e.date);
     });
-
-    $('#end_time').datetimepicker({}).on("dp.change", function (e) {
+    $("#end_time").on("dp.change", function (e) {
         $('#start_time').data("DateTimePicker").maxDate(e.date);
     });
+
 
     if ($('#promo_rep_button').is(':checked')) {
         $('#event_user_ids').prop('required', true);
@@ -174,5 +176,42 @@ $(document).on('turbolinks:load', function () {
 
     $('.selectpicker').selectpicker();
     $('.selectpicker').selectpicker('refresh');
+
+    $('.swal-btn-success').click(function (e) {
+        e.preventDefault();
+        swal({
+            title: "Thank You",
+            text: "You clicked the button!",
+            type: "success",
+            confirmButtonClass: "btn-success",
+            confirmButtonText: "Success"
+        });
+    });
+
+    var URL = $(location).attr('href');
+    if (URL.contains("status=accept")) {
+        swal({
+            title: "Thank You",
+            text: "Event accepted successfully!",
+            type: "success",
+            confirmButtonClass: "btn-success",
+            confirmButtonText: "Close"
+        });
+        $(document).click(function () {
+            window.close()
+        });
+    }
+    else if (URL.contains("status=decline")) {
+        swal({
+            title: "Event Declined",
+            text: "Thank you for your response!",
+            type: "error",
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Close"
+        });
+        $(document).click(function () {
+            window.close()
+        });
+    }
 
 });
