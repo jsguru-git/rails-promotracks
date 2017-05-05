@@ -82,7 +82,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
   config.action_mailer.raise_delivery_errors = true
 
-  config.action_mailer.default_url_options = {host: 'promo.bitcot.com'} #TODO
+  config.action_mailer.default_url_options = {host: 'app.promotracks.com'}
   config.action_mailer.delivery_method = :ses
   config.action_mailer.perform_deliveries = true
   config.logger = ActiveSupport::Logger.new(config.paths['log'].first, 1, 20*1024*1024)

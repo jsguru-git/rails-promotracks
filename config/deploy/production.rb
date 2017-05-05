@@ -1,6 +1,6 @@
 set :branch, :master
 
-server '', roles: %w(app db), user: 'ubuntu' #TODO
+server '34.209.93.89', roles: %w(app db), user: 'ubuntu'
 
 set :assets_roles, [:app]
 set :rails_env, 'production'
@@ -17,7 +17,7 @@ namespace :deploy do
     task :precompile do
       run_locally do
         with rails_env: fetch(:rails_env) do
-          execute 'bundle exec rake assets:precompile RAILS_ENV=staging'
+          execute 'bundle exec rake assets:precompile RAILS_ENV=production'
         end
       end
       on roles(:app) do |host|
