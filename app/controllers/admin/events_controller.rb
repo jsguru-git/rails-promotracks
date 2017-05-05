@@ -5,9 +5,14 @@ class Admin::EventsController < Admin::AdminApplicationController
   def index
     if params[:search]
       if params[:search_type]=='promo_group'
-        @events=@current_client.events.where(:group_id => params[:promo_id]).order('updated_at desc')
+        @events=@current_client.events.where(:group_id => params[:promo_id]).order('updated_at desc').collect { |u| u }
       elsif params[:search_type]=='promo_rep'
-        @events=@current_client.events.joins(:users).where("users.id IN (?)", params[:promo_id]).order('updated_at desc')
+        @events=@current_client.events.joins(:users).where("users.id IN (?)", params[:promo_id]).order('updated_at desc').collect { |u| u }
+      end
+      unless @events.kind_of?(Array)
+        @events = @events.page(params[:page]).per(10)
+      else
+        @events = Kaminari.paginate_array(@events.uniq).page(params[:page]).per(10)
       end
     else
       @events=@current_client.events.page(params[:page]).per(20).order('updated_at desc')
@@ -17,7 +22,7 @@ class Admin::EventsController < Admin::AdminApplicationController
   def new
     @event=@current_client.events.new
     @address=@event.build_address
-    @promo_reps=@current_client.users.where(role: 'promo_rep')
+    @promo_reps=User.where(role: 'promo_rep')
   end
 
   def create
@@ -25,115 +30,107 @@ class Admin::EventsController < Admin::AdminApplicationController
     @event.creator= current_user
     @event.start_time= Time.zone.strptime(event_params[:start_time], '%m/%d/%Y %I:%M %p')
     @event.end_time= Time.zone.strptime(event_params[:end_time], '%m/%d/%Y %I:%M %p')
-    if event_params[:promo_category]=='promo_rep'
-      @event.promo_category= :promo_rep
-      unless params[:event][:user_ids].delete_if { |x| x.empty? }.nil?
-        params[:event][:user_ids].delete_if { |x| x.empty? }.each do |user_id|
-          @event.user_events.new(user_id: user_id, token: SecureRandom.hex[0, 6])
-        end
-      end
-    elsif event_params[:promo_category]=='promo_group'
-      @event.promo_category= :promo_group
-      @event.group_id= params[:event][:group_id] unless params[:event][:group_id].nil?
+    params[:event][:user_ids].reject(&:blank?).each do |user_id|
+      user=User.find(user_id)
+      @event.user_events.new(user_id: user_id, token: SecureRandom.hex[0, 6])
+      @current_client.users << user
     end
-    @event.save
-    email_data={}
-    email_data[:body] = "Please find below the event details"
-    email_data[:subject]="#{@event.name} :#{@event.id}"
-    unless @event.group_id.nil?
-      @event.group.users.each do |user|
-        email_data[:event]=get_event(@event, user)
+    unless params[:event][:group_id].nil?
+      group=Group.find(params[:event][:group_id])
+      group.users.each do |user|
         token=SecureRandom.hex[0, 6]
-        @event.user_events.create(user_id: user.id, token: token, category: :promo_group)
-        EventMailer.accept_event(user.email, email_data, token).deliver
+        @event.user_events.new(user_id: user.id, token: token, category: :promo_group)
       end
+      @current_client.groups << group
     end
-    if @event.promo_rep?
+    if @event.save
+      @current_client.save
+      email_data={}
+      email_data[:body] = "Please find below the event details"
+      email_data[:subject]="#{@event.name} :#{@event.id}"
       @event.users.each do |user|
         token=@event.user_events.where(:user_id => user.id).first.token
         email_data[:event]=get_event(@event, user)
         EventMailer.accept_event(user.email, email_data, token).deliver
       end
+      redirect_to admin_events_path
+    else
+      flash[:error]=@event.errors.full_messages.join(', ')
+      redirect_to :back
     end
-    redirect_to admin_events_path
   end
 
   def edit
     @event=Event.find(params[:id])
     @address=@event.address
-    @promo_reps=@current_client.users.where(role: 'promo_rep')
+    @promo_reps=User.where(role: 'promo_rep')
   end
 
   def update
+    reps = []
+    group_email=false
+    rep_email=false
     @event=Event.find(params[:id])
-    if @event.update_attributes(event_params.except(:promo_category))
-      @event.update_attribute(:start_time, Time.zone.strptime(event_params[:start_time], '%m/%d/%Y %I:%M %p')) unless event_params[:start_time].nil?
-      @event.update_attribute(:end_time, Time.zone.strptime(event_params[:end_time], '%m/%d/%Y %I:%M %p')) unless event_params[:end_time].nil?
-      if event_params[:promo_category]=='promo_rep' and @event.promo_category_was=='promo_rep'
-        unless params[:event][:user_ids].delete_if { |x| x.empty? }.nil?
-          @event.update_attribute(:promo_category, :promo_rep)
-          delete_users=@event.user_ids-(params[:event][:user_ids].map(&:to_i))
+    event_params[:start_time]=Time.zone.strptime(event_params[:start_time], '%m/%d/%Y %I:%M %p') unless event_params[:start_time].nil?
+    event_params[:end_time]=Time.zone.strptime(event_params[:end_time], '%m/%d/%Y %I:%M %p') unless event_params[:end_time].nil?
+    @event.assign_attributes(event_params)
+    if @event.valid?
+      email_data={}
+      email_data[:body] = "Please find below the event details"
+      email_data[:subject]="#{@event.name} :#{@event.id}"
+      if @event.group_id_changed?
+        group_email=true
+        group=Group.find(@event.group_id_was)
+        group.users.each do |user|
+          @event.user_events.where(:user_id => user.id).first.delete
+        end
+        @event.group.users.each do |user|
+          token=SecureRandom.hex[0, 6]
+          @event.user_events.new(user_id: user.id, token: token, category: :promo_group)
+        end
+      end
+      rep_ids=@event.user_events.where(:category => 0).map(&:user_id).reject(&:blank?)
+      new_rep_ids=params[:event][:user_ids].reject(&:blank?).map(&:to_i)
+      unless (rep_ids - new_rep_ids && new_rep_ids - rep_ids).empty?
+        unless new_rep_ids.nil?
+          delete_users=rep_ids-(new_rep_ids)
           delete_users.each do |del_user|
             @event.user_events.where(user_id: del_user).first.delete
           end
-          create_users=(params[:event][:user_ids].map(&:to_i))-delete_users
+          create_users=new_rep_ids-delete_users
+          rep_email=true if create_users.any?
           create_users.each do |user_id|
             if @event.user_ids.exclude? user_id
-              @event.user_events.create(user_id: user_id, token: SecureRandom.hex[0, 6])
+              rep=User.find(user_id)
+              reps << rep
+              @event.user_events.new(user_id: user_id, token: SecureRandom.hex[0, 6])
             end
           end
         end
-      elsif event_params[:promo_category]=='promo_group' and @event.promo_category_was=='promo_group'
-        unless event_params[:group_id].nil?
-          @event.update_attribute(:promo_category, :promo_group)
-          if @event.group_id_was!=event_params[:group_id].to_i
-            UserEvent.where(:event_id => @event.id).delete_all
-            @event.update_attribute(:group_id, event_params[:group_id])
-            email_data={}
-            email_data[:body] = "Please find below the event details"
-            email_data[:subject]="#{@event.name} :#{@event.id}"
-            @event.group.users.each do |user|
-              email_data[:event]=get_event(@event, user)
-              token=SecureRandom.hex[0, 6]
-              @event.user_events.create(user_id: user.id, token: token, category: :promo_group)
-              EventMailer.accept_event(user.email, email_data, token).deliver
-            end
-          end
+      end
+      @event.save!
+      if group_email==true
+        @event.group.users.each do |user|
+          token=@event.user_events.where(:user_id => user.id).first.token
+          email_data[:event]=get_event(@event, user)
+          EventMailer.accept_event(user.email, email_data, token).deliver
         end
-      elsif event_params[:promo_category]=='promo_rep' and @event.promo_category_was=='promo_group'
-        @event.update_attribute(:group_id, nil)
-        UserEvent.where(:event_id => @event.id).delete_all
-        @event.update_attribute(:promo_category, :promo_rep)
-        unless params[:event][:user_ids].delete_if { |x| x.empty? }.nil?
-          params[:event][:user_ids].delete_if { |x| x.empty? }.each do |user_id|
-            @event.user_events.create(user_id: user_id, token: SecureRandom.hex[0, 6])
-          end
-        end
-      elsif event_params[:promo_category]=='promo_group' and @event.promo_category_was=='promo_rep'
-        unless event_params[:group_id].nil?
-          @event.update_attribute(:promo_category, :promo_group)
-          UserEvent.where(:event_id => @event.id).delete_all
-          @event.update_attribute(:group_id, event_params[:group_id])
-          email_data={}
-          email_data[:body] = "Please find below the event details"
-          email_data[:subject]="#{@event.name} :#{@event.id}"
-          @event.group.users.each do |user|
-            email_data[:event]=get_event(@event, user)
-            token=SecureRandom.hex[0, 6]
-            @event.user_events.create(user_id: user.id, token: token, category: :promo_group)
-            EventMailer.accept_event(user.email, email_data, token).deliver
-          end
+      elsif rep_email==true
+        reps.each do |user|
+          token=@event.user_events.where(:user_id => user.id).first.token
+          email_data[:event]=get_event(@event, user)
+          EventMailer.accept_event(user.email, email_data, token).deliver
         end
       end
       redirect_to admin_events_path
     else
-      flash[:error]= @event.errors.full_messages.join(',')
+      flash[:error]=@event.errors.full_messages.join(', ')
       redirect_to :back
     end
   end
 
   private
   def event_params
-    params.require(:event).permit(:name, :event_type_id, :promo_category, :start_time, :end_time, :brand_id, :user_ids, :group_id, :max_users, address_attributes: [:address_1, :city, :state, :zip, :country, :latitude, :longitude, :formatted_address])
+    params.require(:event).permit(:name, :event_type_id, :start_time, :end_time, :brand_id, :user_ids, :group_id, :max_users, :pay, :area, address_attributes: [:address_1, :city, :state, :zip, :country, :latitude, :longitude, :formatted_address])
   end
 end

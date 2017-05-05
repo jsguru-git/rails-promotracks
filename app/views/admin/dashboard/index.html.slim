@@ -1,62 +1,81 @@
 div
-  .panel
-    .panel-heading
-      h3 Dashboard
-    .panel-body
-      table.table
-        thead
-          tr.active
-            th  Date
-            th  Name
-            th  Type
-            th  Area
-            th  Rep
-            th  Pay
-            th Recommended
-            th Follow up
-            th Notes
-            th Sample
-            th Attendance
-        tfoot
-          tr.active
-            th &nbsp;
-            th &nbsp;
-            th Events Data Summary
-            th &nbsp;
-            th  &nbsp;
-            th  #{@total}
-            th  &nbsp;
-            th  &nbsp;
-            th  &nbsp;
-            th #{@total_sample}
-            th #{@total_attendance}
+.panel
+  .panel-heading
+    h3 Dashboard
+  .panel-body
+    table.table
+      thead
+        tr.active
+          th  Date
+          th  Name
+          th  Type
+          th  Area
+          th  Rep
+          th Attendance
+          th Sample
+          th Prod cost
+          th  Expenses
+          th  Hours
+          th  Pay
+          th Recommend
+          th Follow up
+          th Notes
 
-        tbody
-          -@events.each do |event|
-            tr
-              td rowspan="#{event.user_events.count+event.user_events.count}" #{event.start_time&.strftime('%m/%d/%Y')}
-              td rowspan="#{event.user_events.count+event.user_events.count}" #{event.name}
-              td rowspan="#{event.user_events.count+event.user_events.count}" #{event&.event_type&.name}
-              td rowspan="#{event.user_events.count+event.user_events.count}" #{event.address&.city}
-              -event.user_events.where(:status => UserEvent::statuses[:accepted]).each do |uv|
-                tr rowspan="0"
-                  td #{uv.user.full_name}
-                  td #{uv.total_expense}
-                  td
-                    -if uv.recommended
-                      p Yes
-                    -else
-                      p No
-                  td #{uv.follow_up}
-                  td
-                    -if uv.notes.blank?
-                      p Not available
-                    -else
-                      a href="javascript:void" title="Notes" data-toggle="popover" data-placement="bottom" data-content="#{uv.notes}" View
-                  td #{uv.sample}
-                  td #{uv.attendance}
-                tr/
-            tr/
+
+      tfoot
+        tr.active
+          th &nbsp;
+          th &nbsp;
+          th Events Data Summary
+          th &nbsp;
+          th  &nbsp;
+          th  #{@total_attendance}
+          th  #{@total_sample}
+          th  #{@total_product_cost}
+          th  #{@total}
+          th &nbsp;
+          th #{@total_payment}
+          th &nbsp;
+          th &nbsp;
+          th &nbsp;
+
+      tbody
+        -@events.each do |event|
+          -count=event.user_events.where(:status => UserEvent::statuses[:accepted]).count
+          tr
+            td rowspan="#{count+count}" #{event.start_time&.strftime('%m/%d/%Y')}
+            td rowspan="#{count+count}" #{event.name}
+            td rowspan="#{count+count}" #{event&.event_type&.name}
+            td rowspan="#{count+count}" #{event&.area}
+            -event.user_events.where(:status => UserEvent::statuses[:accepted]).each do |uv|
+              tr rowspan="0"
+                td #{uv.user.full_name}
+                td #{uv.attendance}
+                td #{uv.sample}
+                td #{(event.brand.unit_cost)*(uv.sample)}
+                td #{uv.total_expense}
+                -if !uv.check_in.nil? and !uv.check_out.nil?
+                  -hour=((uv.check_out - uv.check_in)/3600).round
+                  td #{hour}
+                  td #{hour*event.pay}
+                -else
+                  td nil
+                  td nil
+
+                td
+                  -if uv.recommended
+                    p Yes
+                  -else
+                    p No
+                td #{uv.follow_up}
+                td
+                  -if uv.notes.blank?
+                    p Not available
+                  -else
+                    a href="javascript:void" title="Notes" data-toggle="popover" data-placement="bottom" data-content="#{uv.notes}" View
+
+              tr/
+          tr/
 .padding-bottom-25
 
 

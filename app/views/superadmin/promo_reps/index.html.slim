@@ -1,0 +1,33 @@
+.col-md-offset-2.col-md-8
+  .clearfix
+  .panel
+    .panel-heading
+      .pull-right
+        = link_to new_superadmin_promo_rep_path, class: "btn btn-info btn-sm" do
+          i.left-menu-link-icon.fa.fa-user-plus
+          |&nbsp;Promo Rep
+      h4 Promo Reps
+    .panel-body
+      table.table
+        thead
+          tr.active
+            th ID
+            th Name
+            th Email
+            th.text-center Actions
+        tbody
+          -@promo_reps.each do |user|
+            tr
+              td #{user.id}
+              td #{user.full_name}
+              td #{user.email}
+              td.text-center
+                = link_to edit_superadmin_promo_rep_path(user), class: 'btn-sm  btn-icon btn btn-rounded btn-warning' do
+                  i.fa.fa-edit
+                '
+                = link_to superadmin_promo_rep_resend_path(user), class: 'btn-sm  btn-icon btn btn-rounded btn-primary', :data => {:toggle => 'tooltip', :placement => 'top'}, :title => "resend invitation" do
+                  i.icmn-envelop5
+      .pull-right
+        -if @promo_reps.count>0
+          = paginate @promo_reps
+      .padding-35

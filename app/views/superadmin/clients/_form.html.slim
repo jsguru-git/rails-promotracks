@@ -1,78 +1,220 @@
--if current_user.super_admin?
-  -object=:superadmin
--else
-  -object=:admin
-.col-md-offset-3.col-md-6
-  = form_for [object, @client], :html => {:multipart => true} do |f|
-    .panel
-      .container#breadcrumb-align
-        ul.list-unstyled.breadcrumb
-          li
-            a href='#{superadmin_clients_path}'   Clients
-          li
-            span #{@client.new_record? ? 'New ' : 'Edit '} Client
-    .panel.panel-with-borders
-      .panel-heading
-        h3.panel-title #{@client.new_record? ? 'New ' : 'Edit '} Client
-      .panel-body
-        .form-group.row
-          .col-md-12
-            = f.label :name
-            sup.text-danger *
-            = f.text_field :name, class: 'name form-control', :autocomplete => true, required: true
-        .form-group.row
-          .col-md-6
-            fieldset.form-group
-              =f.label :phone
-              = f.text_field :phone, class: 'form-control', id: 'us-phone-mask-input'
-          .col-md-6
-            = f.label :brands
-            sup.text-danger *
-            =f.select :brand_ids, options_for_select(Brand.all&.collect { |u| [u.name, u.id] }, selected_key = @client.brand_ids), {}, {:multiple => true, required: true, :class => 'form-control add_brands'}
-            .help-block.with-errors
-        = f.fields_for :admin, @admin do |user|
-          .form-group.row
-            .col-md-6
-              =user.hidden_field :role, :value => 'client_admin'
-              = user.label :first_name
-              sup.text-danger *
-              = user.text_field :first_name, class: 'form-control ', required: true
-            .col-md-6
-              = user.label :last_name
-              sup.text-danger *
-              = user.text_field :last_name, class: 'form-control ', required: true
-          .form-group.row
-            .col-md-6
-              = user.label :email
-              -if @client.new_record?
-                sup.text-danger *
-                = user.email_field :email, class: 'form-control ', required: true
-              -else
-                = user.email_field :email, class: 'form-control ', disabled: true
-            .col-md-6
-              = user.label :image
-              = user.file_field :image, class: 'file'
-              =link_to @admin.image.url&.split('/').last, @admin.image&.url, :target => '_new', :download => '' unless @admin.image.blank?
-          .form-group.row
-            -required=@client.new_record? ? true : false
-            .col-md-6
-              = user.label :password
-              -if @client.new_record?
-                sup.text-danger *
-                = user.password_field :password, class: 'form-control ', required: required
-              -else
-                = user.password_field :password, class: 'form-control ', required: required
-            .col-md-6
-              = user.label :password_confirmation
-              -if @client.new_record?
-                sup.text-danger *
-                = user.password_field :password_confirmation, class: 'form-control ', required: required
-              -else
-                = user.password_field :password_confirmation, class: 'form-control ', required: required
+-object= current_user.super_admin? ? :superadmin : :admin
+-required=@client.new_record? ? true : false
+-disabled=@client.new_record? ? false : true
 
-      .panel-footer
-        .form-group.row
-          .col-md-9.col-md-offset-3
-            =f.submit 'Submit', class: 'button btn width-150 btn-primary'
-            '
-            a.button.btn.btn-default href="#{admin_events_path}" Cancel
+section.page-content.height-auto
+  .page-content-inner
+    /! Forms Wizard
+    section.panel
+      .panel-heading
+        h3 #{@client.new_record? ? 'New ' : 'Edit '} Client
+      .panel-body
+        = form_for [object, @client], :html => {class: 'cui-wizard-style cui-wizard', :multipart => true, id: 'client_wizard', data: {toggle: 'validator'}} do |f|
+          h3
+            i.icmn-home.cui-wizard--steps--icon
+            span.cui-wizard--steps--title Client
+          section.text-center data-step="0"
+            .row
+              .col-sm-12
+                .margin-bottom-50
+                  .row
+                    .col-md-3
+                      label.form-control-label for="l0"
+                        | Name
+                        sup.text-danger *
+                    .col-md-9
+                      .form-group
+                        = f.text_field :name, class: 'name form-control', required: true
+                        .help-block.with-errors
+                  .row
+                    .col-md-3
+                      label.form-control-label for="l0"
+                        | Phone
+                        sup.text-danger
+                    .col-md-9
+                      .form-group
+                        = f.text_field :phone, class: 'form-control', id: 'us-phone-mask-input'
+                        .help-block.with-errors
+          h3
+            i.icmn-user.cui-wizard--steps--icon
+            span.cui-wizard--steps--title Admin
+          section.text-center data-step="1"
+            .row
+              .col-sm-12
+                .margin-bottom-50
+                  = f.fields_for :admin, @admin do |user|
+                    =user.hidden_field :role, :value => 'client_admin'
+                    .row
+                      .col-md-3
+                        label.form-control-label for="l0"
+                          | First Name
+                          sup.text-danger *
+                      .col-md-9
+                        .form-group
+                          = user.text_field :first_name, class: 'form-control required', required: true
+                          .help-block.with-errors
+                    .row
+                      .col-md-3
+                        label.form-control-label for="l0"
+                          | Last Name
+                          sup.text-danger *
+                      .col-md-9
+                        .form-group
+                          = user.text_field :last_name, class: 'form-control required', required: true
+                          .help-block.with-errors
+                    .row
+                      .col-md-3
+                        label.form-control-label for="l0"
+                          | Email
+                          sup.text-danger *
+                      .col-md-9
+                        .form-group
+                          = user.email_field :email, class: 'form-control required', required: required, disabled: disabled
+                          .help-block.with-errors
+
+                    .row
+                      .col-md-3
+                        label.form-control-label for="l0"
+                          | Image
+                          sup.text-danger
+                      .col-md-9
+                        .form-group
+                          = user.file_field :image, class: 'file'
+                          .help-block.with-errors
+                          =link_to @admin.image.url&.split('/').last, @admin.image&.url, :target => '_new', :download => '' unless @admin.image.blank?
+                    .row
+                      .col-md-3
+                        label.form-control-label for="l0"
+                          | Password
+                          sup.text-danger *
+                      .col-md-9
+                        .form-group
+                          = user.password_field :password, class: 'form-control required', required: required
+                          .help-block.with-errors
+                    .row
+                      .col-md-3
+                        label.form-control-label for="l0"
+                          | Password  Confirmation
+                      .col-md-9
+                        .form-group
+                          = user.password_field :password_confirmation, class: 'form-control required', required: required
+                          .help-block.with-errors
+          h3
+            i.icmn-briefcase3.cui-wizard--steps--icon
+            span.cui-wizard--steps--title Brand
+          section.text-center data-step="2"
+            .row
+              .col-sm-12
+                .margin-bottom-50
+                  .row
+                    .col-md-2
+                      .form-group
+                        a.form-control.add_new_brand class="btn btn-primary"href='javascript:void(0)' Add More
+
+                  .brands
+                  -if @client.new_record?
+                    .row
+                      .col-md-6
+                        .form-group
+                          = text_field_tag 'client[brand][][name]', '', class: 'form-control required', :placeholder => 'Name'
+                          .help-block.with-errors
+                      .col-md-4
+                        .form-group
+                          = text_field_tag 'client[brand][][unit_cost]', '', class: 'form-control required', :placeholder => 'Unit Cost'
+                          .help-block.with-errors
+                      .col-md-1
+                        .form-group
+                          a.form-control.remove_brand href='javascript:void(0)'
+                            i.fa.fa-trash
+                  -else
+                    -@client.brands.each do |brand|
+                      .row
+                        .col-md-7
+                          .form-group
+                            =hidden_field_tag 'client[brand][][id]', brand.id
+                            = text_field_tag 'client[brand][][name]', brand.name, class: 'form-control required', :placeholder => 'Name'
+                            .help-block.with-errors
+                        .col-md-4
+                          .form-group
+                            = text_field_tag 'client[brand][][unit_cost]', brand.unit_cost, class: 'form-control required', :placeholder => 'Unit Cost'
+                            .help-block.with-errors
+                        .col-md-1
+                          .form-group
+                            a.form-control.remove_brand data-id=brand.id data-client=@client&.id href='javascript:void(0)'
+                              i.fa.fa-trash
+javascript:
+  $(document).on('turbolinks:load', function () {
+    var form = $("#client_wizard");
+    form.validator();
+    $("form#client_wizard").steps({
+      headerTag: "h3",
+      bodyTag: "section",
+      transitionEffect: "slideLeft",
+      autoFocus: true,
+      onStepChanging: function (event, currentIndex, newIndex) {
+        $(this).validator('validate');
+        $container = $('#client_wizard').find('section[data-step="' + currentIndex + '"]');
+        var hasErrors = $container.validator('validate').has('.has-error').length;
+
+        if (hasErrors) {
+          return false;
+        } else {
+          return form.validator('update');
+        }
+      },
+      onFinishing: function (event, currentIndex) {
+
+        var check = 0;
+        $("form#hotel_wizard :input.required").each(function () {
+          var input_field = $(this);
+
+          if ($(input_field).val().length < 1) {
+            $(input_field).next().html('<ul><li>This is required field.</li></ul>');
+            check++;
+          }
+          else {
+            $(input_field).next().html('');
+            check--;
+          }
+
+        });
+        var hasErrors = $(this).validator('destroy').validator('validate').has('.has-error').length;
+        if (hasErrors || (check > 0 )) {
+          return false;
+        } else {
+          return form.validator('update');
+        }
+
+      },
+      onFinished: function (event, currentIndex) {
+        var form = $(this);
+        form.submit();
+      }
+
+    });
+
+    $('.add_new_brand').on("click", function () {
+      var brandFields = '<div class="row"><div class="col-md-7"><div class="form-group"><input name="client[brand][][name]" id="client_brand__name" value="" class="form-control required" placeholder="Name" type="text"><div class="help-block with-errors"></div></div></div><div class="col-md-4"><div class="form-group"><input name="client[brand][][unit_cost]" id="client_brand__unit_cost" value="" class="form-control required" placeholder="Unit Cost" type="text"><div class="help-block with-errors"></div></div></div><div class="col-md-1"><div class="form-group"><a class="form-control remove_brand" href="javascript:void(0)"><i class="fa fa-trash"></i></a></div></div></div>';
+      $(brandFields).insertBefore('.brands');
+    });
+
+    $("body").delegate('.remove_brand', 'click', function () {
+      var row = $(this);
+      var id = $(this).data("id");
+      var client = $(this).data("client");
+      if (id) {
+        $.ajax({
+          method: "DELETE",
+          url: "/superadmin/clients/" + client + "/remove_brand?id=" + id,
+          dataType: 'json',
+          success: function (data) {
+            console.log("hai");
+            row.closest('div.row').remove();
+          }
+        });
+      } else {
+        $(this).closest('div.row').remove();
+      }
+
+    });
+  });

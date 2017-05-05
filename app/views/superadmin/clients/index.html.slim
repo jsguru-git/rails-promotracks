@@ -2,7 +2,7 @@
   .panel
     .panel-heading
       .pull-right
-        = link_to new_superadmin_client_path, class: "btn btn-info btn-sm" do
+        = link_to new_superadmin_client_path, class: "btn btn-info btn-sm",:data=>{:turbolinks=>"false"} do
           i.left-menu-link-icon.fa.fa-user-plus
           |&nbsp;Client
       h4 Clients
@@ -13,6 +13,7 @@
             th ID
             th Name
             th Phone
+            th Brands
             th.text-center Actions
         tbody
           -@clients.each do |client|
@@ -20,6 +21,7 @@
               td #{client.id}
               td #{client.name}
               td #{client.phone}
+              td #{client.brands&.map(&:name).join(',')}
               td.text-center
                 = link_to superadmin_client_impersonate_path(client_id: client.id, user_id: client.admin_id), class: 'btn-sm  btn-icon btn btn-rounded btn-success', :data => {:toggle => 'tooltip', :placement => 'top'}, :title => "impersonate" do
                   i.icmn-enter

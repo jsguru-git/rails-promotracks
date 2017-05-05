@@ -6,30 +6,6 @@ $(document).on('turbolinks:load', function () {
         placeholder: "Nothing Selected"
     });
 
-    //var start_date_props = {
-    //    format: 'MM/DD/YYYY hh:mm A',
-    //    minDate: new Date()
-    //};
-    //var start_date = "";
-    //
-    //var end_date_props = {
-    //    format: 'MM/DD/YYYY hh:mm A'
-    //};
-    //end_date_props.useCurrent = false;
-    //var end_date = "";
-    //
-    //if (end_date != "") {
-    //
-    //    end_date_props.defaultDate = end_date;
-    //
-    //    start_date_props.maxDate = end_date;
-    //}
-    //
-    //if (start_date != "") {
-    //    start_date_props.defaultDate = start_date;
-    //    end_date_props.minDate = start_date;
-    //}
-
     //$('#start_time')
     //    .datetimepicker(start_date_props)
     //    .on("dp.change", function (e) {
@@ -53,34 +29,6 @@ $(document).on('turbolinks:load', function () {
     });
 
 
-    if ($('#promo_rep_button').is(':checked')) {
-        $('#event_user_ids').prop('required', true);
-        $('#event_group_id').prop('required', false);
-        $("#event_promo_category").val('promo_rep');
-        $('#promo_reps').show();
-        $('.promo_groups').hide();
-    } else if ($('#promo_group_button').is(':checked')) {
-        $('#event_user_ids').prop('required', false);
-        $('#event_group_id').prop('required', true);
-        $("#event_promo_category").val('promo_group');
-        $('#promo_reps').hide();
-        $('.promo_groups').show();
-    }
-    $('#promo_rep_button').on("click", function () {
-        $('#event_user_ids').prop('required', true);
-        $('#event_group_id').prop('required', false);
-        $("#event_promo_category").val('promo_rep');
-        $('#promo_reps').show();
-        $('.promo_groups').hide();
-    });
-
-    $('#promo_group_button').on("click", function () {
-        $('#event_user_ids').prop('required', false);
-        $('#event_group_id').prop('required', true);
-        $("#event_promo_category").val('promo_group');
-        $('#promo_reps').hide();
-        $('.promo_groups').show();
-    });
 
 
     $(".city").keyup(function () {
@@ -177,22 +125,15 @@ $(document).on('turbolinks:load', function () {
     $('.selectpicker').selectpicker();
     $('.selectpicker').selectpicker('refresh');
 
-    $('.swal-btn-success').click(function (e) {
-        e.preventDefault();
-        swal({
-            title: "Thank You",
-            text: "You clicked the button!",
-            type: "success",
-            confirmButtonClass: "btn-success",
-            confirmButtonText: "Success"
-        });
-    });
+
 
     var URL = $(location).attr('href');
+
+    var status = $('#event_status').data('status');
     if (URL.contains("status=accept")) {
         swal({
             title: "Thank You",
-            text: "Event accepted successfully!",
+            text: status,
             type: "success",
             confirmButtonClass: "btn-success",
             confirmButtonText: "Close"
@@ -200,10 +141,14 @@ $(document).on('turbolinks:load', function () {
         $(document).click(function () {
             window.close()
         });
+        setTimeout(function () {
+            window.close();
+        }, 6000);
+
     }
     else if (URL.contains("status=decline")) {
         swal({
-            title: "Event Declined",
+            title: status,
             text: "Thank you for your response!",
             type: "error",
             confirmButtonClass: "btn-danger",
@@ -212,6 +157,10 @@ $(document).on('turbolinks:load', function () {
         $(document).click(function () {
             window.close()
         });
+        setTimeout(function () {
+            window.close();
+        }, 6000);
+
     }
 
 });

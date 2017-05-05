@@ -5,6 +5,7 @@
 //= require bootstrap-datetimepicker
 //= require jquery.jscrollpane.min
 //= require jquery.validation.min
+//= require validator.min
 //= require jquery.typeahead.min
 //= require jquery.mask.min
 //= require autosize.min
@@ -19,3 +20,4 @@
 //= require common
 //= require fullcalendar.min
 //= require data-confirm-modal
+//= require owl.carousel.min

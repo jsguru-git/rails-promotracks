@@ -7,23 +7,17 @@ class EventsController < ApplicationController
     if params[:token]
       user_event=UserEvent.find_by(token: params[:token])
       if params[:status]=="accept"
-        if @event.promo_rep?
+        if @event.max_users > @event.user_events.where(:status => UserEvent::statuses[:accepted]).count
           user_event.status = :accepted
           user_event.save
-          flash[:notice]= "Event accepted sucessfully"
-        elsif @event.promo_group?
-          if @event.max_users > @event.user_events.where(:status => UserEvent::statuses[:accepted]).count
-            user_event.status = :accepted
-            user_event.save
-            flash[:notice]= "Event accepted sucessfully"
-          else
-            flash[:notice]= "Event reached max no of users"
-          end
+          @msg= "Event accepted successfully!"
+        else
+          @msg= "Event reached max no of users!"
         end
       elsif params[:status]=="decline"
         user_event.status = :declined
         user_event.save
-        flash[:notice]= "Event declined "
+        @msg= "Event declined sucessfully"
       end
     end
   end

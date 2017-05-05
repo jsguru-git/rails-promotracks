@@ -27,45 +27,27 @@ div
             = f.label :brand, 'Brand Name'
             sup.text-danger *
             =f.select :brand_id, options_for_select(@current_client.brands.active_brands.collect { |u| [u.name, u.id] }, selected_key = @event.brand_id), {}, {:class => 'form-control pointer selectpicker', required: true}
-            .help-block.with-errors
         .form-group.row
-          -if @event.promo_rep?
-            -rep_checked=true
-            -grp_checked=false
-          -elsif @event.promo_group?
-            -rep_checked=false
-            -grp_checked=true
+          .col-md-6
+
+            = f.label :promo_reps, 'Promo Reps'
+            sup.text-danger *
+            -selected=@event.user_events.where(:category => 0).collect { |c| c[:user_id] }
+            =f.select :user_ids, options_for_select(@promo_reps.collect { |u| [u.full_name, u.id] }, selected_key = selected), {}, {:multiple => true, :class => 'form-control add_promo_reps'}
+            .help-block.with-errors
           .col-md-3
-            label Reps/Groups
-            br
-            =radio_button_tag 'promo', false, rep_checked, class: 'pointer radio-button text-radio', placeholder: 'Name', :id => 'promo_rep_button'
-            =label_tag :promo_reps, 'Promo Reps'
+            = f.label :promo_groups, 'Promo Groups'
+            sup.text-danger *
+            =f.select :group_id, options_for_select(Group.all.collect { |u| [u.name, u.id] }, selected_key = @event.group_id), {:include_blank => 'Nothing Selected'}, {:class => 'form-control pointer', :title => 'Select Group'}
+            .help-block.with-errors
           .col-md-3
-            label &nbsp;
-            br
-              =radio_button_tag 'promo', false, grp_checked, class: 'pointer radio-button', placeholder: 'Name', :id => 'promo_group_button'
-              =label_tag :promo_reps, 'Promo Groups'
-          .col-md-3
-            #promo_reps
-              = f.label :promo_reps, 'Promo Reps'
-              sup.text-danger *
-              -selected=@event.user_events.collect { |c| c[:user_id] }
-              =f.select :user_ids, options_for_select(@promo_reps.collect { |u| [u.full_name, u.id] }, selected_key = selected), {}, {:multiple => true, :class => 'form-control add_promo_reps'}
-              .help-block.with-errors
-            .promo_groups style= "display:none"
-              = f.label :promo_groups, 'Promo Groups'
-              sup.text-danger *
-              =f.select :group_id, options_for_select(@current_client.groups.collect { |u| [u.name, u.id] }, selected_key = @event.group_id), {:include_blank => 'Nothing Selected'}, {:class => 'form-control pointer', :title => 'Select Group'}
-              .help-block.with-errors
-          .col-md-3
-            .promo_groups style= "display:none"
-              = f.label :max_users, 'Max Users'
-              sup.text-danger *
-              -if @event.max_users==0
-                -value=1
-              -else
-                -value=@event.max_users
-              = f.number_field :max_users, min: 1, class: 'form-control', required: true, :value => value
+            = f.label :max_users, 'Max Users'
+            sup.text-danger *
+            -if @event.max_users==0
+              -value=1
+            -else
+              -value=@event.max_users
+            = f.number_field :max_users, min: 1, class: 'form-control', required: true, :value => value
         .form-group.row
           .col-sm-6
             =f.label :start_time, 'Start Time'
@@ -81,6 +63,15 @@ div
               =f.text_field :end_time, class: 'form-control', required: true, value: (@event&.end_time&.strftime('%m/%d/%Y %I:%M %p'))
               span.input-group-addon.pointer
                 i.icmn-calendar4
+        .form-group.row
+          .col-sm-6
+            =f.label :pay, '$ Payment/hr'
+            sup.text-danger *
+            = f.number_field :pay, min: 1, class: 'form-control', required: true
+          .col-sm-6
+            =f.label :area, 'Area'
+            sup.text-danger *
+            = f.text_field :area, class: 'form-control', required: true
 
         = f.fields_for :address do |addr|
           .form-group.row

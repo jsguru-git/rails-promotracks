@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170501162339) do
+ActiveRecord::Schema.define(version: 20170505122552) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,10 +18,11 @@ ActiveRecord::Schema.define(version: 20170501162339) do
   create_table "brands", force: :cascade do |t|
     t.string   "name"
     t.string   "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.integer  "user_id"
-    t.boolean "deleted", default: false
+    t.boolean  "deleted",     default: false
+    t.float    "unit_cost",   default: 0.0
     t.index ["user_id"], name: "index_brands_on_user_id", using: :btree
   end
 
@@ -37,8 +38,18 @@ ActiveRecord::Schema.define(version: 20170501162339) do
     t.string   "phone"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "admin_id"
+    t.integer  "admin_id"
     t.index ["admin_id"], name: "index_clients_on_admin_id", using: :btree
+  end
+
+  create_table "clients_groups", id: false, force: :cascade do |t|
+    t.integer "client_id"
+    t.integer "group_id"
+  end
+
+  create_table "clients_users", id: false, force: :cascade do |t|
+    t.integer "client_id"
+    t.integer "user_id"
   end
 
   create_table "event_types", force: :cascade do |t|
@@ -54,15 +65,16 @@ ActiveRecord::Schema.define(version: 20170501162339) do
     t.datetime "end_time"
     t.string   "area"
     t.float    "product_cost"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.integer  "user_id"
     t.integer  "brand_id"
     t.integer  "group_id"
-    t.integer "promo_category", default: 0
+    t.integer  "promo_category", default: 0
     t.integer  "client_id"
     t.integer  "max_users",      default: 0
     t.integer  "event_type_id"
+    t.integer  "pay",            default: 0
     t.index ["brand_id"], name: "index_events_on_brand_id", using: :btree
     t.index ["client_id"], name: "index_events_on_client_id", using: :btree
     t.index ["event_type_id"], name: "index_events_on_event_type_id", using: :btree
@@ -74,8 +86,6 @@ ActiveRecord::Schema.define(version: 20170501162339) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "name"
-    t.integer  "client_id"
-    t.index ["client_id"], name: "index_groups_on_client_id", using: :btree
   end
 
   create_table "locations", force: :cascade do |t|
@@ -94,30 +104,23 @@ ActiveRecord::Schema.define(version: 20170501162339) do
   end
 
   create_table "user_events", force: :cascade do |t|
-    t.integer "event_id"
-    t.integer "user_id"
-    t.string "token"
-    t.integer "category", default: 0
-    t.integer "status", default: 0
-    t.string "notes"
-    t.boolean "recommended", default: false
+    t.integer  "event_id"
+    t.integer  "user_id"
+    t.string   "token"
+    t.integer  "category",      default: 0
+    t.integer  "status",        default: 0
+    t.string   "notes"
+    t.boolean  "recommended",   default: false
     t.datetime "check_in"
     t.datetime "check_out"
-    t.text "images", default: [], array: true
-    t.string "follow_up"
-    t.integer "attendance"
-    t.integer "sample"
-    t.boolean "deleted", default: false
-    t.integer "total_expense", default: 0
+    t.text     "images",        default: [],    array: true
+    t.string   "follow_up"
+    t.integer  "attendance",    default: 0
+    t.integer  "sample",        default: 0
+    t.boolean  "deleted",       default: false
+    t.integer  "total_expense", default: 0
     t.index ["event_id"], name: "index_user_events_on_event_id", using: :btree
     t.index ["user_id"], name: "index_user_events_on_user_id", using: :btree
-  end
-
-  create_table "user_groups", force: :cascade do |t|
-    t.integer "group_id"
-    t.integer "user_id"
-    t.index ["group_id"], name: "index_user_groups_on_group_id", using: :btree
-    t.index ["user_id"], name: "index_user_groups_on_user_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -137,21 +140,21 @@ ActiveRecord::Schema.define(version: 20170501162339) do
     t.string   "last_name"
     t.integer  "role",                              default: 0
     t.string   "phone"
-    t.integer  "client_id"
     t.string   "authentication_token",   limit: 30
     t.string   "token"
-    t.string "invitation_token"
+    t.string   "invitation_token"
     t.datetime "invitation_created_at"
     t.datetime "invitation_sent_at"
     t.datetime "invitation_accepted_at"
-    t.integer "invitation_limit"
-    t.string "invited_by_type"
-    t.integer "invited_by_id"
-    t.integer "invitations_count", default: 0
-    t.string "image"
+    t.integer  "invitation_limit"
+    t.string   "invited_by_type"
+    t.integer  "invited_by_id"
+    t.integer  "invitations_count",                 default: 0
+    t.string   "image"
+    t.integer  "group_id"
     t.index ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree
-    t.index ["client_id"], name: "index_users_on_client_id", using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["group_id"], name: "index_users_on_group_id", using: :btree
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true, using: :btree
     t.index ["invitations_count"], name: "index_users_on_invitations_count", using: :btree
     t.index ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
@@ -165,7 +168,6 @@ ActiveRecord::Schema.define(version: 20170501162339) do
   add_foreign_key "events", "event_types"
   add_foreign_key "events", "groups"
   add_foreign_key "events", "users"
-  add_foreign_key "groups", "clients"
   add_foreign_key "locations", "events"
-  add_foreign_key "users", "clients"
+  add_foreign_key "users", "groups"
 end

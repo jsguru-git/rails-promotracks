@@ -7,20 +7,27 @@ class Superadmin::ClientsController < Superadmin::SuperadminApplicationControlle
 
   def new
     @client=Client.new
-    @admin=@client.build_admin
+    @admin=@client.users.new
   end
 
   def create
     @client=Client.new(client_params)
-    @client.brand_ids = params[:client][:brand_ids].delete_if { |x| x.empty? }
+    if params[:client][:brand].nil?
+      flash[:error]="Add Atleast one brand"
+      redirect_to :back
+      return
+    else
+      params[:client][:brand].each do |brand_params|
+        @client.brands.new(:name=>brand_params[:name],:unit_cost=>brand_params[:unit_cost])
+      end
+    end
+    @client.users << @client.admin
     if @client.save
-      @client.admin.update(client_id: @client.id)
       redirect_to superadmin_clients_path
     else
       flash[:error]=@client.errors.full_messages.join(',')
       redirect_to :back
     end
-
   end
 
   def edit
@@ -35,7 +42,16 @@ class Superadmin::ClientsController < Superadmin::SuperadminApplicationControlle
       client_call_params = client_update_params
     end
     if @client.update_attributes(client_call_params)
-      @client.update(brand_ids: params[:client][:brand_ids]) if params[:client][:brand_ids]
+      unless params[:client][:brand].nil?
+        params[:client][:brand].each do |brand_params|
+          if brand_params[:id].nil?
+            @client.brands.create(:name=>brand_params[:name],:unit_cost=>brand_params[:unit_cost])
+          else
+            brand=Brand.find(brand_params[:id])
+            brand.update(name:brand_params[:name],unit_cost:brand_params[:unit_cost])
+          end
+        end
+      end
       redirect_to superadmin_clients_path
     else
       flash[:error]=@client.errors.full_messages.join(', ')
@@ -45,7 +61,7 @@ class Superadmin::ClientsController < Superadmin::SuperadminApplicationControlle
 
   def impersonate
     client = Client.find(params[:client_id])
-    slave_user = client.users.find(params[:user_id])
+    slave_user = User.find(params[:user_id])
     if slave_user
       session[:slave_user_id] = slave_user.id
       session[:role] = 'super_admin'
@@ -55,6 +71,14 @@ class Superadmin::ClientsController < Superadmin::SuperadminApplicationControlle
       redirect_back fallback_location: superadmin_clients_path
     end
 
+  end
+
+
+  def remove_brand
+    client = Client.find(params[:client_id])
+    brand=client.brands.find(params[:id])
+    brand.destroy
+    render json: {success: :true}
   end
 
   private

@@ -8,11 +8,11 @@ module Admin
     before_action :set_client
 
     def set_client
-      @current_client = current_user.client
+      @current_client = Client.joins(:users).where(:users=>{:id=>current_user.id,:role=>:client_admin}).first
     end
 
     def authenticate_admin
-      if current_user.client_admin? and !current_user.client_id.nil?
+      if current_user.client_admin?
         true
       end
     end

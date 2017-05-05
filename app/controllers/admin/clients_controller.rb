@@ -2,8 +2,8 @@ class Admin::ClientsController < Admin::AdminApplicationController
 
   def reps_and_groups
     match=[]
-    @groups=@current_client.groups.where("name ILIKE? ", "%#{params[:term]}%").order('name ASC')
-    @users=@current_client.users.where("first_name ILIKE :search OR last_name ILIKE :search", search: "%#{params[:term]}%")
+    @groups=Group.where("name ILIKE? ", "%#{params[:term]}%").order('name ASC')
+    @users=User.where(:role=>:promo_rep).where("first_name ILIKE :search OR last_name ILIKE :search", search: "%#{params[:term]}%")
     @users.each do |user|
       match << {id: user.id, label: user.full_name, value: user.full_name, type: user.role}
     end
@@ -18,7 +18,6 @@ class Admin::ClientsController < Admin::AdminApplicationController
     end
   end
 
-
   def edit
     @client=Client.find(params[:id])
     @admin=@client.admin
@@ -32,7 +31,6 @@ class Admin::ClientsController < Admin::AdminApplicationController
     end
     if @client.update_attributes(client_call_params)
       @client.update(brand_ids: params[:client][:brand_ids]) if params[:client][:brand_ids]
-
       redirect_to admin_dashboard_index_path
     else
       flash[:error]=@client.errors.full_messages.join(', ')

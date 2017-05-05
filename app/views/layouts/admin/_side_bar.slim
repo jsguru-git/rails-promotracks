@@ -12,14 +12,6 @@ nav.left-menu left-menu=""
         a.left-menu-link href=admin_events_path
           i.left-menu-link-icon.icmn-calendar
           | Events
-      li.left-menu-list class="#{active_class(admin_groups_path)}"
-        a.left-menu-link href=admin_groups_path
-          i.left-menu-link-icon.fa.fa-group
-          | Promo Groups
-      li.left-menu-list class="#{active_class(admin_promo_reps_path)}"
-        a.left-menu-link href=admin_promo_reps_path
-          i.left-menu-link-icon.icmn-users
-          | Promo Reps
       li.left-menu-list
         a.left-menu-link href=destroy_user_session_path data= {:confirm => "Are you sure?", :method => :delete} title= 'Logout'
           i.left-menu-link-icon.icmn-exit

@@ -1,5 +1,4 @@
 class Group < ActiveRecord::Base
-  has_many :user_groups
-  has_many :users, :through => :user_groups
-  belongs_to :client
+  has_many :users
+  has_and_belongs_to_many :clients, join_table: :clients_groups
 end

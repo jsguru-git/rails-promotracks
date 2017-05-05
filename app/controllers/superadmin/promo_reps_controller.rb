@@ -1,22 +1,22 @@
 require 'platform/email_helper'
-class Admin::PromoRepsController < Admin::AdminApplicationController
+class Superadmin::PromoRepsController < Superadmin::SuperadminApplicationController
   include EmailHelper
 
   def index
-    @promo_reps=@current_client.users&.where(role: 'promo_rep').collect { |u| u }
+    @promo_reps=User.where(role: 'promo_rep').collect { |u| u }
     unless @promo_reps.kind_of?(Array)
-      @promo_reps = @promo_reps.page(params[:page]).per(20)
+      @promo_reps = @promo_reps.page(params[:page]).per(10)
     else
-      @promo_reps = Kaminari.paginate_array(@promo_reps.uniq).page(params[:page]).per(20)
+      @promo_reps = Kaminari.paginate_array(@promo_reps.uniq).page(params[:page]).per(10)
     end
   end
 
   def new
-    @promo_rep=@current_client.users.new
+    @promo_rep=User.new
   end
 
   def create
-    pro_rep=@current_client.users.new(user_params)
+    pro_rep=User.new(user_params)
     pro_rep.password = (10000..99999).to_a.sample
     pro_rep.token = (10000..99999).to_a.sample
     if pro_rep.valid?
@@ -26,7 +26,7 @@ class Admin::PromoRepsController < Admin::AdminApplicationController
       email_data[:subject]="New Promo Rep :#{pro_rep.id}"
       email_data[:user]=promo_ref_info(pro_rep)
       UserMailer.send_email(pro_rep.email, email_data).deliver
-      redirect_to admin_promo_reps_path
+      redirect_to superadmin_promo_reps_path
     else
       flash[:error]=pro_rep.errors.full_messages.join(', ')
       redirect_to :back
@@ -35,13 +35,13 @@ class Admin::PromoRepsController < Admin::AdminApplicationController
 
 
   def edit
-    @promo_rep=@current_client.users.find(params[:id])
+    @promo_rep=User.find(params[:id])
   end
 
   def update
-    @promo_rep=@current_client.users.find(params[:id])
+    @promo_rep=User.find(params[:id])
     if @promo_rep.update_attributes(user_params)
-      redirect_to admin_promo_reps_path
+      redirect_to superadmin_promo_reps_path
     else
       flash[:error]=@promo_rep.errors.full_messages.join(', ')
       redirect_to :back
@@ -50,7 +50,7 @@ class Admin::PromoRepsController < Admin::AdminApplicationController
 
 
   def resend
-    @promo_rep=@current_client.users.find(params[:promo_rep_id])
+    @promo_rep=User.find(params[:promo_rep_id])
     @promo_rep.update_attribute(:token, (10000..99999).to_a.sample)
     email_data={}
     email_data[:body] = "find below the new passcode for the promo rep"
@@ -58,7 +58,7 @@ class Admin::PromoRepsController < Admin::AdminApplicationController
     email_data[:user]=promo_ref_info(@promo_rep)
     UserMailer.send_code(@promo_rep.email, email_data).deliver
     flash[:notice]="Password sent!"
-    redirect_to admin_promo_reps_path
+    redirect_to superadmin_promo_reps_path
   end
 
 
