@@ -46,6 +46,11 @@ class Api::V1::EventsController < Api::V1::ApiApplicationController
     render :index
   end
 
+  def expired
+    @events = current_user.events.expired_events.includes(:user_events).where(:user_events => {:user_id => current_user.id})
+    render :index
+  end
+
   private
 
 

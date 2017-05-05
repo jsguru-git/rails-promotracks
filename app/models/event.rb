@@ -21,4 +21,9 @@ class Event < ActiveRecord::Base
     self.where('(end_time NOTNULL AND end_time >= ?)', Time.now)
         .where(:user_events => {:status => UserEvent::statuses[:accepted], :check_out => nil}).where.not(:user_events => {:check_in => nil})
   end
+
+  def self.expired_events
+    self.where('(end_time NOTNULL AND end_time < ?)', Time.now)
+        .where(:user_events => {:status => UserEvent::statuses[:accepted], :check_out => nil}).where.not(:user_events => {:check_in => nil})
+  end
 end
