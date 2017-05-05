@@ -1,4 +1,8 @@
 div
+  /ol.breadcrumb
+  /  li.breadcrumb-item
+  /    a href='#{admin_events_path}'   Events
+  /  li.breadcrumb-item.active #{@event.new_record? ? 'Create ' : 'Edit '} Event
   = form_for [:admin, @event] do |f|
     .panel.panel-with-borders
       .panel-heading
@@ -14,12 +18,12 @@ div
           .col-md-6
             = f.label :type, 'Event Type'
             sup.text-danger *
-            =f.select :event_type_id, options_for_select(EventType.all.collect { |u| [u.name, u.id] }, selected_key = @event.event_type_id), {:include_blank => 'Nothing Selected'}, {:class => 'form-control pointer', required: true}
+            =f.select :event_type_id, options_for_select(EventType.all.collect { |u| [u.name, u.id] }, selected_key = @event.event_type_id), {}, {:class => 'form-control pointer selectpicker', required: true}
             .help-block.with-errors
           .col-md-6
             = f.label :brand, 'Brand Name'
             sup.text-danger *
-            =f.select :brand_id, options_for_select(@current_client.brands.active_brands.collect { |u| [u.name, u.id] }, selected_key = @event.brand_id), {:include_blank => 'Nothing Selected'}, {:class => 'form-control pointer', required: true}
+            =f.select :brand_id, options_for_select(@current_client.brands.active_brands.collect { |u| [u.name, u.id] }, selected_key = @event.brand_id), {}, {:class => 'form-control pointer selectpicker', required: true}
             .help-block.with-errors
         .form-group.row
           -if @event.promo_rep?
