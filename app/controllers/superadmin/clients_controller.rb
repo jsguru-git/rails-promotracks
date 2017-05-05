@@ -35,6 +35,7 @@ class Superadmin::ClientsController < Superadmin::SuperadminApplicationControlle
       client_call_params = client_update_params
     end
     if @client.update_attributes(client_call_params)
+      @client.update(brand_ids: params[:client][:brand_ids]) if params[:client][:brand_ids]
       redirect_to superadmin_clients_path
     else
       flash[:error]=@client.errors.full_messages.join(', ')
