@@ -3,12 +3,21 @@ div
   .panel-heading
     h3 Dashboard
   .panel-body
-    table.table
+    table.table#data_table
       thead
         tr.active
-          th  Date
-          th  Name
-          th  Type
+          th
+            span.fa.fa-sort.fa-1x
+              '
+              | Date
+          th
+            span.fa.fa-sort.fa-1x
+              '
+              | Name
+          th
+            span.fa.fa-sort.fa-1x
+              '
+              | Type
           th  Area
           th  Rep
           th Attendance
@@ -55,7 +64,7 @@ div
                 td #{(event.brand.unit_cost)*(uv.sample)}
                 td #{uv.total_expense}
                 -if !uv.check_in.nil? and !uv.check_out.nil?
-                  -hour=((uv.check_out - uv.check_in)/3600).round
+                  -hour=((Time.parse(uv.check_out.to_s) - Time.parse(uv.check_in.to_s))/ 60).round
                   td #{hour}
                   td #{hour*event.pay}
                 -else
