@@ -18,7 +18,8 @@ class Superadmin::ClientsController < Superadmin::SuperadminApplicationControlle
       return
     else
       params[:client][:brand].each do |brand_params|
-        @client.brands.new(:name=>brand_params[:name],:unit_cost=>brand_params[:unit_cost])
+        brand=Brand.new(:name => brand_params[:name], :unit_cost => brand_params[:unit_cost])
+        @client.brands << brand
       end
     end
     @client.users << @client.admin
