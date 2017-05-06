@@ -30,7 +30,7 @@ body.theme-default.single-page
                       .col-md-6
                         =client.label :phone
                         br
-                        =client.text_field :phone, :class => 'form-control', autofocus: true
+                        =client.text_field :phone, :class => 'form-control', autofocus: true, :id => 'us-phone-mask-input'
                   .form-group
                     =f.hidden_field :role, :value => 'client_admin'
                     = f.label :email

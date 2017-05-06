@@ -15,7 +15,10 @@ class RegistrationsController < Devise::RegistrationsController
     if resource.save
       sign_up(resource_name, resource)
       resource.update_attributes(update_params)
-      resource.client.update(admin_id: resource.id)
+      client=Client.new(client_params)
+      client.admin = resource
+      client.users << resource
+      client.save
       respond_to do |format|
         format.html { redirect_to after_sign_up_path_for(resource), notice: "Signed Up Successfully" }
         format.json {
@@ -39,7 +42,7 @@ class RegistrationsController < Devise::RegistrationsController
 
   def after_sign_up_path_for(resource)
     if resource.client_admin?
-      admin_promo_reps_path
+      admin_dashboard_index_path
     else
       homes_path
     end
@@ -52,6 +55,10 @@ class RegistrationsController < Devise::RegistrationsController
 
   def update_params
     params.require(:user).permit(:first_name, :last_name, :email, :role, client_attributes: [:name, :phone, :admin_id])
+  end
+
+  def client_params
+    params[:user].require(:client).permit(:name, :phone)
   end
 
   def json_request?
