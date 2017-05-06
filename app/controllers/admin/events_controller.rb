@@ -37,7 +37,7 @@ class Admin::EventsController < Admin::AdminApplicationController
       @event.user_events.new(user_id: user_id, token: SecureRandom.hex[0, 6])
       @current_client.users << user
     end
-    unless params[:event][:group_id].nil?
+    unless params[:event][:group_id].blank?
       group=Group.find(params[:event][:group_id])
       group.users.each do |user|
         token=SecureRandom.hex[0, 6]
