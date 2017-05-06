@@ -10,14 +10,14 @@ class EventsController < ApplicationController
         if @event.max_users > @event.user_events.where(:status => UserEvent::statuses[:accepted]).count
           user_event.status = :accepted
           user_event.save
-          flash[:notice]= "Event accepted successfully!"
+          @msg= "Event accepted successfully!"
         else
-          flash[:notice]= "Event reached max no of users!"
+          @msg= "Event reached max no of users!"
         end
       elsif params[:status]=="decline"
         user_event.status = :declined
         user_event.save
-        flash[:error]= "Event declined sucessfully"
+        @msg= "Event declined sucessfully"
       end
     end
   end
