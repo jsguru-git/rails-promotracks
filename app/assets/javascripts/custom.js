@@ -126,41 +126,40 @@ $(document).on('turbolinks:load', function () {
     $('.selectpicker').selectpicker('refresh');
 
 
-
-    var URL = $(location).attr('href');
-
-    var status = $('#event_status').data('status');
-    if (URL.contains("status=accept")) {
-        swal({
-            title: "Thank You",
-            text: status,
-            type: "success",
-            confirmButtonClass: "btn-success",
-            confirmButtonText: "Close"
-        });
-        $(document).click(function () {
-            window.close()
-        });
-        setTimeout(function () {
-            window.close();
-        }, 6000);
-
-    }
-    else if (URL.contains("status=decline")) {
-        swal({
-            title: status,
-            text: "Thank you for your response!",
-            type: "error",
-            confirmButtonClass: "btn-danger",
-            confirmButtonText: "Close"
-        });
-        $(document).click(function () {
-            window.close()
-        });
-        setTimeout(function () {
-            window.close();
-        }, 6000);
-
-    }
+    //var URL = $(location).attr('href');
+    //
+    //var status = $('#event_status').data('status');
+    //if (URL.contains("status=accept")) {
+    //    swal({
+    //        title: "Thank You",
+    //        text: status,
+    //        type: "success",
+    //        confirmButtonClass: "btn-success",
+    //        confirmButtonText: "Close"
+    //    });
+    //    $(document).click(function () {
+    //        window.close()
+    //    });
+    //    setTimeout(function () {
+    //        window.close();
+    //    }, 6000);
+    //
+    //}
+    //else if (URL.contains("status=decline")) {
+    //    swal({
+    //        title: status,
+    //        text: "Thank you for your response!",
+    //        type: "error",
+    //        confirmButtonClass: "btn-danger",
+    //        confirmButtonText: "Close"
+    //    });
+    //    $(document).click(function () {
+    //        window.close()
+    //    });
+    //    setTimeout(function () {
+    //        window.close();
+    //    }, 6000);
+    //
+    //}
 
 });
