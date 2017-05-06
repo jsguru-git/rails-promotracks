@@ -2,7 +2,7 @@ class Superadmin::UsersController < Superadmin::SuperadminApplicationController
 
   def index
     @client=Client.find(params[:client_id])
-    @users=@client.users
+    @users=@client.users.where(:role => :client_admin)
   end
 
   def new
@@ -12,9 +12,10 @@ class Superadmin::UsersController < Superadmin::SuperadminApplicationController
 
   def create
     @client=Client.find(params[:client_id])
-    admin=@client.users.new(user_params)
+    admin=User.new(user_params)
     admin.invite!
     if admin.valid?
+      @client.users << admin
       @client.save
       flash[:notice]= "Admin Invited Sucessfully"
       redirect_to superadmin_client_users_path

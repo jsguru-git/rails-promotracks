@@ -2,7 +2,7 @@ class Admin::DashboardController < Admin::AdminApplicationController
 
 
   def index
-    @events=@current_client.events.includes(:user_events).where(:user_events=>{:status => UserEvent::statuses[:accepted]}).order("created_at desc")
+    @events=@current_client&.events.includes(:user_events).where(:user_events => {:status => UserEvent::statuses[:accepted]}).order("created_at desc")
     @total=0.0
     @total_attendance=0
     @total_sample=0

@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
     if resource.super_admin?
       superadmin_clients_path
     elsif resource.client_admin?
-      admin_promo_reps_path
+      admin_dashboard_index_path
     else
       homes_path
     end
