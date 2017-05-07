@@ -20,38 +20,13 @@ section.page-content
                   | Payment/hr :      #{@event.pay}
 
                   br/
-                  /strong "&amp;nbsp;&amp;nbsp;example@amazon.com" do
-                  /  abbr title="Mail"  E-mail:
-                  /br/
-                  /= succeed "&amp;nbsp;&amp;nbsp;(123)" do
-                  /  abbr title="Phone"  Phone:
-                  /| 456-7890
-                  /br/
-                  /= succeed "&amp;nbsp;&amp;nbsp;800-692-7753" do
-                  /  abbr title="Fax"  Fax:
-                  br/
                   br/
               .col-md-6.text-right
                 address
                   |  Brand :    #{@event.brand&.name}
                 address
                   | Unit cost: $ #{@event.brand&.unit_cost}
-            /  br/
-            /  span.font-size-20 Artour Arteezy
-            /address
-            /  | 795 Folsom Ave, Suite 600
-            /  br/
-            /  | San Francisco, CA, 94107
-            /  br/
-            /  /= succeed "&amp;nbsp;&amp;nbsp;(123)" do
-            /  /  abbr title="Phone"  P:
-            /  /| 456-7890
-            /  /br/
-            /span Invoice Date: January 20, 2016
-            /br/
-            /span Due Date: January 22, 2016
-            /br/
-            /br/
+
             .table-responsive
               table.table.table-hover.text-right
                 thead
