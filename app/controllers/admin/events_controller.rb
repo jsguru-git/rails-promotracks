@@ -68,6 +68,10 @@ class Admin::EventsController < Admin::AdminApplicationController
     @promo_reps=User.where(role: 'promo_rep')
   end
 
+  def show
+    @event = Event.find(params[:id])
+  end
+
   def update
     reps = []
     group_email=false

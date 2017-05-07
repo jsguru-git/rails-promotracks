@@ -47,7 +47,9 @@ div
           -count=event.user_events.where(:status => UserEvent::statuses[:accepted]).count
           tr
             td rowspan="#{count+count}" #{event.start_time&.strftime('%m/%d/%Y')}
-            td rowspan="#{count+count}" #{event.name}
+            td rowspan="#{count+count}"
+              =link_to " #{event.name}", admin_event_path(event.id)
+
             td rowspan="#{count+count}" #{event&.event_type&.name}
             td rowspan="#{count+count}" #{event&.area}
             -event.user_events.where(:status => UserEvent::statuses[:accepted]).each do |uv|

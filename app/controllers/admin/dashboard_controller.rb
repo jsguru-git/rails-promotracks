@@ -40,4 +40,9 @@ class Admin::DashboardController < Admin::AdminApplicationController
     @total_product_cost=product_cost.collect { |c| c }.compact.flatten.reduce(0, :+)
     @total_payment=final_pay.collect { |c| c }.compact.reduce(0, :+)
   end
+
+
+  def images
+    @user_event=UserEvent.find(params[:user_event])
+  end
 end

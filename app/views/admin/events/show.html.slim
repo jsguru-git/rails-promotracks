@@ -1,0 +1,110 @@
+section.page-content
+  #load_images
+  .page-content-inner
+    /! Pricing Tables
+    .panel
+      .panel-heading
+        h3 #{@event.name}
+      .panel-body
+        .margin-bottom-50
+          .invoice-block
+            .row
+              .col-md-6
+                h4 #{@event.event_type&.name}
+
+                address
+                  | Timings:       #{@event&.start_time&.strftime('%m/%d/%Y %I:%M %p')} - #{@event&.end_time&.strftime('%m/%d/%Y %I:%M %p')}
+                address
+                  | Venue:         #{@event.address&.formatted_address}
+                address
+                  | Payment/hr :      #{@event.pay}
+
+                  br/
+                  /strong "&amp;nbsp;&amp;nbsp;example@amazon.com" do
+                  /  abbr title="Mail"  E-mail:
+                  /br/
+                  /= succeed "&amp;nbsp;&amp;nbsp;(123)" do
+                  /  abbr title="Phone"  Phone:
+                  /| 456-7890
+                  /br/
+                  /= succeed "&amp;nbsp;&amp;nbsp;800-692-7753" do
+                  /  abbr title="Fax"  Fax:
+                  br/
+                  br/
+              .col-md-6.text-right
+                address
+                  |  Brand :    #{@event.brand&.name}
+                address
+                  | Unit cost: $ #{@event.brand&.unit_cost}
+            /  br/
+            /  span.font-size-20 Artour Arteezy
+            /address
+            /  | 795 Folsom Ave, Suite 600
+            /  br/
+            /  | San Francisco, CA, 94107
+            /  br/
+            /  /= succeed "&amp;nbsp;&amp;nbsp;(123)" do
+            /  /  abbr title="Phone"  P:
+            /  /| 456-7890
+            /  /br/
+            /span Invoice Date: January 20, 2016
+            /br/
+            /span Due Date: January 22, 2016
+            /br/
+            /br/
+            .table-responsive
+              table.table.table-hover.text-right
+                thead
+                  tr
+                    th.text-right Id
+                    th.text-right Rep
+                    th.text-right Attendance
+                    th.text-right Sample
+                    th.text-right Product Cost
+                    th.text-right Expenses
+                    th.text-right Hours
+                    th.text-right Pay
+                    th.text-right Recommended
+                    th.text-right Follow up
+                    th.text-right Notes
+                    th.text-right Images
+
+                tbody
+                  -@event.user_events.where(:status => UserEvent::statuses[:accepted]).each_with_index do |uv, index|
+
+                    tr
+                      td #{uv.user.id}
+                      td #{uv.user.full_name}
+                      td #{uv.attendance}
+                      td #{uv.sample}
+                      td #{number_with_precision((@event.brand.unit_cost)*(uv.sample).round, precision: 1,  strip_insignificant_zeros: true)}
+                      td #{uv.total_expense}
+                      -if !uv.check_in.nil? and !uv.check_out.nil?
+                        -hour=((Time.parse(uv.check_out.to_s) - Time.parse(uv.check_in.to_s))/ 60).round
+                        td #{hour}
+                        td #{hour*@event.pay}
+                      -else
+                        td nil
+                        td nil
+                      td
+                        -if uv.recommended
+                          p Yes
+                        -else
+                          p No
+                      td
+                        -if uv.notes.blank?
+                          p Not available
+                        -else
+                          a href="javascript:void" title="Notes" data-toggle="popover" data-placement="bottom" data-content="#{uv.follow_up}" View
+                      td
+                        -if uv.notes.blank?
+                          p Not available
+                        -else
+                          a href="javascript:void" title="Notes" data-toggle="popover" data-placement="bottom" data-content="#{uv.notes}" View
+
+                      td
+                        -if uv.images&
+                           .size==0
+                          p Not available
+                        -else
+                          a class="images" href= images_admin_dashboard_index_path(:user_event=> uv.id)  Show

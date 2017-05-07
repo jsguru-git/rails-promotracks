@@ -22,7 +22,11 @@ Rails.application.routes.draw do
   end
   namespace :admin do
     get '/login_as_master' => 'admin_application#login_as_master'
-    resources :dashboard
+    resources :dashboard do
+      collection do
+        get "images"
+      end
+    end
     resources :promo_reps do
       get :resend
     end
