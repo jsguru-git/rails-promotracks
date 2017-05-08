@@ -43,6 +43,7 @@ section.page-content
                     th.text-right Follow up
                     th.text-right Notes
                     th.text-right Images
+                    th.text-right Actions
 
                 tbody
                   -@event.user_events.where(:status => UserEvent::statuses[:accepted]).each_with_index do |uv, index|
@@ -83,3 +84,6 @@ section.page-content
                           p Not available
                         -else
                           a class="images" href= images_admin_dashboard_index_path(:user_event=> uv.id)  Show
+                      td
+                        = link_to edit_admin_event_user_event_path(:event_id => @event.id, :id => uv.id), class: 'btn-sm  btn-icon btn btn-rounded btn-warning' do
+                          i.icmn-pencil4

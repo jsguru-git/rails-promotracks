@@ -30,7 +30,9 @@ Rails.application.routes.draw do
     resources :promo_reps do
       get :resend
     end
-    resources :events
+    resources :events do
+      resources :user_events
+    end
     resources :groups
     resources :clients do
       collection do

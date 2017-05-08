@@ -1,0 +1,46 @@
+section.page-content
+  .page-content-inner
+    .col-md-offset-1.col-md-10
+      = form_for [:admin, @event, @user_event] do |f|
+        section.panel
+          .panel-heading
+            h3 #{@user_event.new_record? ? 'New ' : 'Edit '}
+          .panel-body
+            .form-group.row
+              .col-md-12
+                = f.label :attendance, 'Total Attendance'
+                sup.text-danger
+                = f.text_field :attendance, class: 'form-control '
+            .form-group.row
+              .col-md-12
+                = f.label :sample, 'Number Sampled'
+                sup.text-danger
+                = f.text_field :sample, class: 'form-control'
+            .form-group.row
+              .col-md-12
+                = f.label :total_expense, 'Total Expense for event'
+                sup.text-danger
+                = f.text_field :total_expense, class: 'form-control'
+            .form-group.row
+              .col-md-12
+                = f.label :follow_up, 'Bar/Store Owner Meetup for Followup'
+                sup.text-danger
+                = f.text_field :follow_up, class: 'form-control'
+            .form-group.row
+              .col-md-12
+                = f.label :notes, 'Notes'
+                sup.text-danger
+                = f.text_area :notes, class: 'form-control', rows: 5
+            .form-group.row
+              .col-md-6
+                label &nbsp;
+                .input-group
+                  .input-group-addon
+                    = f.check_box :recommended
+                  .form-control Recommended
+          .panel-footer
+            .form-group.row
+              .col-md-9.col-md-offset-3
+                =f.submit 'Submit', class: 'button btn width-150 btn-primary'
+                '
+                a.button.btn.btn-default href="#{admin_event_path(@event)}" Cancel
