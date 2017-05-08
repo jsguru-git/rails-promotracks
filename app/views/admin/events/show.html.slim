@@ -40,8 +40,8 @@ section.page-content
                     th.text-right Hours
                     th.text-right Pay
                     th.text-right Recommended
-                    th.text-right Follow up
-                    th.text-right Notes
+                    th.text-right Check In
+                    th.text-right Check out
                     th.text-right Images
                     th.text-right Actions
 
@@ -67,16 +67,9 @@ section.page-content
                           p Yes
                         -else
                           p No
-                      td
-                        -if uv.notes.blank?
-                          p Not available
-                        -else
-                          a href="javascript:void" title="Notes" data-toggle="popover" data-placement="bottom" data-content="#{uv.follow_up}" View
-                      td
-                        -if uv.notes.blank?
-                          p Not available
-                        -else
-                          a href="javascript:void" title="Notes" data-toggle="popover" data-placement="bottom" data-content="#{uv.notes}" View
+                      td #{uv.check_in&.strftime('%m/%d/%Y %I:%M %p')}
+
+                      td #{uv.check_out&.strftime('%m/%d/%Y %I:%M %p')}
 
                       td
                         -if uv.images&.size==0
