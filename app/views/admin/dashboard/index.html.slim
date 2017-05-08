@@ -59,7 +59,11 @@ div
                     td #{uv.user.full_name}
                     td #{uv.attendance}
                     td #{uv.sample}
-                    td #{number_with_precision((event.brand.unit_cost)*(uv.sample).round, precision: 1,  strip_insignificant_zeros: true)}
+                    -if uv.sample.nil?
+                      td N/A
+                    -else
+                      td  #{number_with_precision((event.brand.unit_cost)*(uv.sample).round, precision: 1,  strip_insignificant_zeros: true)}
+
                     td #{uv.total_expense}
                     -if !uv.check_in.nil? and !uv.check_out.nil?
                       -hour=((Time.parse(uv.check_out.to_s) - Time.parse(uv.check_in.to_s))/ 60).round
