@@ -164,9 +164,9 @@ $(document).on('turbolinks:load', function () {
 
 
     $('#owl3').owlCarousel({
-        items: 4,
+        items: 5,
         lazyLoad: true,
-        loop: true,
+        loop: false,
         margin: 10,
         responsive: {
             0: {
