@@ -25,7 +25,7 @@ class Admin::DashboardController < Admin::AdminApplicationController
       total_sample=active_events.collect { |c| c[:sample] }.compact.reduce(0, :+)
       sample << total_sample
 
-      total_product_cost=active_events.collect { |c| c[:sample]* event.brand.unit_cost }
+      total_product_cost=active_events.where.not(:sample => nil).collect { |c| c[:sample]* event.brand.unit_cost }
       product_cost<<total_product_cost
 
       active_events.where.not(:check_in=>nil,:check_out=>nil).each do |active|
