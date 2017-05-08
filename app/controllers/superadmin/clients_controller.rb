@@ -43,7 +43,11 @@ class Superadmin::ClientsController < Superadmin::SuperadminApplicationControlle
       client_call_params = client_update_params
     end
     if @client.update_attributes(client_call_params)
-      unless params[:client][:brand].nil?
+      if params[:client][:brand].nil?
+        flash[:error]="Add Atleast one brand"
+        redirect_to :back
+        return
+      else
         params[:client][:brand].each do |brand_params|
           if brand_params[:id].nil?
             @client.brands.create(:name=>brand_params[:name],:unit_cost=>brand_params[:unit_cost])

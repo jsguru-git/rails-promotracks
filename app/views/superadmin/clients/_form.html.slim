@@ -114,13 +114,13 @@ section.page-content.height-auto
                   .brands
                   -if @client.new_record?
                     .row
-                      .col-md-6
+                      .col-md-7
                         .form-group
-                          = text_field_tag 'client[brand][][name]', '', class: 'form-control required', :placeholder => 'Name'
+                          = text_field_tag 'client[brand][][name]', '', class: 'form-control required', :placeholder => 'Name', :required => true
                           .help-block.with-errors
                       .col-md-4
                         .form-group
-                          = text_field_tag 'client[brand][][unit_cost]', '', class: 'form-control required', :placeholder => 'Unit Cost'
+                          = text_field_tag 'client[brand][][unit_cost]', '', class: 'form-control required', :placeholder => 'Unit Cost', :required => true
                           .help-block.with-errors
                       .col-md-1
                         .form-group
