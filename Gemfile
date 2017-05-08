@@ -24,6 +24,7 @@ gem "select2-rails"
 # gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
+gem 'jquery-datatables-rails', '~> 3.4.0'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'bootstrap-sass', '~> 3.3.6'

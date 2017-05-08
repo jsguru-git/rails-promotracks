@@ -8,10 +8,9 @@ section.page-content
       .panel-body
         .margin-bottom-50
           .invoice-block
+            h4 #{@event.event_type&.name}
             .row
               .col-md-6
-                h4 #{@event.event_type&.name}
-
                 address
                   | Timings:       #{@event&.start_time&.strftime('%m/%d/%Y %I:%M %p')} - #{@event&.end_time&.strftime('%m/%d/%Y %I:%M %p')}
                 address

@@ -16,25 +16,24 @@ section.page-content.height-auto
           section.text-center data-step="0"
             .row
               .col-sm-12
-                .margin-bottom-50
-                  .row
-                    .col-md-3
-                      label.form-control-label for="l0"
-                        | Name
-                        sup.text-danger *
-                    .col-md-9
-                      .form-group
-                        = f.text_field :name, class: 'name form-control', required: true
-                        .help-block.with-errors
-                  .row
-                    .col-md-3
-                      label.form-control-label for="l0"
-                        | Phone
-                        sup.text-danger
-                    .col-md-9
-                      .form-group
-                        = f.text_field :phone, class: 'form-control', id: 'us-phone-mask-input'
-                        .help-block.with-errors
+                .row
+                  .col-md-3.col-lg-offset-2
+                    label.form-control-label for="l0"
+                      | Name
+                      sup.text-danger *
+                  .col-md-4
+                    .form-group
+                      = f.text_field :name, class: 'name form-control', required: true
+                      .help-block.with-errors
+                .row
+                  .col-md-3.col-lg-offset-2
+                    label.form-control-label for="l0"
+                      | Phone
+                      sup.text-danger
+                  .col-md-4
+                    .form-group
+                      = f.text_field :phone, class: 'form-control', id: 'us-phone-mask-input'
+                      .help-block.with-errors
           h3
             i.icmn-user.cui-wizard--steps--icon
             span.cui-wizard--steps--title Admin
@@ -120,8 +119,10 @@ section.page-content.height-auto
                           .help-block.with-errors
                       .col-md-4
                         .form-group
-                          = text_field_tag 'client[brand][][unit_cost]', '', class: 'form-control required', :placeholder => 'Unit Cost', :required => true
-                          .help-block.with-errors
+                          .form-input-icon
+                            i.fa.fa-dollar.font-green
+                            = text_field_tag 'client[brand][][unit_cost]', '', class: 'form-control required', :id => 'l32', :placeholder => 'Unit Cost', :required => true
+                            .help-block.with-errors
                       .col-md-1
                         .form-group
                           a.form-control.remove_brand href='javascript:void(0)'
@@ -136,12 +137,16 @@ section.page-content.height-auto
                             .help-block.with-errors
                         .col-md-4
                           .form-group
-                            = text_field_tag 'client[brand][][unit_cost]', brand.unit_cost, class: 'form-control required', :placeholder => 'Unit Cost'
-                            .help-block.with-errors
+                            .form-input-icon
+                              i.fa.fa-dollar.font-green
+                              = text_field_tag 'client[brand][][unit_cost]', brand.unit_cost, class: 'form-control required', id: 'l32', :placeholder => 'Unit Cost'
+                              .help-block.with-errors
                         .col-md-1
                           .form-group
                             a.form-control.remove_brand data-id=brand.id data-client=@client&.id href='javascript:void(0)'
                               i.fa.fa-trash
+.padding-bottom-40
+
 javascript:
   $(document).on('turbolinks:load', function () {
     var form = $("#client_wizard");
