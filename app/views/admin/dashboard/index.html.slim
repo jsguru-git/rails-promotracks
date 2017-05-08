@@ -50,7 +50,7 @@ div
               tr
                 td rowspan="#{count+count}" #{event.start_time&.strftime('%m/%d/%Y')}
                 td rowspan="#{count+count}"
-                  =link_to " #{event.name}", admin_event_path(event.id)
+                  =link_to " #{event.name}", admin_event_path(event.id), :id => 'text-color'
 
                 td rowspan="#{count+count}" #{event&.event_type&.name}
                 td rowspan="#{count+count}" #{event&.area}
@@ -87,7 +87,7 @@ div
               tr
                 td  #{event.start_time&.strftime('%m/%d/%Y')}
                 td
-                  =link_to " #{event.name}", admin_event_path(event.id)
+                  =link_to " #{event.name}", admin_event_path(event.id), :id => 'text-color'
 
                 td  #{event&.event_type&.name}
                 td  #{event&.area}
