@@ -43,7 +43,7 @@ section.page-content
                     th.text-right Check In
                     th.text-right Check out
                     th.text-right Images
-                    th.text-right Actions
+                    th Actions
 
                 tbody
                   -@event.user_events.where(:status => UserEvent::statuses[:accepted]).each_with_index do |uv, index|

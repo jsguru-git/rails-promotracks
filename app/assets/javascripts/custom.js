@@ -8,17 +8,6 @@ $(document).on('turbolinks:load', function () {
         placeholder: "Nothing Selected"
     });
 
-    //$('#start_time')
-    //    .datetimepicker(start_date_props)
-    //    .on("dp.change", function (e) {
-    //        $('#end_time').data("DateTimePicker").minDate(e.date);
-    //    });
-    //$('#end_time')
-    //    .datetimepicker(end_date_props)
-    //    .on("dp.change", function (e) {
-    //        $('#start_time').data("DateTimePicker").maxDate(e.date);
-    //    });
-
     $('#start_time').datetimepicker();
     $('#end_time').datetimepicker({
         useCurrent: false //Important! See issue #1075
@@ -30,6 +19,17 @@ $(document).on('turbolinks:load', function () {
         $('#start_time').data("DateTimePicker").maxDate(e.date);
     });
 
+
+    $('#check_in_time').datetimepicker();
+    $('#check_out_time').datetimepicker({
+        useCurrent: false //Important! See issue #1075
+    });
+    $("#check_in_time").on("dp.change", function (e) {
+        $('#check_out_time').data("DateTimePicker").minDate(e.date);
+    });
+    $("#check_out_time").on("dp.change", function (e) {
+        $('#check_in_time').data("DateTimePicker").maxDate(e.date);
+    });
 
 
 

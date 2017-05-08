@@ -10,6 +10,8 @@ class Admin::UserEventsController < Admin::AdminApplicationController
     @event = Event.find(params[:event_id])
     @user_event = @event.user_events.find(params[:id])
     if @user_event.update_attributes(user_event_params)
+      @user_event.update_attribute(:check_in, Time.zone.strptime(user_event_params[:check_in], '%m/%d/%Y %I:%M %p')) unless user_event_params[:check_in].nil?
+      @user_event.update_attribute(:check_out, Time.zone.strptime(user_event_params[:check_out], '%m/%d/%Y %I:%M %p')) unless user_event_params[:check_out].nil?
       flash[:notice]="Updated Successfully"
       redirect_to admin_event_path(@event)
     else

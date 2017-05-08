@@ -32,6 +32,21 @@ section.page-content
                 sup.text-danger
                 = f.text_area :notes, class: 'form-control', rows: 5
             .form-group.row
+              .col-sm-6
+                =f.label :check_in, 'Check In time'
+                sup.text-danger
+                #check_in_time.input-group.date
+                  =f.text_field :check_in, class: 'form-control', value: (@user_event&.check_in&.strftime('%m/%d/%Y %I:%M %p'))
+                  span.input-group-addon.pointer
+                    i.icmn-calendar4
+              .col-sm-6
+                =f.label :check_out, 'Check Out time'
+                sup.text-danger
+                #check_out_time.input-group.date
+                  =f.text_field :check_out, class: 'form-control', value: (@user_event&.check_out&.strftime('%m/%d/%Y %I:%M %p'))
+                  span.input-group-addon.pointer
+                    i.icmn-calendar4
+            .form-group.row
               .col-md-6
                 label &nbsp;
                 .input-group
