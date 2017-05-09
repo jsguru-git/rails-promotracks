@@ -31,7 +31,9 @@ Rails.application.routes.draw do
       get :resend
     end
     resources :events do
-      resources :user_events
+      resources :user_events do
+        delete :delete_image
+      end
     end
     resources :groups
     resources :clients do

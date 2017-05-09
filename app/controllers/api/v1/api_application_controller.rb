@@ -1,5 +1,7 @@
+
 class Api::V1::ApiApplicationController < ApplicationController
   respond_to :json
+  include ApplicationHelper
 
   protect_from_forgery with: :null_session
 

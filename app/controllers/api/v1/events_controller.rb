@@ -58,24 +58,5 @@ class Api::V1::EventsController < Api::V1::ApiApplicationController
     params.require(:user_event).permit(:notes, :total_expense, :check_in, :check_out, :images, :follow_up, :recommended, :attendance, :sample)
   end
 
-  def add_images(images, event)
-    success = true
-    error={}
-    images_count=event.images.count
-    unless images.nil?
-      if event.images.count<5 and event.images.count+images.count<=5
-        event.images += images
-        event.save!
-      else
-        success = false
-        if (5-images_count==0) or (5-images_count<0)
-          error={:code => 709, :message => "There are already #{images_count} file uploaded.Cant upload files "}
-        else
-          error={:code => 709, :message => "There are already #{images_count} file uploaded.Upload upto #{5-images_count} files "}
-        end
-      end
-    end
-    return success, error
-  end
 
 end

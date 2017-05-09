@@ -17,10 +17,16 @@ section.page-content
                 sup.text-danger
                 = f.text_field :sample, class: 'form-control'
             .form-group.row
-              .col-md-12
+              .col-md-6
                 = f.label :total_expense, 'Total Expense for event'
                 sup.text-danger
                 = f.text_field :total_expense, class: 'form-control'
+              .col-md-6
+                label &nbsp;
+                .input-group
+                  .input-group-addon
+                    = f.check_box :recommended
+                  .form-control Recommended
             .form-group.row
               .col-md-12
                 = f.label :follow_up, 'Bar/Store Owner Meetup for Followup'
@@ -47,12 +53,20 @@ section.page-content
                   span.input-group-addon.pointer
                     i.icmn-calendar4
             .form-group.row
-              .col-md-6
-                label &nbsp;
-                .input-group
-                  .input-group-addon
-                    = f.check_box :recommended
-                  .form-control Recommended
+              .col-md-12
+                = f.label :images, 'Images'
+                sup.text-danger
+                =f.file_field :images, :class => 'form-control file', :multiple => true
+
+            .row
+              .col-lg-12
+                br
+                .margin-bottom-50
+                  #owl3.owl-carousel.owl-theme.owl-demo-img
+                    -@user_event&.images.each_with_index do |img, index|
+                      div class="image_#{index}"
+                        span class="fa fa-times remove_image" data-event=@event.id data-uv="#{@user_event.id}" data-item="#{index}" aria-hidden="true"
+                          img src=image_path(img) class='fa fa-times'
           .panel-footer
             .form-group.row
               .col-md-9.col-md-offset-3

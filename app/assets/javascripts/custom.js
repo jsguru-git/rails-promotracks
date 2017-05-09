@@ -215,5 +215,21 @@ $(document).on('turbolinks:load', function () {
     //});
 
 
+    $(".remove_image").click(function (event) {
+        var event_id = $(this).attr('data-event');
+        var uv_id = $(this).attr('data-uv');
+        var item = $(this).attr('data-item');
+        $.ajax({
+            method: "DELETE",
+            url: '/admin/events/' + event_id + '/user_events/' + uv_id + '/delete_image?index=' + item,
+            dataType: 'json',
+            success: function (data) {
+
+            }
+        });
+        $('.image_' + item).find("*").remove();
+
+    });
+
 
 });
