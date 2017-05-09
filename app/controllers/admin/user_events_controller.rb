@@ -20,7 +20,7 @@ class Admin::UserEventsController < Admin::AdminApplicationController
       end
     end
     if @user_event.update_attributes(user_event_params)
-      @user_event.update_attribute(:images, images)
+      @user_event.update_attribute(:images, images) unless images.blank?
       @user_event.update_attribute(:check_in, Time.zone.strptime(user_event_params[:check_in], '%m/%d/%Y %I:%M %p')) unless user_event_params[:check_in].nil?
       @user_event.update_attribute(:check_out, Time.zone.strptime(user_event_params[:check_out], '%m/%d/%Y %I:%M %p')) unless user_event_params[:check_out].nil?
       flash[:notice]="Updated Successfully"
