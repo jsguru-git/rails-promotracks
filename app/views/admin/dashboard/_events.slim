@@ -1,0 +1,51 @@
+-events.each do |event|
+  -if event.user_events.where(:status => UserEvent::statuses[:accepted]).size>0
+    -count=event.user_events.where(:status => UserEvent::statuses[:accepted]).count
+    tr
+      td rowspan="#{count+count}" #{event.start_time&.strftime('%m/%d/%Y')}
+      td rowspan="#{count+count}"
+        =link_to " #{event.name}", admin_event_path(event.id), :id => 'text-color'
+
+      td rowspan="#{count+count}" #{event&.event_type&.name}
+      td rowspan="#{count+count}" #{event&.area}
+      -event.user_events.where(:status => UserEvent::statuses[:accepted]).each do |uv|
+        tr data-hide="true"
+          td #{uv.user.full_name}
+          td #{uv.attendance}
+          td #{uv.sample}
+          -if uv.sample.nil?
+            td N/A
+          -else
+            td  #{number_with_precision((event.brand.unit_cost)*(uv.sample).round, precision: 1,  strip_insignificant_zeros: true)}
+
+          td #{uv.total_expense}
+          -if !uv.check_in.nil? and !uv.check_out.nil?
+            -hour=((Time.parse(uv.check_out.to_s) - Time.parse(uv.check_in.to_s))/ 60).round
+            td #{hour}
+            td #{hour*event.pay}
+          -else
+            td nil
+            td nil
+
+          td
+            -if uv.recommended
+              p Yes
+            -else
+              p No
+          td #{uv.follow_up}
+          td
+            -if uv.notes.blank?
+              p Not available
+            -else
+              a href="javascript:void" title="Notes" data-toggle="popover" data-placement="bottom" data-content="#{uv.notes}" View
+
+        tr/
+    tr/
+  -else
+    tr
+      td  #{event.start_time&.strftime('%m/%d/%Y')}
+      td
+        =link_to " #{event.name}", admin_event_path(event.id), :id => 'text-color'
+
+      td  #{event&.event_type&.name}
+      td  #{event&.area}
