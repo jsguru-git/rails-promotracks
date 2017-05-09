@@ -23,6 +23,14 @@
   }
 }
 
+#login-screen {
+  background-image: image-url("login.jpeg");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
 .select2-container {
   width: 80px;
 }
@@ -51,7 +59,7 @@
 }
 
 #align {
-  bottom: 120px;
+  bottom: 140px;
 }
 
 #align1 {
@@ -153,3 +161,13 @@ input.field {
 .step {
   display: block;
 }
+
+//table.dataTable thead tr th {
+//  word-wrap: break-word;
+//  word-break: break-all;
+//}
+//
+//table.dataTable tbody tr td {
+//  word-wrap: break-word;
+//  word-break: break-all;
+//}
