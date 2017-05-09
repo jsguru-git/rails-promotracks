@@ -181,6 +181,19 @@ $(document).on('turbolinks:load', function () {
         }
     });
 
+    $("#order-select").on("change", function () {
+        var item = $(this).val();
+        $.ajax({
+            method: "GET",
+            url: "/admin/dashboard?sort_by=" + item,
+            dataType: 'json',
+            success: function (data) {
+                $("#events_list").find("*").remove();
+                $("#events_list").append(data.html);
+            }
+        });
+    });
+
 
     //$(".images").unbind('click').on("click", function () {
     //    var id = $(this).data("id");

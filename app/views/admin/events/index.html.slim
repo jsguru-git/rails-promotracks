@@ -14,9 +14,10 @@ div
               =text_field_tag "search", nil, placeholder: "Enter Reps or Groups", class: 'form-control field search_rep', :id => 'Postcode'
               |&nbsp;
               =submit_tag "Search", id: 'findbutton', class: 'btn btn-info'
+
       h3 Events List
     .panel-body
-      table.table
+      table.table#sort-data-table
         thead
           tr.active
             th ID

@@ -2,7 +2,7 @@ class Admin::DashboardController < Admin::AdminApplicationController
 
 
   def index
-    @events=@current_client&.events.includes(:user_events).order("created_at desc")
+    @events=@current_client&.events.includes(:user_events).order_events(params[:sort_by])
     @total=0.0
     @total_attendance=0
     @total_sample=0
@@ -39,6 +39,13 @@ class Admin::DashboardController < Admin::AdminApplicationController
     @total=total.collect { |c| c }.compact.reduce(0, :+)
     @total_product_cost=product_cost.collect { |c| c }.compact.flatten.reduce(0, :+)
     @total_payment=final_pay.collect { |c| c }.compact.reduce(0, :+)
+    respond_to do |format|
+      format.html {}
+      format.js {
+        html = render_to_string :partial => 'admin/dashboard/events', layout: false, :locals => {:events => @events}
+        render :json => {:success => true, :html => html} }
+
+    end
   end
 
 

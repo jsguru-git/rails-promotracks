@@ -3,48 +3,12 @@ div
   .panel-heading
     h3 Dashboard
   .panel-body
-    .table-responsive
-      table.table
-        thead
-          tr.active
-            th Date
-
-            th Name
-
-            th Type
-
-            th  Area
-            th  Rep
-            th Attendance
-            th Sample
-            th Prod cost
-            th  Expenses
-            th  Hours
-            th  Pay
-            th Recommend
-            th Follow up
-            th Notes
-
-
-        tfoot
-          tr.active
-            th &nbsp;
-            th &nbsp;
-            th Events Data Summary
-            th &nbsp;
-            th  &nbsp;
-            th  #{@total_attendance}
-            th  #{@total_sample}
-            th  #{@total_product_cost}
-            th  #{@total}
-            th &nbsp;
-            th #{@total_payment}
-            th &nbsp;
-            th &nbsp;
-            th &nbsp;
-
-        tbody
-          =render partial: 'admin/dashboard/events', :locals => {:events => @events}
+    .pull-right.col-md-3
+      .form-group
+        /= label_tag :sort_by, 'Order'
+        = select_tag :sort_by, options_for_select(Event::SORT_BY, selected_key = params[:sort]), {class: 'form-control', id: 'order-select'}
+    #events_list
+      =render partial: 'admin/dashboard/events', :locals => {:events => @events}
 .padding-bottom-25
 
 

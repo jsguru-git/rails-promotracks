@@ -26,4 +26,31 @@ class Event < ActiveRecord::Base
     self.where('(end_time NOTNULL AND end_time < ?)', Time.now)
         .where(:user_events => {:status => UserEvent::statuses[:accepted], :check_out => nil}).where.not(:user_events => {:check_in => nil})
   end
+
+  SORT_BY =
+      {
+          'Date (desc)' => 'nd',
+          'Date (asc)' => 'na',
+          # 'Type (asc)' => 'ta',
+          # 'Type (desc)' => 'td',
+          'Area (asc)' => 'aa',
+          'Area (desc)' => 'ad',
+      }
+
+  def self.order_events(sort)
+    if sort.nil? or sort=='nd'
+      order(start_time: :desc)
+    elsif sort=='na'
+      order(start_time: :asc)
+      # elsif sort=='ca'
+      #   order(type: :asc)
+      # elsif sort=='cd'
+      #   order(type: :desc)
+    elsif sort=='aa'
+      order(area: :asc)
+    elsif sort=='ad'
+      order(area: :desc)
+    end
+  end
+
 end
