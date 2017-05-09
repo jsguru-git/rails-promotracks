@@ -51,9 +51,9 @@ class Admin::EventsController < Admin::AdminApplicationController
       email_data[:body] = "Please find below the event details"
       email_data[:subject]="#{@event.name} :#{@event.id}"
       @event.users.each do |user|
-        token=@event.user_events.where(:user_id => user.id).first.token
+        user_event=@event.user_events.where(:user_id => user.id).first
         email_data[:event]=get_event(@event, user)
-        EventMailer.accept_event(user.email, email_data, token).deliver
+        EventMailer.accept_event(user.email, email_data, {token: user_event.token, category: user_event.category}).deliver
       end
       redirect_to admin_events_path
     else
@@ -117,15 +117,15 @@ class Admin::EventsController < Admin::AdminApplicationController
       @event.save!
       if group_email==true
         @event.group.users.each do |user|
-          token=@event.user_events.where(:user_id => user.id).first.token
+          user_event=@event.user_events.where(:user_id => user.id).first
           email_data[:event]=get_event(@event, user)
-          EventMailer.accept_event(user.email, email_data, token).deliver
+          EventMailer.accept_event(user.email, email_data, {token: user_event.token, category: user_event.category}).deliver
         end
       elsif rep_email==true
         reps.each do |user|
-          token=@event.user_events.where(:user_id => user.id).first.token
+          user_event=@event.user_events.where(:user_id => user.id).first
           email_data[:event]=get_event(@event, user)
-          EventMailer.accept_event(user.email, email_data, token).deliver
+          EventMailer.accept_event(user.email, email_data, {token: user_event.token, category: user_event.category}).deliver
         end
       end
       redirect_to admin_events_path

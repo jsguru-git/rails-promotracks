@@ -1,8 +1,9 @@
 class EventMailer < ApplicationMailer
 
-  def accept_event(to_email, data, token=nil)
+  def accept_event(to_email, data, params)
     @data = data
-    @data[:token]= token
+    @data[:token]= params[:token]
+    @data[:type]=params[:category]
     mail(:to => to_email, :subject => @data[:subject])
   end
 
