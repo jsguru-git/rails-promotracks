@@ -31,8 +31,8 @@ class Event < ActiveRecord::Base
       {
           'Date (desc)' => 'nd',
           'Date (asc)' => 'na',
-          # 'Type (asc)' => 'ta',
-          # 'Type (desc)' => 'td',
+          'Type (asc)' => 'ta',
+          'Type (desc)' => 'td',
           'Area (asc)' => 'aa',
           'Area (desc)' => 'ad',
       }
@@ -42,10 +42,10 @@ class Event < ActiveRecord::Base
       order(start_time: :desc)
     elsif sort=='na'
       order(start_time: :asc)
-      # elsif sort=='ca'
-      #   order(type: :asc)
-      # elsif sort=='cd'
-      #   order(type: :desc)
+    elsif sort=='td'
+      order('event_type.name DESC')
+    elsif sort=='ta'
+      order('event_type.name ASC')
     elsif sort=='aa'
       order(area: :asc)
     elsif sort=='ad'
