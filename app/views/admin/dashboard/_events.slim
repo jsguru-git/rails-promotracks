@@ -4,20 +4,20 @@
       tr.active
         th Date
 
-        th Name
+        th style="width: 8%" Name
 
-        th Type
+        th style="width: 8%" Type
 
-        th  Area
-        th  Rep
+        th style="width: 8%" Area
+        th style="width: 8%" Rep
         th Attendance
         th Sample
-        th Prod cost
+        th style="width: 8%" Prod cost
         th  Expenses
         th  Hours
         th  Pay
         th Recommend
-        th Potential Customer Follow up
+        th style="width: 8%" Follow up
         th Notes
 
 
@@ -25,9 +25,7 @@
       tr.active
         th &nbsp;
         th &nbsp;
-        th Events Data Summary
-        th &nbsp;
-        th  &nbsp;
+        th colspan="3" Events Data Summary
         th  #{@total_attendance}
         th  #{@total_sample}
         th  #{@total_product_cost}
@@ -66,18 +64,22 @@
                   td #{hour}
                   td #{hour*event.pay}
                 -else
-                  td nil
-                  td nil
+                  td
+                  td
 
                 td
                   -if uv.recommended
                     p Yes
                   -else
                     p No
-                td #{uv.follow_up}
+                td
+                  -if uv.follow_up.blank?
+                    p N/A
+                  -else
+                    a href="javascript:void" title="Notes" data-toggle="popover" data-placement="bottom" data-content="#{uv.follow_up}" View
                 td
                   -if uv.notes.blank?
-                    p Not available
+                    p N/A
                   -else
                     a href="javascript:void" title="Notes" data-toggle="popover" data-placement="bottom" data-content="#{uv.notes}" View
 
