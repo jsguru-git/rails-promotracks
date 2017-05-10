@@ -2,9 +2,10 @@ div
   .panel
     .panel-heading
       .pull-right
-        = link_to new_admin_event_path, class: "btn btn-info" do
-          i.left-menu-link-icon.fa.fa-calendar-plus-o
-          |&nbsp;Event
+        =link_to "Create Event", new_admin_event_path, class: 'btn btn-info'
+      /= link_to new_admin_event_path, class: "btn btn-info" do
+      /  i.left-menu-link-icon
+      /  |&nbsp;Event
       .col-sm-5.pull-right
         .fieldwrapper
           =form_tag admin_events_path, method: :get, class: 'search_form' do
