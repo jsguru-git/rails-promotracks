@@ -34,7 +34,7 @@ class Admin::EventsController < Admin::AdminApplicationController
     @event.end_time= Time.zone.strptime(event_params[:end_time], '%m/%d/%Y %I:%M %p')
     params[:event][:user_ids].reject(&:blank?).each do |user_id|
       user=User.find(user_id)
-      @event.user_events.new(user_id: user_id, token: SecureRandom.hex[0, 6])
+      @event.user_events.new(user_id: user_id, token: SecureRandom.hex[0, 6], status: :accepted)
       @current_client.users << user
     end
     unless params[:event][:group_id].blank?
@@ -109,7 +109,7 @@ class Admin::EventsController < Admin::AdminApplicationController
             if @event.user_ids.exclude? user_id
               rep=User.find(user_id)
               reps << rep
-              @event.user_events.new(user_id: user_id, token: SecureRandom.hex[0, 6])
+              @event.user_events.new(user_id: user_id, token: SecureRandom.hex[0, 6], status: :accepted)
             end
           end
         end
