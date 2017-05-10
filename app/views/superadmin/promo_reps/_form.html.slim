@@ -20,6 +20,11 @@
             = f.label :email
             sup.text-danger *
             = f.email_field :email, class: 'form-control ', required: true
+        .form-group.row
+          .col-md-12
+            = f.label :area
+            sup.text-danger *
+            = f.text_field :area, class: 'form-control ', required: true
 
       .panel-footer
         .text-right
