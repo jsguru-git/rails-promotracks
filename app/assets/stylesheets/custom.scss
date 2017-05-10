@@ -31,6 +31,17 @@
   background-size: cover;
 }
 
+nav.csm-menu.top-menu {
+  border: none;
+  border-left: solid 1px;
+}
+
+@media (min-width: 768px) {
+  body.menu-top nav.csm-menu.top-menu {
+    height: 79px !important;
+  }
+}
+
 .select2-container {
   width: 80px;
 }
@@ -162,12 +173,3 @@ input.field {
   display: block;
 }
 
-//table.dataTable thead tr th {
-//  word-wrap: break-word;
-//  word-break: break-all;
-//}
-//
-//table.dataTable tbody tr td {
-//  word-wrap: break-word;
-//  word-break: break-all;
-//}

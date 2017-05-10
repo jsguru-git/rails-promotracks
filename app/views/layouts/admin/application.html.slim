@@ -6,12 +6,12 @@ html
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
-  body.theme-default
+  body.theme-default.menu-top.menu-static
+    -if flash.present?
+      =render 'layouts/flash_msg_template'
     =render partial: 'layouts/admin/side_bar'
-    =render partial: 'layouts/admin/top_bar'
+    /=render partial: 'layouts/admin/top_bar'
     section.page-content
       section.page-content-inner
-      -if flash.present?
-        =render 'layouts/flash_msg_template'
       = yield
-    =render partial: 'layouts/superadmin/footer'
+  =render partial: 'layouts/superadmin/footer'
