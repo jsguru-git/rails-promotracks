@@ -3,7 +3,7 @@ class Superadmin::PromoRepsController < Superadmin::SuperadminApplicationControl
   include EmailHelper
 
   def index
-    @promo_reps=User.where(role: 'promo_rep').collect { |u| u }
+    @promo_reps=User.where(role: 'promo_rep').order('first_name').collect { |u| u }
     unless @promo_reps.kind_of?(Array)
       @promo_reps = @promo_reps.page(params[:page]).per(10)
     else

@@ -24,7 +24,7 @@ class Admin::EventsController < Admin::AdminApplicationController
   def new
     @event=@current_client.events.new
     @address=@event.build_address
-    @promo_reps=User.where(role: 'promo_rep')
+    @promo_reps=User.where(role: 'promo_rep').order('first_name')
   end
 
   def create
