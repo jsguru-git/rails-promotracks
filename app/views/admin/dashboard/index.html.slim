@@ -5,8 +5,9 @@ div
   .panel-body
     .pull-right.col-md-3
       .form-group
-        /= label_tag :sort_by, 'Order'
         = select_tag :sort_by, options_for_select(Event::SORT_BY, selected_key = params[:sort]), {class: 'form-control', id: 'order-select'}
+    .pull-right
+      h6.filter Filter
     #events_list
       =render partial: 'admin/dashboard/events', :locals => {:events => @events}
 .padding-bottom-25

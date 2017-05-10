@@ -29,12 +29,12 @@ class Event < ActiveRecord::Base
 
   SORT_BY =
       {
-          'Date (desc)' => 'nd',
+          'Date (dsc)' => 'nd',
           'Date (asc)' => 'na',
           'Type (asc)' => 'ta',
-          'Type (desc)' => 'td',
+          'Type (dsc)' => 'td',
           'Area (asc)' => 'aa',
-          'Area (desc)' => 'ad',
+          'Area (dsc)' => 'ad',
       }
 
   def self.order_events(sort)
