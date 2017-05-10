@@ -3,7 +3,7 @@ class Superadmin::PromoRepsController < Superadmin::SuperadminApplicationControl
   include EmailHelper
 
   def index
-    @promo_reps=User.where(role: 'promo_rep').collect { |u| u }
+    @promo_reps=User.where(role: 'promo_rep').order('first_name').collect { |u| u }
     unless @promo_reps.kind_of?(Array)
       @promo_reps = @promo_reps.page(params[:page]).per(10)
     else
@@ -64,6 +64,6 @@ class Superadmin::PromoRepsController < Superadmin::SuperadminApplicationControl
 
   private
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :email, :role)
+    params.require(:user).permit(:first_name, :last_name, :email, :role, :area)
   end
 end
