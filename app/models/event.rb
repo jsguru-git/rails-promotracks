@@ -43,9 +43,9 @@ class Event < ActiveRecord::Base
     elsif sort=='na'
       order(start_time: :asc)
     elsif sort=='td'
-      order('event_type.name DESC')
+      order('event_types.name DESC')
     elsif sort=='ta'
-      order('event_type.name ASC')
+      order('event_types.name ASC')
     elsif sort=='aa'
       order(area: :asc)
     elsif sort=='ad'
