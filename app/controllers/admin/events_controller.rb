@@ -87,10 +87,10 @@ class Admin::EventsController < Admin::AdminApplicationController
       redirect_to :back
       return
     end
-    event_params[:start_time]=Time.zone.strptime(event_params[:start_time], '%m/%d/%Y %I:%M %p') unless event_params[:start_time].nil?
-    event_params[:end_time]=Time.zone.strptime(event_params[:end_time], '%m/%d/%Y %I:%M %p') unless event_params[:end_time].nil?
     @event.assign_attributes(event_params)
     if @event.valid?
+      @event.start_time=Time.zone.strptime(event_params[:start_time], '%m/%d/%Y %I:%M %p') unless event_params[:start_time].nil?
+      @event.end_time=Time.zone.strptime(event_params[:end_time], '%m/%d/%Y %I:%M %p') unless event_params[:end_time].nil?
       email_data={}
       email_data[:body] = "Please find below the event details"
       email_data[:subject]="#{@event.name} :#{@event.id}"
