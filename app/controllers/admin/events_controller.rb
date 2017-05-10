@@ -29,6 +29,11 @@ class Admin::EventsController < Admin::AdminApplicationController
 
   def create
     @event=@current_client.events.new(event_params)
+    if event_params[:group_id].blank? and event_params[:user_ids].blank?
+      flash[:error]= "Either Promo Rep or Group should be selected"
+      redirect_to :back
+      return
+    end
     @event.creator= current_user
     @event.start_time= Time.zone.strptime(event_params[:start_time], '%m/%d/%Y %I:%M %p')
     @event.end_time= Time.zone.strptime(event_params[:end_time], '%m/%d/%Y %I:%M %p')
@@ -77,6 +82,11 @@ class Admin::EventsController < Admin::AdminApplicationController
     group_email=false
     rep_email=false
     @event=Event.find(params[:id])
+    if event_params[:group_id].blank? and event_params[:user_ids].blank?
+      flash[:error]= "Either Promo Rep or Group should be selected"
+      redirect_to :back
+      return
+    end
     event_params[:start_time]=Time.zone.strptime(event_params[:start_time], '%m/%d/%Y %I:%M %p') unless event_params[:start_time].nil?
     event_params[:end_time]=Time.zone.strptime(event_params[:end_time], '%m/%d/%Y %I:%M %p') unless event_params[:end_time].nil?
     @event.assign_attributes(event_params)
