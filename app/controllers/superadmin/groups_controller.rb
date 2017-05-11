@@ -19,7 +19,7 @@ class Superadmin::GroupsController < Superadmin::SuperadminApplicationController
 
   def edit
     @group=Group.find(params[:id])
-    @promo_reps=User.where(role: 'promo_rep').order('first_name')
+    @promo_reps=User.where(role: 'promo_rep', :group_id => nil).order('first_name')
   end
 
   def update
