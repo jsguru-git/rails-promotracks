@@ -25,7 +25,7 @@ nav.left-menu left-menu=""
           .menu
             .menu-user-block
               .dropdown.dropdown-avatar
-                a.dropdown-toggle.left-menu-link aria-expanded="false" data-toggle="dropdown" href=("javascript: void(0);")
+                a.dropdown-toggle.left-menu-link aria-expanded="false" data-toggle="dropdown" data-no-turbolink="true" href=("javascript: void(0);")
                   span.avatar href="javascript:void(0);"
                     -image=current_user.image.blank? ? "default-user.jpg" : current_user.image.url
                     = image_tag image, alt: "Image"
