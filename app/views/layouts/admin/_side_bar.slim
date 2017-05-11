@@ -40,10 +40,10 @@ nav.left-menu left-menu=""
                       .dropdown-divider
                       -if @current_slave_user
                         li
-                        = link_to admin_login_as_master_path, data: {confirm: "Are you sure?"}, title: 'Back to Super Admin'
-                          i.dropdown-icon.icmn-enter
-                          |Back to SuperAdmin
-                    .dropdown-divider
+                          = link_to admin_login_as_master_path, data: {confirm: "Are you sure?"}, title: 'Back to Super Admin'
+                            i.dropdown-icon.icmn-enter
+                            |Back to SuperAdmin
+                        .dropdown-divider
                     li
                       = link_to destroy_user_session_path, data: {confirm: "Are you sure?"}, title: 'Logout', :method => :delete
                         i.dropdown-icon.icmn-exit
