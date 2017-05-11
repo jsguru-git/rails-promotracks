@@ -6,5 +6,4 @@ class Client < ActiveRecord::Base
   belongs_to :admin, class_name: 'User', foreign_key: :admin_id
   accepts_nested_attributes_for :brands, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :admin, reject_if: :all_blank, allow_destroy: true
-  # validates_length_of :phone, :minimum => 14, :maximum => 14
 end

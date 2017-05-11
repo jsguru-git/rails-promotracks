@@ -12,5 +12,6 @@ module PromoRails
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
     ActiveSupport.halt_callback_chains_on_return_false = false
+    config.active_job.queue_adapter = :sidekiq
   end
 end

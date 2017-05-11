@@ -399,6 +399,8 @@ GEM
       actionmailer (>= 3.2.6, < 6)
       actionpack (>= 3.2.6, < 6)
       devise (>= 3.2, < 6)
+    sinatra (1.0)
+      rack (>= 1.0)
     slackistrano (3.1.1)
       capistrano (>= 3.5.0)
     slim (3.0.7)
@@ -493,7 +495,9 @@ DEPENDENCIES
   sdoc (~> 0.4.0)
   select2-rails
   settingslogic
+  sidekiq
   simple_token_authentication
+  sinatra
   slackistrano
   slim
   slim-rails

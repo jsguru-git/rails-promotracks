@@ -2,7 +2,7 @@ class Superadmin::UsersController < Superadmin::SuperadminApplicationController
 
   def index
     @client=Client.find(params[:client_id])
-    @users=@client.users.where(:role => :client_admin)
+    @users=@client.users.client_admin
   end
 
   def new

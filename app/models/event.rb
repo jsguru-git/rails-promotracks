@@ -1,5 +1,5 @@
 class Event < ActiveRecord::Base
-  enum promo_category: [:promo_rep, :promo_group]
+
   belongs_to :client
   belongs_to :group
   belongs_to :brand
@@ -10,6 +10,7 @@ class Event < ActiveRecord::Base
   has_many :users, :through => :user_events
   accepts_nested_attributes_for :address, reject_if: :all_blank, allow_destroy: true
 
+  enum promo_category: [:promo_rep, :promo_group]
 
   def self.active_events
     self.where('(end_time NOTNULL AND end_time > ?)', Time.now)

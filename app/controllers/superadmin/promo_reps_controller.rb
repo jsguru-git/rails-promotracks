@@ -17,15 +17,10 @@ class Superadmin::PromoRepsController < Superadmin::SuperadminApplicationControl
 
   def create
     pro_rep=User.new(user_params)
-    pro_rep.password = (10000..99999).to_a.sample
-    pro_rep.token = (10000..99999).to_a.sample
-    if pro_rep.valid?
-      pro_rep.save
-      email_data={}
-      email_data[:body] = "find below the passcode for the promo rep"
-      email_data[:subject]="New Promo Rep :#{pro_rep.id}"
-      email_data[:user]=promo_ref_info(pro_rep)
-      UserMailer.send_email(pro_rep.email, email_data).deliver
+    pro_rep.password = generate_token
+    pro_rep.token = generate_token
+    if pro_rep.save
+      UserJob.perform_later('add_rep', pro_rep)
       redirect_to superadmin_promo_reps_path
     else
       flash[:error]=pro_rep.errors.full_messages.join(', ')
@@ -51,13 +46,9 @@ class Superadmin::PromoRepsController < Superadmin::SuperadminApplicationControl
 
   def resend
     @promo_rep=User.find(params[:promo_rep_id])
-    @promo_rep.update_attribute(:token, (10000..99999).to_a.sample)
-    email_data={}
-    email_data[:body] = "find below the new passcode for the promo rep"
-    email_data[:subject]="New  passcode for Promo Rep :#{@promo_rep.id}"
-    email_data[:user]=promo_ref_info(@promo_rep)
-    UserMailer.send_code(@promo_rep.email, email_data).deliver
-    flash[:notice]="Password sent!"
+    @promo_rep.update_attribute(:token, generate_token)
+    UserJob.perform_later('resend_token', @promo_rep)
+    flash[:notice] = "Password sent!"
     redirect_to superadmin_promo_reps_path
   end
 

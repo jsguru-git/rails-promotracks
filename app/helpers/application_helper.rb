@@ -12,6 +12,10 @@ module ApplicationHelper
     end
   end
 
+  def generate_token
+    (10000..99999).to_a.sample
+  end
+
   def add_images(images, event)
     success = true
     error={}

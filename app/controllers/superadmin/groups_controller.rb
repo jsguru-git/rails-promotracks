@@ -7,25 +7,27 @@ class Superadmin::GroupsController < Superadmin::SuperadminApplicationController
 
   def new
     @group=Group.new
-    @promo_reps=User.where(role: 'promo_rep', :group_id => nil).order('first_name')
+    @promo_reps=User.group_members
   end
 
   def create
     @group=Group.new(group_params)
-    @group.user_ids= params[:group][:user_ids].delete_if { |x| x.empty? }
+    @group.user_ids= params[:group][:user_ids].reject(&:blank?)
     @group.save
     redirect_to superadmin_groups_path
   end
 
   def edit
     @group=Group.find(params[:id])
-    @promo_reps=User.where(role: 'promo_rep', :group_id => nil).order('first_name')
+    @promo_reps=User.promo_rep.where("group_id=? OR group_id is NULL", @group.id).order('first_name')
   end
 
   def update
     @group=Group.find(params[:id])
-    if @group.update_attributes(group_params)
-      @group.update(user_ids: params[:group][:user_ids]) if params[:group][:user_ids]
+    @group.assign_attributes(group_params)
+    if @group.valid?
+      @group.user_ids = params[:group][:user_ids].reject(&:blank?)
+      @group.save
       redirect_to superadmin_groups_path
     else
       flash[:error]=@group.errors.full_messages.join(', ')
