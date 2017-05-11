@@ -199,7 +199,7 @@ javascript:
     });
 
     $('.add_new_brand').on("click", function () {
-      var brandFields = '<div class="row"><div class="col-md-7"><div class="form-group"><input name="client[brand][][name]" id="client_brand__name" value="" class="form-control required" placeholder="Name" type="text"><div class="help-block with-errors"></div></div></div><div class="col-md-4"><div class="form-group"><input name="client[brand][][unit_cost]" id="client_brand__unit_cost" value="" class="form-control required" placeholder="Unit Cost" type="text"><div class="help-block with-errors"></div></div></div><div class="col-md-1"><div class="form-group"><a class="form-control remove_brand" href="javascript:void(0)"><i class="fa fa-trash"></i></a></div></div></div>';
+      var brandFields = '<div class="row"><div class="col-md-7"><div class="form-group"><input name="client[brand][][name]" id="client_brand__name" value="" class="form-control required"  required="required" placeholder="Name" type="text"><div class="help-block with-errors"></div></div></div><div class="col-md-4"><div class="form-group"><input name="client[brand][][unit_cost]" id="client_brand__unit_cost" value="" class="form-control required" required="required" placeholder="Unit Cost" type="text"><div class="help-block with-errors"></div></div></div><div class="col-md-1"><div class="form-group"><a class="form-control remove_brand" href="javascript:void(0)"><i class="fa fa-trash"></i></a></div></div></div>';
       $(brandFields).insertBefore('.brands');
     });
 
