@@ -7,6 +7,7 @@ class Admin::DashboardController < Admin::AdminApplicationController
     @total_attendance=0
     @total_sample=0
     @total_product_cost=0.0
+    @total_payment=0
     sample=[]
     total=[]
     product_cost=[]
