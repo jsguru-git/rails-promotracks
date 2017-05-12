@@ -78,6 +78,7 @@ group :development do
   gem 'capistrano-rails', '~> 1.1.0'
   gem 'capistrano-thin'
   gem 'capistrano-sidekiq'
+  gem 'capistrano-faster-assets', '~> 1.0'
 end
 
 #Slack integreation
