@@ -26,7 +26,7 @@ html
                   h5 style=("margin-bottom: 20px; color: #24222f; font-size: 1.25rem ; font-weight: 600")  Hello #{@data[:event][:user]},
                   -if @data[:type] == 'promo_group'
                     p
-                      | You have been invited for this event please click accept to attend.
+                      | You have been invited for #{@data[:event][:name]} event please click accept to attend.
                   -else
                     p
                       | You have been assigned for this event.

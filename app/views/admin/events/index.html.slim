@@ -9,12 +9,14 @@ div
       .col-sm-5.pull-right
         .fieldwrapper
           =form_tag admin_events_path, method: :get, class: 'search_form' do
-            .input-group
-              =hidden_field_tag 'search_type'
-              =hidden_field_tag 'promo_id'
-              =text_field_tag "search", nil, placeholder: "Enter Reps or Groups", class: 'form-control field search_rep', :id => 'Postcode'
-              |&nbsp;
-              =submit_tag "Search", id: 'findbutton', class: 'btn btn-info'
+            .right.hidden-md-down.margin-left-20
+              .search-block
+                .form-input-icon.form-input-icon-right
+                  i.glyphicon.glyphicon-search
+                  =hidden_field_tag 'search_type'
+                  =hidden_field_tag 'promo_id'
+                  =text_field_tag "search", nil, placeholder: "Enter Reps or Groups", class: 'form-control form-control-sm form-control-rounded field search_rep', :id => 'Postcode'
+                  button.search-block-submit type="submit"
 
       h3 Events List
     .panel-body
