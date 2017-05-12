@@ -29,10 +29,7 @@ class Admin::ClientsController < Admin::AdminApplicationController
     if client_params[:admin_attributes][:password].empty?
       client_call_params = client_update_params
     end
-    @client.assign_attributes(client_call_params)
-    if @client.valid?
-      @client.brand_ids = params[:client][:brand_ids] unless params[:client][:brand_ids].blank?
-      @client.save
+    if @client.update_attributes(client_call_params)
       redirect_to admin_dashboard_index_path
     else
       flash[:error]=@client.errors.full_messages.join(', ')
