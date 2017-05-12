@@ -1,4 +1,6 @@
+require 'sidekiq/web'
 Rails.application.routes.draw do
+  mount Sidekiq::Web => '/sidekiq'
   devise_for :users, controllers: {registrations: "registrations", sessions: "sessions", invitations: "invitations"}
   devise_scope :user do
     root to: 'devise/sessions#new'
