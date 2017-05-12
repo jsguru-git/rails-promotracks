@@ -8,19 +8,15 @@ class Superadmin::ClientsController < Superadmin::SuperadminApplicationControlle
   def new
     @client=Client.new
     @admin=@client.users.new
+    @brands= @client.brands.build
   end
 
   def create
     @client=Client.new(client_params)
-    if params[:client][:brand].nil?
+    if client_params[:brands_attributes].nil?
       flash[:error]="Add Atleast one brand"
       redirect_to :back
       return
-    else
-      params[:client][:brand].each do |brand_params|
-        brand=Brand.new(:name => brand_params[:name], :unit_cost => brand_params[:unit_cost])
-        @client.brands << brand
-      end
     end
     @client.users << @client.admin
     if @client.save
@@ -34,6 +30,7 @@ class Superadmin::ClientsController < Superadmin::SuperadminApplicationControlle
   def edit
     @client=Client.find(params[:id])
     @admin=@client.admin
+    @brands=@client.brands
   end
 
   def update
@@ -42,21 +39,12 @@ class Superadmin::ClientsController < Superadmin::SuperadminApplicationControlle
     if client_params[:admin_attributes][:password].empty?
       client_call_params = client_update_params
     end
+    if client_params[:brands_attributes].nil?
+      flash[:error]="Add Atleast one brand"
+      redirect_to :back
+      return
+    end
     if @client.update_attributes(client_call_params)
-      if params[:client][:brand].nil?
-        flash[:error]="Add Atleast one brand"
-        redirect_to :back
-        return
-      else
-        params[:client][:brand].each do |brand_params|
-          if brand_params[:id].nil?
-            @client.brands.create(:name=>brand_params[:name],:unit_cost=>brand_params[:unit_cost])
-          else
-            brand=Brand.find(brand_params[:id])
-            brand.update(name:brand_params[:name],unit_cost:brand_params[:unit_cost])
-          end
-        end
-      end
       redirect_to superadmin_clients_path
     else
       flash[:error]=@client.errors.full_messages.join(', ')
@@ -89,11 +77,11 @@ class Superadmin::ClientsController < Superadmin::SuperadminApplicationControlle
   private
 
   def client_params
-    params.require(:client).permit(:name, :phone, :brand_ids, admin_attributes: [:id, :first_name, :last_name, :password, :password_confirmation, :email, :role, :image])
+    params.require(:client).permit(:name, :phone, :brand_ids, admin_attributes: [:id, :first_name, :last_name, :password, :password_confirmation, :email, :role, :image], brands_attributes: [:id, :name, :unit_cost])
   end
 
   def client_update_params
-    params.require(:client).permit(:name, :phone, :brand_ids, admin_attributes: [:id, :first_name, :last_name, :email, :role, :client_id, :image])
+    params.require(:client).permit(:name, :phone, :brand_ids, admin_attributes: [:id, :first_name, :last_name, :email, :role, :client_id, :image], brands_attributes: [:id, :name, :unit_cost])
   end
 
 

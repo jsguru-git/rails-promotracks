@@ -116,42 +116,24 @@ section.page-content.height-auto
                     .col-md-2
                       .form-group
                         a.form-control.add_new_brand class="btn btn-primary"href='javascript:void(0)' Add More
-
-                  .brands
-                  -if @client.new_record?
-                    .row
+                  = f.fields_for :brands, @brands do |brand|
+                    .row.brand_row
                       .col-md-7
                         .form-group
-                          = text_field_tag 'client[brand][][name]', '', class: 'form-control required', :placeholder => 'Name', :required => true
+                          =brand.hidden_field :id
+                          =brand.text_field :name, class: 'form-control', required: 'true'
                           .help-block.with-errors
                       .col-md-4
                         .form-group
                           .form-input-icon
                             i.fa.fa-dollar.font-green
-                            = text_field_tag 'client[brand][][unit_cost]', '', class: 'form-control required', :id => 'l32', :placeholder => 'Unit Cost', :required => true
+                            =brand.text_field :unit_cost, class: 'form-control', required: 'true'
                             .help-block.with-errors
                       .col-md-1
                         .form-group
-                          a.form-control.remove_brand href='javascript:void(0)'
+                          a.form-control.btn.btn-danger.remove_brand data-id=@brands[brand.options[:child_index]]&.id data-client=@client&.id href='javascript:void(0)'
                             i.fa.fa-trash
-                  -else
-                    -@client.brands.each do |brand|
-                      .row
-                        .col-md-7
-                          .form-group
-                            =hidden_field_tag 'client[brand][][id]', brand.id
-                            = text_field_tag 'client[brand][][name]', brand.name, class: 'form-control required', :placeholder => 'Name'
-                            .help-block.with-errors
-                        .col-md-4
-                          .form-group
-                            .form-input-icon
-                              i.fa.fa-dollar.font-green
-                              = text_field_tag 'client[brand][][unit_cost]', brand.unit_cost, class: 'form-control required', id: 'l32', :placeholder => 'Unit Cost'
-                              .help-block.with-errors
-                        .col-md-1
-                          .form-group
-                            a.form-control.remove_brand data-id=brand.id data-client=@client&.id href='javascript:void(0)'
-                              i.fa.fa-trash
+                  .brands
 .padding-bottom-40
 
 javascript:
@@ -205,9 +187,12 @@ javascript:
 
     });
 
+
     $('.add_new_brand').on("click", function () {
-      var brandFields = '<div class="row"><div class="col-md-7"><div class="form-group"><input name="client[brand][][name]" id="client_brand__name" value="" class="form-control required"  required="required" placeholder="Name" type="text"><div class="help-block with-errors"></div></div></div><div class="col-md-4"><div class="form-group"><input name="client[brand][][unit_cost]" id="client_brand__unit_cost" value="" class="form-control required" required="required" placeholder="Unit Cost" type="text"><div class="help-block with-errors"></div></div></div><div class="col-md-1"><div class="form-group"><a class="form-control remove_brand" href="javascript:void(0)"><i class="fa fa-trash"></i></a></div></div></div>';
-      $(brandFields).insertBefore('.brands');
+      console.log($('.brand_row').size());
+      var ip_counter = $('.brand_row').size();
+      var new_brands = '<div class="row brand_row"><div class="col-md-7"><div class="form-group"><input class="form-control" required="required" name="client[brands_attributes][' + ip_counter + "][name]" + '" id="client_brands_attributes_' + ip_counter + "_name" + '" type="text"><div class="help-block with-errors"></div></div></div><div class="col-md-4"><div class="form-group"><div class="form-input-icon"><i class="fa fa-dollar font-green"></i><input class="form-control" required="required" value="0.0" name="client[brands_attributes][' + ip_counter + "][unit_cost]" + '" id="client_brands_attributes_' + ip_counter + "_unit_cost" + '" type="text"><div class="help-block with-errors"></div></div></div></div><div class="col-md-1"><div class="form-group"><a class="form-control btn btn-danger remove_brand" href="javascript:void(0)"><i class="fa fa-trash"></i></a></div></div></div>';
+      $(new_brands).insertBefore('.brands');
     });
 
     $("body").delegate('.remove_brand', 'click', function () {
@@ -220,12 +205,12 @@ javascript:
           url: "/superadmin/clients/" + client + "/remove_brand?id=" + id,
           dataType: 'json',
           success: function (data) {
-            console.log("hai");
-            row.closest('div.row').remove();
+
+            row.closest('div.brand_row').find("*").remove();
           }
         });
       } else {
-        $(this).closest('div.row').remove();
+        $(this).closest('div.brand_row').find("*").remove();
       }
 
     });
