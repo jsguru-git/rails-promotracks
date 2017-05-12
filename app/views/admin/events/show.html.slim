@@ -52,10 +52,10 @@ section.page-content
                       td #{uv.user.full_name}
                       td #{uv.attendance}
                       td #{uv.sample}
-                      td #{number_with_precision((@event.brand.unit_cost)*(uv.sample).round, precision: 1,  strip_insignificant_zeros: true)}
+                      td #{number_with_precision((@event.brand&.unit_cost||0)*((uv&.sample)||0).round, precision: 1,  strip_insignificant_zeros: true)}
                       td #{uv.total_expense}
                       -if !uv.check_in.nil? and !uv.check_out.nil?
-                        -hour=((Time.parse(uv.check_out.to_s) - Time.parse(uv.check_in.to_s))/ 60).round
+                        -hour=((uv.check_out - uv.check_in)/3600).round
                         td #{hour}
                         td #{hour*@event.pay}
                       -else
