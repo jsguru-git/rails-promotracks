@@ -131,7 +131,11 @@ section.page-content.height-auto
                             .help-block.with-errors
                       .col-md-1
                         .form-group
-                          a.form-control.btn.btn-danger.remove_brand data-id=@brands[brand.options[:child_index]]&.id data-client=@client&.id href='javascript:void(0)'
+                          -if @brands.nil?
+                            -brand_id=''
+                          -else
+                            -brand_id = @brands[brand.options[:child_index]]&.id
+                          a.form-control.btn.btn-danger.remove_brand data-id=brand_id data-client=@client&.id href='javascript:void(0)'
                             i.fa.fa-trash
                   .brands
 .padding-bottom-40

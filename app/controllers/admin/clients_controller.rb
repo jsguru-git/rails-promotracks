@@ -29,8 +29,10 @@ class Admin::ClientsController < Admin::AdminApplicationController
     if client_params[:admin_attributes][:password].empty?
       client_call_params = client_update_params
     end
-    if @client.update_attributes(client_call_params)
-      @client.update(brand_ids: params[:client][:brand_ids]) if params[:client][:brand_ids]
+    @client.assign_attributes(client_call_params)
+    if @client.valid?
+      @client.brand_ids = params[:client][:brand_ids] unless params[:client][:brand_ids].blank?
+      @client.save
       redirect_to admin_dashboard_index_path
     else
       flash[:error]=@client.errors.full_messages.join(', ')
@@ -41,11 +43,11 @@ class Admin::ClientsController < Admin::AdminApplicationController
   private
 
   def client_params
-    params.require(:client).permit(:name, :phone, :brand_ids, admin_attributes: [:id, :first_name, :last_name, :password, :password_confirmation, :email, :role, :image])
+    params.require(:client).permit(:name, :phone, :brand_ids, admin_attributes: [:id, :first_name, :last_name, :password, :password_confirmation, :email, :role, :image], brands_attributes: [:id, :name, :unit_cost])
   end
 
   def client_update_params
-    params.require(:client).permit(:name, :phone, :brand_ids, admin_attributes: [:id, :first_name, :last_name, :email, :role, :client_id, :image])
+    params.require(:client).permit(:name, :phone, :brand_ids, admin_attributes: [:id, :first_name, :last_name, :email, :role, :client_id, :image], brands_attributes: [:id, :name, :unit_cost])
   end
 
 end

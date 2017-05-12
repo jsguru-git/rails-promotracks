@@ -35,14 +35,14 @@ class Superadmin::ClientsController < Superadmin::SuperadminApplicationControlle
 
   def update
     @client=Client.find(params[:id])
-    client_call_params= client_params
-    if client_params[:admin_attributes][:password].empty?
-      client_call_params = client_update_params
-    end
     if client_params[:brands_attributes].nil?
       flash[:error]="Add Atleast one brand"
       redirect_to :back
       return
+    end
+    client_call_params= client_params
+    if client_params[:admin_attributes][:password].empty?
+      client_call_params = client_update_params
     end
     if @client.update_attributes(client_call_params)
       redirect_to superadmin_clients_path
