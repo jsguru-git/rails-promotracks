@@ -4,6 +4,13 @@
 
 section.page-content.height-auto
   .page-content-inner
+    .panel
+      #breadcrumb-align
+        ul.list-unstyled.breadcrumb
+          li
+            a href='#{superadmin_clients_path}'   Clients
+          li
+            span #{@client.new_record? ? 'New ' : 'Edit '} Client
     /! Forms Wizard
     section.panel
       .panel-heading
