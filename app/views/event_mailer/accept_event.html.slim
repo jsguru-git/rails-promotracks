@@ -16,35 +16,40 @@ html
             tr
               td style=("vertical-align: top;")
                 a href="#{root_url}" target="_blank"
-                  img border="0" src="https://s3-us-west-2.amazonaws.com/promotracks-stage-asset/new-logo.png"
+                  img border="0" src="https://s3-us-west-2.amazonaws.com/promotracks-stage-asset/logo.png"
 
         div style=("padding: 40px 40px 20px 40px; background: #fff;")
           table border="0" cellpadding="0" cellspacing="0" style=("width: 100%;")
             tbody
               tr
                 td
+                  -if @data[:type] == 'promo_group'
+                    div style=("padding: 15px 30px; background: #46be8a; border-radius: 5px; margin-bottom: 20px; color: #fff; text-align: center")
+                      | Congratulations! You have been invited.
+                  -else
+                    div style=("padding: 15px 30px; background: #46be8a; border-radius: 5px; margin-bottom: 20px; color: #fff; text-align: center")
+                      | Congratulations! You have been assigned for an event.
                   h5 style=("margin-bottom: 20px; color: #24222f; font-size: 1.25rem ; font-weight: 600")  Hello #{@data[:event][:user]},
                   -if @data[:type] == 'promo_group'
                     p
-                      | You have been invited for #{@data[:event][:name]} event please click accept to attend.
+                      | You have been invited for #{@data[:event][:name]} for the brand of #{@data[:event][:brand_name]} on #{@data[:event][:start_time]&.strftime('%m/%d/%Y %I:%M %p')}  to  #{@data[:event][:end_time]&.strftime('%m/%d/%Y %I:%M %p')} at #{@data[:event][:location]}. Please click accept to attend.
                   -else
                     p
-                      | You have been assigned for this event.
-                  div
-                    p Name: #{@data[:event][:name]}
-                    p Timings: #{@data[:event][:start_time]&.strftime('%m/%d/%Y %I:%M %p')}  to  #{@data[:event][:end_time]&.strftime('%m/%d/%Y %I:%M %p')}
-                    p Brand : #{@data[:event][:brand_name]}
-                    p Location : #{@data[:event][:location]}
+                      | You have been assigned for #{@data[:event][:name]} for the brand of #{@data[:event][:brand_name]} on #{@data[:event][:start_time]&.strftime('%m/%d/%Y %I:%M %p')}  to  #{@data[:event][:end_time]&.strftime('%m/%d/%Y %I:%M %p')} at #{@data[:event][:location]}. Please click accept to attend.
+                  /div
+                  /  p Name: #{@data[:event][:name]}
+                  /  p Timings: #{@data[:event][:start_time]&.strftime('%m/%d/%Y %I:%M %p')}  to  #{@data[:event][:end_time]&.strftime('%m/%d/%Y %I:%M %p')}
+                  /  p Brand : #{@data[:event][:brand_name]}
+                  /  p Location : #{@data[:event][:location]}
                   -if @data[:type] == 'promo_group'
                     div style=("text-align: center")
-                      =link_to 'Accept', event_url(@data[:event][:id], token: @data[:token], status: "accept")
+                      =link_to 'Accept', event_url(@data[:event][:id], :class => "button btn btn-info", token: @data[:token], status: "accept")
                       '
-                      =link_to 'Decline', event_url(@data[:event][:id], token: @data[:token], status: "decline")
+                      =link_to 'Decline', event_url(@data[:event][:id], :class => "button btn btn-default", token: @data[:token], status: "decline")
                   p
                     | Regards,
                     br
-                    span style="color:#01a8fe;"  Promo
-                    span style="color:#acb7bf;"  Tracks
+                    span style="color:#d43f3a;"  Promo Tracks
         div style=("text-align: center; font-size: 12px; color: #a09bb9; margin-top: 20px")
           p
             | &copy; 2017 PromoTracks,
