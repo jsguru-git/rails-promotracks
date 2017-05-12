@@ -3,16 +3,9 @@ class Admin::DashboardController < Admin::AdminApplicationController
 
   def index
     @events=@current_client&.events.includes(:user_events, :event_type).order_events(params[:sort_by])
-    @total=0.0
-    @total_attendance=0
-    @total_sample=0
-    @total_product_cost=0.0
-    @total_payment=0
-    sample=[]
-    total=[]
-    product_cost=[]
-    attendance=[]
-    final_pay=[]
+    @total, @total_attendance, @total_sample, @total_product_cost, @total_payment=0.0
+    sample=[]; total=[]; product_cost=[]; attendance=[]; final_pay=[]
+
     @events.each do |event|
 
       active_events=event.user_events.where(:status => UserEvent::statuses[:accepted])
