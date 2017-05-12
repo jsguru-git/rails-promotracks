@@ -25,7 +25,7 @@
               = link_to superadmin_client_impersonate_path(client_id: client.id, user_id: client.admin_id), class: 'btn-sm  btn-icon btn btn-rounded btn-success', :data => {:toggle => 'tooltip', :placement => 'top'}, :title => "impersonate" do
                 i.icmn-enter
               '
-              = link_to edit_superadmin_client_path(client), class: 'btn-sm  btn-icon btn btn-rounded btn-warning', :data => {:toggle => 'tooltip', :placement => 'top'}, :title => "edit" do
+              = link_to edit_superadmin_client_path(client), class: 'btn-sm  btn-icon btn btn-rounded btn-warning', "data-turbolinks" => "false", :data => {:toggle => 'tooltip', :placement => 'top'}, :title => "edit" do
                 i.icmn-pencil4
               '
               = link_to superadmin_client_users_path(client), class: 'btn-sm  btn-icon btn btn-rounded btn-primary', :data => {:toggle => 'tooltip', :placement => 'top'}, :title => "admins" do

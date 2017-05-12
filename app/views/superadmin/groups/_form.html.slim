@@ -18,7 +18,8 @@
             .help-block.with-errors
 
       .panel-footer
-        .text-right
-          =f.submit 'Submit', class: 'btn btn-success'
-          '
-          a.btn.btn-danger href="#{superadmin_groups_path}" Cancel
+        .form-group.row
+          .col-md-9.col-md-offset-3
+            =f.submit 'Submit', class: 'button btn width-150 btn-primary'
+            '
+            a.button.btn.btn-default href="#{superadmin_groups_path}" Cancel
