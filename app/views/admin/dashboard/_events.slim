@@ -60,7 +60,7 @@
 
                 td #{uv.total_expense}
                 -if !uv.check_in.nil? and !uv.check_out.nil?
-                  -hour=((uv.check_out - uv.check_in)/3600).round
+                  -hour=time_diff(uv.check_out, uv.check_in)
                   td #{hour}
                   td #{hour*event.pay}
                 -else

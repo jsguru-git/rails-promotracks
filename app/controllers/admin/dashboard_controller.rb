@@ -23,7 +23,7 @@ class Admin::DashboardController < Admin::AdminApplicationController
         product_cost<<total_product_cost
 
         active_events.where.not(:check_in => nil, :check_out => nil).each do |active|
-          hour=((active.check_out - active.check_in)/3600).round
+          hour=time_diff(active.check_out, active.check_in)
           pay=hour*event.pay
           final_pay << pay
         end

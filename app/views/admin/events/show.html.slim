@@ -55,9 +55,10 @@ section.page-content
                       td #{number_with_precision((@event.brand&.unit_cost||0)*((uv&.sample)||0).round, precision: 1,  strip_insignificant_zeros: true)}
                       td #{uv.total_expense}
                       -if !uv.check_in.nil? and !uv.check_out.nil?
-                        -hour=((uv.check_out - uv.check_in)/3600).round
+                        -hour=time_diff(uv.check_out, uv.check_in)
                         td #{hour}
                         td #{hour*@event.pay}
+
                       -else
                         td nil
                         td nil
