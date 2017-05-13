@@ -14,7 +14,7 @@ gem 'slim'
 gem 'slim-rails'
 gem 'simple_token_authentication'
 gem 'figaro'
-
+gem 'time_difference'
 gem 'thin'
 gem 'settingslogic'
 gem 'browser-timezone-rails'

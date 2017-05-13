@@ -16,24 +16,29 @@ module ApplicationHelper
     (10000..99999).to_a.sample
   end
 
+  # def time_diff(start_time, end_time)
+  #   seconds_diff = (start_time - end_time).to_i.abs
+  #
+  #   hours = seconds_diff / 3600
+  #   seconds_diff -= hours * 3600
+  #
+  #   minutes = seconds_diff / 60
+  #   seconds_diff -= minutes * 60
+  #
+  #   seconds = seconds_diff
+  #
+  #   time="#{hours.to_s.rjust(2, '0')}:#{minutes.to_s.rjust(2, '0')}:#{seconds.to_s.rjust(2, '0')}"
+  #   hours.to_s.rjust(2, '0').to_i
+  # end
+
   def time_diff(start_time, end_time)
-    seconds_diff = (start_time - end_time).to_i.abs
-
-    hours = seconds_diff / 3600
-    seconds_diff -= hours * 3600
-
-    minutes = seconds_diff / 60
-    seconds_diff -= minutes * 60
-
-    seconds = seconds_diff
-
-    "#{hours.to_s.rjust(2, '0')}".to_i
+    if TimeDifference.between(start_time, end_time).in_hours.round < 1
+      1
+    else
+      TimeDifference.between(start_time, end_time).in_hours.round
+    end
   end
 
-  # def time_diff(start_time, end_time)
-  #   seconds=(( start_time -end_time) * 24 * 60 * 60).to_i
-  #   Time.at(seconds).strftime("%H")
-  # end
 
   def add_images(images, event)
     success = true
