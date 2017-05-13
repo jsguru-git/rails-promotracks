@@ -12,17 +12,18 @@ class Admin::UserEventsController < Admin::AdminApplicationController
     unless user_event_params[:images].nil?
       success, error, images= add_images(user_event_params[:images], @user_event)
       if success
-        user_event_params[:images]=images
+        @user_event.images=images
       else
         flash[:error]= error[:message].to_s
         redirect_to :back
         return
       end
     end
-    if @user_event.update_attributes(user_event_params)
-      @user_event.update_attribute(:images, images) unless images.blank?
-      @user_event.update_attribute(:check_in, Time.zone.strptime(user_event_params[:check_in], '%m/%d/%Y %I:%M %p')) unless user_event_params[:check_in].nil?
-      @user_event.update_attribute(:check_out, Time.zone.strptime(user_event_params[:check_out], '%m/%d/%Y %I:%M %p')) unless user_event_params[:check_out].nil?
+    @user_event.assign_attributes(user_event_params)
+    if @user_event.valid?
+      @user_event.check_in = Time.zone.strptime(user_event_params[:check_in], '%m/%d/%Y %I:%M %p') unless user_event_params[:check_in].nil?
+      @user_event.check_out = Time.zone.strptime(user_event_params[:check_out], '%m/%d/%Y %I:%M %p') unless user_event_params[:check_out].nil?
+      @user_event.save
       flash[:notice]="Updated Successfully"
       redirect_to admin_event_path(@event)
     else
