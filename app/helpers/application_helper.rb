@@ -28,7 +28,7 @@ module ApplicationHelper
 
     seconds = seconds_diff
     puts "#{hours.to_s.rjust(2, '0')}:#{minutes.to_s.rjust(2, '0')}:#{seconds.to_s.rjust(2, '0')}"
-    if (minutes.to_s.rjust(2, '0').to_i < 45) and (minutes.to_s.rjust(2, '0').to_i > 59)
+    if (minutes.to_s.rjust(2, '0').to_i > 35) and (minutes.to_s.rjust(2, '0').to_i < 59)
       hours= minutes.to_s.rjust(2, '0').to_i+1
     else
       hours=hours.to_s.rjust(2, '0').to_i
