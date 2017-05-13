@@ -28,8 +28,9 @@ class Api::V1::EventsController < Api::V1::ApiApplicationController
       if params[:user_event][:images].nil?
         render :show
       else
-        success, error= add_images(params[:user_event][:images], @user_event)
+        success, error, images= add_images(params[:user_event][:images], @user_event)
         if success
+          @user_event.update_attribute(:images, images) unless images.nil?
           render :show
         else
           render 'global/error', :locals => {:code => 701, :message => error}
