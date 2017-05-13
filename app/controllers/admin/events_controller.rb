@@ -29,7 +29,7 @@ class Admin::EventsController < Admin::AdminApplicationController
 
   def create
     @event=@current_client.events.new(event_params)
-    if event_params[:group_id].blank? and event_params[:user_ids].blank?
+    if event_params[:group_id].blank? and params[:event][:user_ids].blank?
       flash[:error]= "Either Promo Rep or Group should be selected"
       redirect_to :back
       return
@@ -82,7 +82,7 @@ class Admin::EventsController < Admin::AdminApplicationController
     group_email=false
     rep_email=false
     @event=Event.find(params[:id])
-    if event_params[:group_id].blank? and event_params[:user_ids].blank?
+    if event_params[:group_id].blank? and params[:event][:user_ids].blank?
       flash[:error]= "Either Promo Rep or Group should be selected"
       redirect_to :back
       return
