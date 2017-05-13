@@ -23,4 +23,8 @@ class User < ActiveRecord::Base
   def self.group_members
     promo_rep.where(:group_id => nil).order('first_name')
   end
+
+  def self.promo_representatives
+    where(role: 'promo_rep').order('first_name')
+  end
 end

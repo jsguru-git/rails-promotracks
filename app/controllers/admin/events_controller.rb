@@ -24,7 +24,7 @@ class Admin::EventsController < Admin::AdminApplicationController
   def new
     @event=@current_client.events.new
     @address=@event.build_address
-    @promo_reps=User.where(role: 'promo_rep').order('first_name')
+    @promo_reps=User.promo_representatives
   end
 
   def create
@@ -52,14 +52,7 @@ class Admin::EventsController < Admin::AdminApplicationController
     end
     if @event.save
       @current_client.save
-      email_data={}
-      email_data[:body] = "Please find below the event details"
-      email_data[:subject]="#{@event.name} :#{@event.id}"
-      @event.users.each do |user|
-        user_event=@event.user_events.where(:user_id => user.id).first
-        email_data[:event]=get_event(@event, user)
-        EventMailer.accept_event(user.email, email_data, {token: user_event.token, category: user_event.category}).deliver
-      end
+      EventJob.perform_later('event', @event, @event.user_ids)
       redirect_to admin_events_path
     else
       flash[:error]=@event.errors.full_messages.join(', ')
@@ -70,13 +63,12 @@ class Admin::EventsController < Admin::AdminApplicationController
   def edit
     @event=Event.find(params[:id])
     @address=@event.address
-    @promo_reps=User.where(role: 'promo_rep')
+    @promo_reps=User.promo_representatives
   end
 
   def show
     @event = Event.find(params[:id])
   end
-
   def update
     reps = []
     group_email=false
@@ -91,9 +83,6 @@ class Admin::EventsController < Admin::AdminApplicationController
     if @event.valid?
       @event.start_time=Time.zone.strptime(event_params[:start_time], '%m/%d/%Y %I:%M %p') unless event_params[:start_time].nil?
       @event.end_time=Time.zone.strptime(event_params[:end_time], '%m/%d/%Y %I:%M %p') unless event_params[:end_time].nil?
-      email_data={}
-      email_data[:body] = "Please find below the event details"
-      email_data[:subject]="#{@event.name} :#{@event.id}"
       if @event.group_id_changed?
         group_email=true
         group=Group.find(@event.group_id_was)
@@ -125,18 +114,11 @@ class Admin::EventsController < Admin::AdminApplicationController
         end
       end
       @event.save!
-      if group_email==true
-        @event.group.users.each do |user|
-          user_event=@event.user_events.where(:user_id => user.id).first
-          email_data[:event]=get_event(@event, user)
-          EventMailer.accept_event(user.email, email_data, {token: user_event.token, category: user_event.category}).deliver
-        end
-      elsif rep_email==true
-        reps.each do |user|
-          user_event=@event.user_events.where(:user_id => user.id).first
-          email_data[:event]=get_event(@event, user)
-          EventMailer.accept_event(user.email, email_data, {token: user_event.token, category: user_event.category}).deliver
-        end
+      if group_email
+        EventJob.perform_later('event', @event, @event.group.user_ids)
+      end
+      if rep_email
+        EventJob.perform_later('event', @event, reps)
       end
       redirect_to admin_events_path
     else
@@ -144,7 +126,6 @@ class Admin::EventsController < Admin::AdminApplicationController
       redirect_to :back
     end
   end
-
   private
   def event_params
     params.require(:event).permit(:name, :event_type_id, :start_time, :end_time, :brand_id, :user_ids, :group_id, :max_users, :pay, :area, address_attributes: [:address_1, :city, :state, :zip, :country, :latitude, :longitude, :formatted_address])
