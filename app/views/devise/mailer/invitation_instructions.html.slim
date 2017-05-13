@@ -16,7 +16,7 @@ html
             tr
               td style=("vertical-align: top;")
                 a href="#{root_url}" target="_blank"
-                  img border="0" src="https://s3-us-west-2.amazonaws.com/promotracks-stage-asset/new-logo.png"
+                  img border="0" src="https://s3-us-west-2.amazonaws.com/promotracks-stage-asset/logo.png"
               td style=("text-align: right; vertical-align: middle;")
                 span style=("color: #a09bb9;")
         div style=("padding: 40px 40px 20px 40px; background: #fff;")
@@ -24,23 +24,33 @@ html
             tbody
               tr
                 td
+                  div style=("padding: 15px 30px; background: #46be8a; border-radius: 5px; margin-bottom: 20px; color: #fff; text-align: center")
+                    | Congratulations! You have been invited.
                   h5 style=("margin-bottom: 20px; color: #24222f; font-size: 1.25rem ; font-weight: 600")  Hello  #{@user&.first_name},
                   p
-                    | Someone has invited you to
+                    | Someone has invited you to&nbsp;
                     strong
-                      span style="color:#01a8fe;"  #{root_url} ,
-                    | you can accept it through the link below.
-                  =link_to t("devise.mailer.invitation_instructions.accept"), accept_invitation_url(@resource, :invitation_token => @token)
-
+                      span style="color:#01a8fe;"
+                        =link_to "Promo Tracks", root_url
+                    |,&nbsp; please accept the invitation by clicking the button below.
                   div
-                    -if @resource.invitation_due_at
-                      p
-                        = t("devise.mailer.invitation_instructions.accept_until", due_date: l(@resource.invitation_due_at, format: :'devise.mailer.invitation_instructions.accept_until_format'))
+                    p
+                      |&nbsp;
+                      |&nbsp;
+                    a href=accept_invitation_url(@resource, :invitation_token => @token) style='font-weight:bold; font-size: medium; background: #0EC1DC; color: #fff; text-decoration: none; padding: 11px 30PX; border-radius: 5px' ACCEPT INVITATION
+                  p
+                    |&nbsp;
+                    |&nbsp;
+                  -if @resource.invitation_due_at
+                    p
+                      = t("devise.mailer.invitation_instructions.accept_until", due_date: l(@resource.invitation_due_at, format: :'devise.mailer.invitation_instructions.accept_until_format'))
+                  p
+                    |&nbsp;
+                    |&nbsp;
                   p
                     | Regards,
                     br
-                    span style="color:#01a8fe;"  Promo
-                    span style="color:#acb7bf;"  Tracks
+                    span style="color:#d43f3a;"  Promo Tracks
         div style=("text-align: center; font-size: 12px; color: #a09bb9; margin-top: 20px")
           p
             | &copy; 2017 PromoTracks,
