@@ -15,39 +15,13 @@ div
                   i.glyphicon.glyphicon-search
                   =hidden_field_tag 'search_type'
                   =hidden_field_tag 'promo_id'
-                  =text_field_tag "search", nil, placeholder: "Enter Reps or Groups", class: 'form-control form-control-sm form-control-rounded field search_rep', :id => 'Postcode'
+                  =text_field_tag "search", nil, placeholder: "Reps or Groups", class: 'form-control form-control-sm form-control-rounded field search_rep', :id => 'Postcode'
                   button.search-block-submit type="submit"
 
       h3 Events List
     .panel-body
-      table.table#sort-data-table
-        thead
-          tr.active
-            th ID
-            th Event Name
-            th Event Type
-            th Venue
-            th Start Time
-            th End Time
-            th Brand
-            th.text-center Actions
-        tbody
-          -if @events
-            -@events.each do |event|
-              tr
-                td #{event.id}
-                td #{event.name}
-                td #{event.event_type&.name}
-                td #{event.address&.city}
-                td #{event.start_time&.strftime('%m/%d/%Y %I:%M %p')}
-                td #{event.end_time&.strftime('%m/%d/%Y %I:%M %p')}
-                td #{event.brand&.name}
-                td.text-center
-                  = link_to edit_admin_event_path(event), class: 'btn-sm  btn-icon btn btn-rounded btn-warning' do
-                    i.icmn-pencil4
-          -else
-            td
-              | No events
-.pull-right
-  -unless @events.nil?
-    = paginate @events
+      #events
+        =render partial: 'admin/events/events', :locals => {:events => @events}
+    .pull-right
+      #events-footer
+        =render partial: 'admin/events/footer', :locals => {:events => @events}

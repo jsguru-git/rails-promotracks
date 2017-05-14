@@ -19,6 +19,15 @@ class Admin::EventsController < Admin::AdminApplicationController
     else
       @events=@current_client.events.page(params[:page]).per(20).order('updated_at desc')
     end
+    respond_to do |format|
+      format.html {
+      }
+      format.js {
+        html = render_to_string :partial => 'admin/events/events', layout: false, :locals => {:events => @events}
+        html_footer = render_to_string :partial => 'admin/events/footer', layout: false, :locals => {:events => @events}
+        render :json => {:success => true, :html => html, :footer => html_footer}
+      }
+    end
   end
 
   def new

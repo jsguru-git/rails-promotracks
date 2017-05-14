@@ -88,17 +88,33 @@ $(document).on('turbolinks:load', function () {
         });
         //jQuery('.ui-autocomplete').css('z-index', 5000);
     });
+    var promo_id = '';
+    var search_type = '';
     $(".search_rep").autocomplete({
         source: '/admin/clients/reps_and_groups',
         minLength: 3,
         select: function (event, ui) {
             if (ui.item.type == "promo_rep") {
-                $('#promo_id').val(ui.item.id);
-                $('#search_type').val(ui.item.type);
+                promo_id = ui.item.id;
+                search_type = ui.item.type;
+
             } else if (ui.item.type == "promo_group") {
-                $('#promo_id').val(ui.item.id);
-                $('#search_type').val(ui.item.type);
+                promo_id = ui.item.id;
+                search_type = ui.item.type;
             }
+
+            $.ajax({
+                method: "GET",
+                url: "/admin/events?promo_id=" + promo_id + "&search_type=" + search_type + "&search=" + true,
+                dataType: 'json',
+                success: function (data) {
+
+                    $("#events").find("*").remove();
+                    $("#events").append(data.html);
+                    $("#events-footer").find("*").remove();
+                    $("#events-footer").append(data.footer);
+                }
+            });
         }
     });
     //Form Validation
