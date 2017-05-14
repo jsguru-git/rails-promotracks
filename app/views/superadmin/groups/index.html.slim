@@ -20,7 +20,9 @@
             -@groups.each do |group|
               tr
                 td #{group.id}
-                td #{group.name}
+                td
+                  -group_users=group.users&.collect { |c| c[:first_name]+c[:last_name] }.reject(&:blank?).flatten.uniq.join('<br>')
+                  a.group_users [href='javascript:void(0)' data-trigger="hover" data-html="true" data-container="body" data-toggle="popover" data-placement="left" data-content=group_users ] #{group.name}
                 td.text-center
                   = link_to edit_superadmin_group_path(group), class: 'btn-sm  btn-icon btn btn-rounded btn-warning' do
                     i.fa.fa-edit

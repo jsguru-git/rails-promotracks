@@ -137,7 +137,7 @@ $(document).on('turbolinks:load', function () {
 
     $('#us-phone-mask-input').mask('(000) 000-0000', {placeholder: "(___) ___-____"});
 
-
+    $('.group_users').popover();
     $('[data-toggle="popover"]').popover();
 
     $('.selectpicker').selectpicker();
