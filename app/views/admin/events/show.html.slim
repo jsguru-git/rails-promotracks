@@ -63,9 +63,9 @@ section.page-content
                         td nil
                         td nil
                       td
-                        -if uv.recommended
+                        -if uv.recommended==true
                           p Yes
-                        -else
+                        -elsif uv.recommended==false
                           p No
                       td #{uv.check_in&.strftime('%m/%d/%Y %I:%M %p')}
 

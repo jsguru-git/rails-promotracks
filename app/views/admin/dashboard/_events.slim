@@ -68,9 +68,9 @@
                   td
 
                 td
-                  -if uv.recommended
+                  -if uv.recommended==true
                     p Yes
-                  -else
+                  -elsif uv.recommended==false
                     p No
                 td
                   -if uv.follow_up.blank?
