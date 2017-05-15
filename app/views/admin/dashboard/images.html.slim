@@ -6,9 +6,8 @@ section.panel
     .row
       .col-lg-12
         br
-        .margin-bottom-50
-          #owl3.owl-carousel.owl-theme.owl-demo-img
-            -@user_event&.images.each do |img|
-              img src=image_path(img)
+        #owl3.owl-carousel.owl-theme.owl-demo-img
+          -@user_event&.images.each do |img|
+            img src=image_path(img)
 
 
