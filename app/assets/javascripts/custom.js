@@ -248,4 +248,18 @@ $(document).on('turbolinks:load', function () {
     });
 
 
+    var counter = 0;
+    $(".add_images").click(function () {
+        if (counter < 4) {
+            var newTextBoxDiv = $(document.createElement('div')).attr("class", 'controls');
+            newTextBoxDiv.after().html('<div class="form-group row"><div class="col-md-11"><input class="form-control file" name="user_event[images][]" id="user_event_images_" type="file"></div></div>');
+            newTextBoxDiv.appendTo(".attach");
+            counter++;
+        }
+        else {
+            $('.add_images').hide();
+        }
+    });
+
+
 });

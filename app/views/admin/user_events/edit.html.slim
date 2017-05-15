@@ -53,10 +53,15 @@ section.page-content
                   span.input-group-addon.pointer
                     i.icmn-calendar4
             .form-group.row
-              .col-md-12
+              .col-md-11
                 = f.label :images, 'Images'
                 sup.text-danger
-                =f.file_field :images, :class => 'form-control file', :multiple => true
+                  =f.file_field :images, :class => 'form-control file', :multiple => true
+              .col-md-1
+                =label_tag '', ''
+                a.form-control.btn.btn-default.add_images href='javascript:void(0)'
+                  i.fa.fa-plus
+            .controls.attach
 
             .row
               .col-lg-12
