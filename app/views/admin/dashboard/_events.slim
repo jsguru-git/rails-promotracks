@@ -19,6 +19,7 @@
         th Recommend
         th style="width: 8%" Follow up
         th Notes
+        th Images
 
 
     tfoot
@@ -32,6 +33,7 @@
         th  $#{@total}
         th &nbsp;
         th $#{@total_payment}
+        th &nbsp;
         th &nbsp;
         th &nbsp;
         th &nbsp;
@@ -82,6 +84,12 @@
                     p N/A
                   -else
                     a href="javascript:void" title="Notes" data-toggle="popover" data-placement="bottom" data-content="#{uv.notes}" View
+                td
+                  -if uv.images&
+                     .size==0
+                    p Not available
+                  -else
+                    a class="images" href= images_admin_dashboard_index_path(:user_event=> uv.id)  Show
 
               tr/
           tr/
