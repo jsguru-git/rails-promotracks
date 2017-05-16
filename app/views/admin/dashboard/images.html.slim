@@ -1,10 +1,14 @@
+-if params[:index]==0
+  -url = admin_dashboard_index_path
+-else
+  -url = admin_event_path
 section.panel
 
   .panel-heading
     h3
       | Images
 
-    =link_to 'Back', :back, :class => 'pull-right btn btn-default'
+    =link_to 'Back', url, :class => 'pull-right btn btn-default'
   .panel-body
     .row
       .col-lg-12

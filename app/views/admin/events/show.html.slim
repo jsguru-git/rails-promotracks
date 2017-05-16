@@ -76,7 +76,7 @@ section.page-content
 
                           p Not available
                         -else
-                          a class="images" href= images_admin_dashboard_index_path(:user_event=> uv.id)  Show
+                          a class="images" href= images_admin_dashboard_index_path(:user_event=> uv.id,:index => 1)  Show
                       td.text-center
                         = link_to edit_admin_event_user_event_path(:event_id => @event.id, :id => uv.id), class: 'btn-sm  btn-icon btn btn-rounded btn-warning' do
                           i.icmn-pencil4

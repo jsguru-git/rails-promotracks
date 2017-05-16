@@ -32,21 +32,53 @@ html
                   h5 style=("margin-bottom: 20px; color: #24222f; font-size: 1.25rem ; font-weight: 600")  Hello #{@data[:event][:user]},
                   -if @data[:type] == 'promo_group'
                     p
-                      | You have been invited for #{@data[:event][:name]} for the brand of #{@data[:event][:brand_name]} on #{@data[:event][:start_time]&.strftime('%m/%d/%Y %I:%M %p')}  to  #{@data[:event][:end_time]&.strftime('%m/%d/%Y %I:%M %p')} at #{@data[:event][:location]}.
+                      | You have been invited for
+                      strong
+                        |&nbsp; #{@data[:event][:name]}
+                      |&nbsp; for the brand of
+                      strong
+                        |&nbsp; #{@data[:event][:brand_name]}
+                      |&nbsp; from
+                      strong
+                        |&nbsp; #{@data[:event][:start_time]&.strftime('%m/%d/%Y %I:%M %p')}
+                      |&nbsp; to
+                      strong
+                        |&nbsp; #{@data[:event][:end_time]&.strftime('%m/%d/%Y %I:%M %p')}
+                      |&nbsp; at
+                      strong
+                        |&nbsp; #{@data[:event][:location]}.
                   -else
                     p
-                      | You have been assigned for #{@data[:event][:name]} for the brand of #{@data[:event][:brand_name]} on #{@data[:event][:start_time]&.strftime('%m/%d/%Y %I:%M %p')}  to  #{@data[:event][:end_time]&.strftime('%m/%d/%Y %I:%M %p')} at #{@data[:event][:location]}.
+                      |&nbsp; You have been assigned for
+                      strong
+                        |&nbsp; #{@data[:event][:name]}
+                      |&nbsp; for the brand of
+                      strong
+                        |&nbsp; #{@data[:event][:brand_name]}
+                      |&nbsp; from
+                      strong
+                        |&nbsp; #{@data[:event][:start_time]&.strftime('%m/%d/%Y %I:%M %p')}
+                      |&nbsp; to
+                      strong
+                        |&nbsp; #{@data[:event][:end_time]&.strftime('%m/%d/%Y %I:%M %p')}
+                      |&nbsp; at
+                      strong
+                        |&nbsp; #{@data[:event][:location]}.
                   /div
                   /  p Name: #{@data[:event][:name]}
                   /  p Timings: #{@data[:event][:start_time]&.strftime('%m/%d/%Y %I:%M %p')}  to  #{@data[:event][:end_time]&.strftime('%m/%d/%Y %I:%M %p')}
                   /  p Brand : #{@data[:event][:brand_name]}
                   /  p Location : #{@data[:event][:location]}
+                  br
+                  /br
                   -if @data[:type] == 'promo_group'
-                    p Please click accept to attend
+                    br
                     div style=("text-align: center")
-                      =link_to 'Accept', event_url(@data[:event][:id], :class => "button btn btn-info", token: @data[:token], status: "accept")
+                      a href=event_url(@data[:event][:id],token: @data[:token],status: "accept") style= 'font-weight:bold; font-size: medium; background: #46be8a; color: #fff; text-decoration: none; padding: 8px 15PX; border-radius: 5px' Accept
                       '
-                      =link_to 'Decline', event_url(@data[:event][:id], :class => "button btn btn-default", token: @data[:token], status: "decline")
+                      a href=event_url(@data[:event][:id], token: @data[:token], status: "decline") style= 'font-weight:bold; font-size: medium; background: #fb434a; color: #fff; text-decoration: none; padding: 8px 15PX; border-radius: 5px' Decline
+                    br
+                  /br
                   p
                     | Regards,
                     br
