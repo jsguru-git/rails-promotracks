@@ -12,7 +12,7 @@ class UserMailer < ApplicationMailer
 
   def send_contact(to_email, data)
     @data = data
-    mail(:to => 'testqa@bitcot.com', :subject => @data[:subject])
+    mail(:to => 'admin@promotracks.com', :subject => @data[:subject])
   end
 
 end
