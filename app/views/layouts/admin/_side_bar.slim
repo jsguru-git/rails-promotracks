@@ -25,11 +25,12 @@ nav.left-menu left-menu=""
           .menu
             .menu-user-block
               .dropdown.dropdown-avatar
-                a.dropdown-toggle.left-menu-link aria-expanded="false" data-toggle="dropdown" data-no-turbolink="true" href=("javascript: void(0);")
+                a.dropdown-toggle#user-logo aria-expanded="false" data-toggle="dropdown" data-no-turbolink="true" href=("javascript: void(0);")
                   span.avatar href="javascript:void(0);"
                     -image=current_user.image.blank? ? "default-user.jpg" : current_user.image.url
                     = image_tag image, alt: "Image"
-                    .dropdown style="bottom:5px;"
+                  .dropdown style="bottom:10px;"
+                    p &nbsp; #{current_user.first_name}
                 ul.dropdown-menu.dropdown-menu-right aria-labelledby="" role="menu"
                   .dropdown-item
                     -if Client.where(:admin_id => current_user.id).exists?
