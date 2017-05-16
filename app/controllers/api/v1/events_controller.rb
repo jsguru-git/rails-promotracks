@@ -7,15 +7,12 @@ class Api::V1::EventsController < Api::V1::ApiApplicationController
 
   def update
     @event=current_user.events.find(params[:id])
-    if @event.promo_rep?
-      Rails.logger.info "rep"
-      @user_event=UserEvent.where(user_id: current_user.id, event_id: @event.id, :category => 0).first
-      Rails.logger.info "#{@user_event.id}"
-    elsif @event.promo_group?
-      Rails.logger.info "group"
-      @user_event=UserEvent.where(user_id: current_user.id, event_id: @event.id, :category => 1).first
-      Rails.logger.info "#{@user_event.id}"
-    end
+    @user_event=UserEvent.where(user_id: current_user.id, event_id: @event.id).first
+    # if @event.promo_rep?
+    #   @user_event=UserEvent.where(user_id: current_user.id, event_id: @event.id, :category => 'promo_rep').first
+    # elsif @event.promo_group?
+    #   @user_event=UserEvent.where(user_id: current_user.id, event_id: @event.id, :category => 'promo_group').first
+    # end
 
     unless user_event_params[:check_in].nil?
       if user_event_params[:check_in] < (@event.start_time-1.hour)
