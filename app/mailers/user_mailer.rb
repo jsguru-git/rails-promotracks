@@ -15,7 +15,7 @@ class UserMailer < ApplicationMailer
     if Rails.env.production?
       email = 'admin@promotracks.com'
     else
-      email = 'testqa@bitcot.com'
+      email = 'admin@promotracks.com'
     end
     mail(:to => email, :subject => @data[:subject])
   end
