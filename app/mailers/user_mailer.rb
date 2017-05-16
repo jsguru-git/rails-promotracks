@@ -12,7 +12,12 @@ class UserMailer < ApplicationMailer
 
   def send_contact(to_email, data)
     @data = data
-    mail(:to => 'admin@promotracks.com', :subject => @data[:subject])
+    if Rails.env.production?
+      email = 'admin@promotracks.com'
+    else
+      email = 'testqa@bitcot.com'
+    end
+    mail(:to => email, :subject => @data[:subject])
   end
 
 end
