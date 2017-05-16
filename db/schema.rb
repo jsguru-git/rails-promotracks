@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170515135632) do
+ActiveRecord::Schema.define(version: 20170516043713) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,12 @@ ActiveRecord::Schema.define(version: 20170515135632) do
   create_table "clients_users", id: false, force: :cascade do |t|
     t.integer "client_id"
     t.integer "user_id"
+  end
+
+  create_table "contacts", force: :cascade do |t|
+    t.jsonb "details", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "event_types", force: :cascade do |t|

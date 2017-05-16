@@ -25,5 +25,16 @@ module EmailHelper
     data
   end
 
+  def get_contact(contact)
+    data={}
+    data[:first_name]=contact.details["first_name"]
+    data[:last_name]= contact.details["last_name"]
+    data[:email]= contact.details["email"]
+    data[:phone] = contact.details["phone"]
+    data[:city]= contact.details["city"]
+    data[:comments] = contact.details["comments"]
+    data
+  end
+
 
 end

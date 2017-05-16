@@ -46,6 +46,7 @@ Rails.application.routes.draw do
   end
   namespace :api, defaults: {format: 'json'} do
     namespace :v1 do
+      resources :contacts
       resources :events do
         collection do
           get :active
