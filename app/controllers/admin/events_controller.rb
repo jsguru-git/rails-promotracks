@@ -44,37 +44,38 @@ class Admin::EventsController < Admin::AdminApplicationController
       redirect_to :back
       return
     end
-    group=Group.find(event_params[:group_id])
-    matched_users=group.user_ids & user_ids.map(&:to_i)
-    if matched_users.empty?
-      @event.creator= current_user
-      @event.start_time= Time.zone.strptime(event_params[:start_time], '%m/%d/%Y %I:%M %p')
-      @event.end_time= Time.zone.strptime(event_params[:end_time], '%m/%d/%Y %I:%M %p')
-      user_ids.each do |user_id|
-        user=User.find(user_id)
-        @event.user_events.new(user_id: user_id, token: SecureRandom.hex[0, 6], status: :accepted)
-        @current_client.users << user
-      end
-      unless params[:event][:group_id].blank?
-        group=Group.find(params[:event][:group_id])
-        group.users.each do |user|
-          token=SecureRandom.hex[0, 6]
-          @event.user_events.new(user_id: user.id, token: token, category: :promo_group)
-        end
-        @current_client.groups << group
-      end
-      if @event.save
-        @current_client.save
-        EventJob.perform_later('event', @event, @event.user_ids)
-        redirect_to admin_events_path
-      else
-        flash[:error]=@event.errors.full_messages.join(', ')
+    unless event_params[:group_id].blank?
+      group=Group.find(event_params[:group_id])
+      matched_users=group.user_ids & user_ids.map(&:to_i)
+      unless matched_users.empty?
+        flash[:error]= "#{User.where(id: matched_users).collect { |c| c[:first_name]+c[:last_name] }.join(',')} selected in both rep ane group"
         redirect_to :back
+        return
       end
+    end
+    @event.creator= current_user
+    @event.start_time= Time.zone.strptime(event_params[:start_time], '%m/%d/%Y %I:%M %p')
+    @event.end_time= Time.zone.strptime(event_params[:end_time], '%m/%d/%Y %I:%M %p')
+    user_ids.each do |user_id|
+      user=User.find(user_id)
+      @event.user_events.new(user_id: user_id, token: SecureRandom.hex[0, 6], status: :accepted)
+      @current_client.users << user
+    end
+    unless params[:event][:group_id].blank?
+      group=Group.find(params[:event][:group_id])
+      group.users.each do |user|
+        token=SecureRandom.hex[0, 6]
+        @event.user_events.new(user_id: user.id, token: token, category: :promo_group)
+      end
+      @current_client.groups << group
+    end
+    if @event.save
+      @current_client.save
+      EventJob.perform_later('event', @event, @event.user_ids)
+      redirect_to admin_events_path
     else
-      flash[:error]= "#{User.where(id: matched_users).collect { |c| c[:first_name]+c[:last_name] }.join(',')} selected in both rep ane group"
+      flash[:error]=@event.errors.full_messages.join(', ')
       redirect_to :back
-      return
     end
   end
 
@@ -98,59 +99,60 @@ class Admin::EventsController < Admin::AdminApplicationController
       redirect_to :back
       return
     end
-    group=Group.find(event_params[:group_id])
-    matched_users=group.user_ids & user_ids.map(&:to_i)
-    if matched_users.empty?
-      @event.assign_attributes(event_params)
-      if @event.valid?
-        @event.start_time=Time.zone.strptime(event_params[:start_time], '%m/%d/%Y %I:%M %p') unless event_params[:start_time].nil?
-        @event.end_time=Time.zone.strptime(event_params[:end_time], '%m/%d/%Y %I:%M %p') unless event_params[:end_time].nil?
-        if @event.group_id_changed?
-          group_email=true
-          group=Group.find(@event.group_id_was)
-          group.users.each do |user|
-            @event.user_events.where(:user_id => user.id).first.delete
-          end
-          @event.group.users.each do |user|
-            token=SecureRandom.hex[0, 6]
-            @event.user_events.new(user_id: user.id, token: token, category: :promo_group)
-          end
-        end
-        rep_ids=@event.user_events.where(:category => 0).map(&:user_id).reject(&:blank?)
-        new_rep_ids=user_ids.map(&:to_i)
-        unless (rep_ids - new_rep_ids && new_rep_ids - rep_ids).empty?
-          unless new_rep_ids.nil?
-            delete_users=rep_ids-(new_rep_ids)
-            delete_users.each do |del_user|
-              @event.user_events.where(user_id: del_user).first.delete
-            end
-            create_users=new_rep_ids-delete_users
-            rep_email=true if create_users.any?
-            create_users.each do |user_id|
-              if @event.user_ids.exclude? user_id
-                rep=User.find(user_id)
-                reps << rep
-                @event.user_events.new(user_id: user_id, token: SecureRandom.hex[0, 6], status: :accepted)
-              end
-            end
-          end
-        end
-        @event.save!
-        if group_email
-          EventJob.perform_later('event', @event, @event.group.user_ids)
-        end
-        if rep_email
-          EventJob.perform_later('event', @event, reps)
-        end
-        redirect_to admin_events_path
-      else
-        flash[:error]=@event.errors.full_messages.join(', ')
+    unless event_params[:group_id].blank?
+      group=Group.find(event_params[:group_id])
+      matched_users=group.user_ids & user_ids.map(&:to_i)
+      unless matched_users.empty?
+        flash[:error]= "#{User.where(id: matched_users).collect { |c| c[:first_name]+c[:last_name] }.join(',')} selected in both rep ane group"
         redirect_to :back
+        return
       end
+    end
+    @event.assign_attributes(event_params)
+    if @event.valid?
+      @event.start_time=Time.zone.strptime(event_params[:start_time], '%m/%d/%Y %I:%M %p') unless event_params[:start_time].nil?
+      @event.end_time=Time.zone.strptime(event_params[:end_time], '%m/%d/%Y %I:%M %p') unless event_params[:end_time].nil?
+      if @event.group_id_changed?
+        group_email=true
+        group=Group.find(@event.group_id_was)
+        group.users.each do |user|
+          @event.user_events.where(:user_id => user.id).first.delete
+        end
+        @event.group.users.each do |user|
+          token=SecureRandom.hex[0, 6]
+          @event.user_events.new(user_id: user.id, token: token, category: :promo_group)
+        end
+      end
+      rep_ids=@event.user_events.where(:category => 0).map(&:user_id).reject(&:blank?)
+      new_rep_ids=user_ids.map(&:to_i)
+      unless (rep_ids - new_rep_ids && new_rep_ids - rep_ids).empty?
+        unless new_rep_ids.nil?
+          delete_users=rep_ids-(new_rep_ids)
+          delete_users.each do |del_user|
+            @event.user_events.where(user_id: del_user).first.delete
+          end
+          create_users=new_rep_ids-delete_users
+          rep_email=true if create_users.any?
+          create_users.each do |user_id|
+            if @event.user_ids.exclude? user_id
+              rep=User.find(user_id)
+              reps << rep
+              @event.user_events.new(user_id: user_id, token: SecureRandom.hex[0, 6], status: :accepted)
+            end
+          end
+        end
+      end
+      @event.save!
+      if group_email
+        EventJob.perform_later('event', @event, @event.group.user_ids)
+      end
+      if rep_email
+        EventJob.perform_later('event', @event, reps)
+      end
+      redirect_to admin_events_path
     else
-      flash[:error]= "#{User.where(id: matched_users).collect { |c| c[:first_name]+c[:last_name] }.join(',')} selected in both rep ane group"
+      flash[:error]=@event.errors.full_messages.join(', ')
       redirect_to :back
-      return
     end
 
   end
