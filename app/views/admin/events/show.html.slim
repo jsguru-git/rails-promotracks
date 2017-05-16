@@ -30,53 +30,53 @@ section.page-content
               table.table.table-hover.text-right
                 thead
                   tr
-                    th.text-right Id
-                    th.text-right Rep
-                    th.text-right Attendance
-                    th.text-right Sample
-                    th.text-right Product Cost
-                    th.text-right Expenses
-                    th.text-right Hours
-                    th.text-right Pay
-                    th.text-right Recommended
-                    th.text-right Check In
-                    th.text-right Check out
-                    th.text-right Images
-                    th Actions
+                    th Id
+                    th Rep
+                    th Attendance
+                    th Sample
+                    th Product Cost
+                    th Expenses
+                    th Hours
+                    th Pay
+                    th Recommended
+                    th Check In
+                    th Check out
+                    th Images
+                    th.text-center Actions
 
                 tbody
                   -@event.user_events.where(:status => UserEvent::statuses[:accepted]).each_with_index do |uv, index|
 
                     tr
-                      td #{uv.user.id}
-                      td #{uv.user.full_name}
-                      td #{uv.attendance}
-                      td #{uv.sample}
-                      td #{number_with_precision((@event.brand&.unit_cost||0)*((uv&.sample)||0).round, precision: 1,  strip_insignificant_zeros: true)}
-                      td #{uv.total_expense}
+                      td.text-left #{uv.user.id}
+                      td.text-left #{uv.user.full_name}
+                      td.text-left #{uv.attendance}
+                      td.text-left #{uv.sample}
+                      td.text-left #{number_with_precision((@event.brand&.unit_cost||0)*((uv&.sample)||0).round, precision: 1,  strip_insignificant_zeros: true)}
+                      td.text-left #{uv.total_expense}
                       -if !uv.check_in.nil? and !uv.check_out.nil?
                         -hour=time_diff(uv.check_out, uv.check_in)
-                        td #{hour}
-                        td #{hour*@event.pay}
+                        td.text-left #{hour}
+                        td.text-left #{hour*@event.pay}
 
                       -else
-                        td nil
-                        td nil
-                      td
+                        td.text-left nil
+                        td.text-left nil
+                      td.text-left
                         -if uv.recommended==true
                           p Yes
                         -elsif uv.recommended==false
                           p No
-                      td #{uv.check_in&.strftime('%m/%d/%Y %I:%M %p')}
+                      td.text-left #{uv.check_in&.strftime('%m/%d/%Y %I:%M %p')}
 
-                      td #{uv.check_out&.strftime('%m/%d/%Y %I:%M %p')}
+                      td.text-left #{uv.check_out&.strftime('%m/%d/%Y %I:%M %p')}
 
-                      td
+                      td.text-left
                         -if uv.images&.size==0
 
                           p Not available
                         -else
                           a class="images" href= images_admin_dashboard_index_path(:user_event=> uv.id)  Show
-                      td
+                      td.text-center
                         = link_to edit_admin_event_user_event_path(:event_id => @event.id, :id => uv.id), class: 'btn-sm  btn-icon btn btn-rounded btn-warning' do
                           i.icmn-pencil4
