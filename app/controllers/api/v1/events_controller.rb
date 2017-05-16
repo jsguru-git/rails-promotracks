@@ -8,9 +8,13 @@ class Api::V1::EventsController < Api::V1::ApiApplicationController
   def update
     @event=current_user.events.find(params[:id])
     if @event.promo_rep?
+      Rails.logger.info "rep"
       @user_event=UserEvent.where(user_id: current_user.id, event_id: @event.id, :category => 0).first
+      Rails.logger.info "#{@user_event.id}"
     elsif @event.promo_group?
+      Rails.logger.info "group"
       @user_event=UserEvent.where(user_id: current_user.id, event_id: @event.id, :category => 1).first
+      Rails.logger.info "#{@user_event.id}"
     end
 
     unless user_event_params[:check_in].nil?
