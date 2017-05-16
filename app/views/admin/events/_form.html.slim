@@ -65,9 +65,12 @@ div
                 i.icmn-calendar4
         .form-group.row
           .col-sm-6
-            =f.label :pay, '$ Payment/hr'
+            =f.label :pay, 'Payment/hr'
             sup.text-danger *
-            = f.number_field :pay, min: 1, class: 'form-control', required: true
+            .input-group
+              span.input-group-addon
+                i.fa.fa-dollar
+              = f.number_field :pay, min: 1, class: 'form-control', required: true
           .col-sm-6
             =f.label :area, 'Area'
             sup.text-danger *

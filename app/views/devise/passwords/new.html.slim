@@ -20,7 +20,11 @@ body.theme-default.single-page#login-screen
                   .form-group
                     = f.label :email
                     br
-                    = f.email_field :email, :class => 'form-control', autofocus: true
+                    .input-group
+                      = f.email_field :email, :class => 'form-control', autofocus: true
+                      .input-group-addon
+                        i.icmn-envelop5
+
                   .form-actions
                     input.button.btn.btn-primary.width-150 data-disable-with=("Submit") name="commit" type="submit" value=("Submit")
                     span.register-link

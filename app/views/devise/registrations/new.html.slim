@@ -32,16 +32,25 @@ body.theme-default.single-page#login-screen
                     =f.hidden_field :role, :value => 'client_admin'
                     = f.label :email
                     br
-                    =f.email_field :email, :class => 'form-control', autofocus: true
+                    .input-group
+                      = f.email_field :email, :class => 'form-control', autofocus: true
+                      .input-group-addon
+                        i.icmn-envelop5
                   .form-group
                     = f.label :password
                     br
+                    .input-group
+                      = f.password_field :password, :class => 'form-control', autocomplete: "off"
+                      .input-group-addon
+                        i.icmn-key
                     = f.password_field :password, :class => 'form-control', autocomplete: "off"
                   .form-group
                     = f.label :password_confirmation
                     br
-                    = f.password_field :password_confirmation, :class => 'form-control', autocomplete: "off"
-
+                    .input-group
+                      = f.password_field :password_confirmation, :class => 'form-control', autocomplete: "off"
+                      .input-group-addon
+                        i.icmn-key
                   .form-actions
                     input.button.btn.btn-primary.width-150 data-disable-with=("Sign Up") name="commit" type="submit" value=("Sign up")
                     span.register-link
