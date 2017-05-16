@@ -7,7 +7,7 @@ class Api::V1::EventsController < Api::V1::ApiApplicationController
 
   def update
     @event=current_user.events.find(params[:id])
-    @user_event=UserEvent.where(user_id: current_user.id, event_id: @event.id).first
+    @user_event=UserEvent.where(user_id: current_user.id, event_id: @event.id, status: :accepted).first
     # if @event.promo_rep?
     #   @user_event=UserEvent.where(user_id: current_user.id, event_id: @event.id, :category => 'promo_rep').first
     # elsif @event.promo_group?
