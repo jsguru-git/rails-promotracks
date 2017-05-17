@@ -70,8 +70,13 @@ class Superadmin::ClientsController < Superadmin::SuperadminApplicationControlle
   def remove_brand
     client = Client.find(params[:client_id])
     brand=client.brands.find(params[:id])
-    brand.destroy
-    render json: {success: :true}
+    if Event.where(:brand_id => brand.id).exists?
+      msg= "Unable to delete, since you have active events for this brand!"
+    else
+      brand.destroy
+    end
+
+    render json: {success: :true, :message => msg}
   end
 
   private

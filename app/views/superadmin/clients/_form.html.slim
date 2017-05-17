@@ -1,7 +1,6 @@
 -object= current_user.super_admin? ? :superadmin : :admin
 -required=@client.new_record? ? true : false
 -disabled=@client.new_record? ? false : true
-
 section.page-content.height-auto
   .page-content-inner
     .panel
@@ -138,7 +137,9 @@ section.page-content.height-auto
                           a.form-control.btn.btn-danger.remove_brand data-id=brand_id data-client=@client&.id href='javascript:void(0)'
                             i.fa.fa-trash
                   .brands
+.flash_message
 .padding-bottom-40
+
 
 javascript:
   $(document).on('turbolinks:load', function () {
@@ -209,8 +210,14 @@ javascript:
           url: "/superadmin/clients/" + client + "/remove_brand?id=" + id,
           dataType: 'json',
           success: function (data) {
+            if (data.message) {
+              var success_div = '<div class="alert alert-danger fade in capitalize bottom-right"><button class="close" data-dismiss="alert" >x</button>' + data.message + '</div>';
+              jQuery(success_div).insertBefore(".flash_message");
+              jQuery(".alert").delay(3000).fadeOut('slow');
+            } else {
+              row.closest('div.brand_row').find("*").remove();
+            }
 
-            row.closest('div.brand_row').find("*").remove();
           }
         });
       } else {
