@@ -185,7 +185,7 @@ $(document).on('turbolinks:load', function () {
         loop: false,
         margin: 10,
         nav: true,
-        navText: ["<i class='icon-prev fa fa-arrow-left pull-left'></i>", "<i class='icon-next fa fa-arrow-right pull-right'></i>"],
+        navText: ["<i class='icon-prev fa fa-arrow-left'></i>", "<i class='icon-next fa fa-arrow-right'></i>"],
         responsive: {
             0: {
                 items: 1

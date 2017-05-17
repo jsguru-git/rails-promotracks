@@ -181,3 +181,53 @@ input.field {
   padding-top: 10px;
 }
 
+/*owl-nav*/
+.owl-prev {
+  position: absolute;
+  top: 40%;
+  left: 0;
+}
+
+.owl-next {
+  position: absolute;
+  top: 40%;
+  right: 0;
+}
+
+.fa {
+  font-size: 80px;
+  color: #fff;
+}
+
+@media (max-width: 767px) {
+  .owl-nav {
+    display: none;
+  }
+}
+
+/*owl-dots*/
+.owl-dots {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  margin-left: -27px;
+}
+
+.owl-dot {
+  background: #fff;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 0 4px;
+  text-indent: -999em;
+  border-radius: 6px;
+  cursor: pointer;
+  -webkit-transition: background .5s, opacity .5s;
+  -moz-transition: background .5s, opacity .5s;
+  transition: background .5s, opacity .5s;
+}
+
+.owl-dot.active {
+  background: #333;
+}
+
