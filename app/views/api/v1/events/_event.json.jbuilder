@@ -3,10 +3,16 @@ json.event_type do
   json.extract! event.event_type, :id, :name
 end
 json.brand do
-  unless event.brand.nil?
+  if event.brand.nil?
+    json.nil!
+  else
     json.extract! event.brand, :id, :name, :description
   end
 end
 json.address do
-  json.extract! event.address, :city, :state, :zip, :country, :formatted_address, :latitude, :longitude
+  if event.address.nil?
+    json.nil!
+  else
+    json.extract! event.address, :city, :state, :zip, :country, :formatted_address, :latitude, :longitude
+  end
 end
