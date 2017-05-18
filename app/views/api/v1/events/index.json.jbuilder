@@ -4,7 +4,7 @@ json.events @events do |event|
   user_event=event.user_events.where(user_id: current_user.id, status: UserEvent::statuses[:accepted]).first
   json.user_event do
     if user_event.nil?
-      json.user_event []
+      json.nil!
     else
       json.extract! user_event, :sample, :attendance, :total_expense, :follow_up, :notes, :check_in, :check_out, :recommended
       json.images do
