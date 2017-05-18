@@ -115,28 +115,31 @@ section.page-content.height-auto
                     .col-md-2
                       .form-group
                         a.form-control.add_new_brand class="btn btn-primary"href='javascript:void(0)' Add More
-                  = f.fields_for :brands, @brands do |brand|
-                    .row.brand_row
-                      .col-md-7
-                        .form-group
-                          =brand.hidden_field :id
-                          =brand.text_field :name, class: 'form-control', required: 'true'
-                          .help-block.with-errors
-                      .col-md-4
-                        .form-group
-                          .form-input-icon
-                            i.fa.fa-dollar.font-green
-                            =brand.text_field :unit_cost, class: 'form-control', required: 'true'
+                  div.scroll_over
+                    = f.fields_for :brands, @brands do |brand|
+                      .row.brand_row
+                        .col-md-6
+                          .form-group
+                            =brand.hidden_field :id
+                            =brand.text_field :name, class: 'form-control', required: 'true'
                             .help-block.with-errors
-                      .col-md-1
-                        .form-group
-                          -if @brands.nil?
-                            -brand_id=''
-                          -else
-                            -brand_id = @brands[brand.options[:child_index]]&.id
-                          a.form-control.btn.btn-danger.remove_brand data-id=brand_id data-client=@client&.id href='javascript:void(0)'
-                            i.fa.fa-trash
-                  .brands
+                        .col-md-4
+                          .form-group
+                            .form-input-icon
+                              i.fa.fa-dollar.font-green
+                              =brand.text_field :unit_cost, class: 'form-control', required: 'true'
+                              .help-block.with-errors
+                        .col-md-1
+                          .form-group
+                            -if @brands.nil?
+                              -brand_id=''
+                            -else
+                              -brand_id = @brands[brand.options[:child_index]]&.id
+                            a.form-control.btn.btn-danger.remove_brand data-id=brand_id data-client=@client&.id href='javascript:void(0)'
+                              i.fa.fa-trash
+
+                    .brands
+
 .flash_message
 .padding-bottom-40
 
@@ -193,10 +196,10 @@ javascript:
     });
 
 
-    $('.add_new_brand').on("click", function () {
+    $('.add_new_brand').on("click", function (e) {
       console.log($('.brand_row').size());
       var ip_counter = $('.brand_row').size();
-      var new_brands = '<div class="row brand_row"><div class="col-md-7"><div class="form-group"><input class="form-control" required="required" name="client[brands_attributes][' + ip_counter + "][name]" + '" id="client_brands_attributes_' + ip_counter + "_name" + '" type="text"><div class="help-block with-errors"></div></div></div><div class="col-md-4"><div class="form-group"><div class="form-input-icon"><i class="fa fa-dollar font-green"></i><input class="form-control" required="required" value="0.0" name="client[brands_attributes][' + ip_counter + "][unit_cost]" + '" id="client_brands_attributes_' + ip_counter + "_unit_cost" + '" type="text"><div class="help-block with-errors"></div></div></div></div><div class="col-md-1"><div class="form-group"><a class="form-control btn btn-danger remove_brand" href="javascript:void(0)"><i class="fa fa-trash"></i></a></div></div></div>';
+      var new_brands = '<div class="row brand_row"><div class="col-md-6"><div class="form-group"><input class="form-control" required="required" name="client[brands_attributes][' + ip_counter + "][name]" + '" id="client_brands_attributes_' + ip_counter + "_name" + '" type="text"><div class="help-block with-errors"></div></div></div><div class="col-md-4"><div class="form-group"><div class="form-input-icon"><i class="fa fa-dollar font-green"></i><input class="form-control" required="required" value="0.0" name="client[brands_attributes][' + ip_counter + "][unit_cost]" + '" id="client_brands_attributes_' + ip_counter + "_unit_cost" + '" type="text"><div class="help-block with-errors"></div></div></div></div><div class="col-md-1"><div class="form-group"><a class="form-control btn btn-danger remove_brand" href="javascript:void(0)"><i class="fa fa-trash"></i></a></div></div></div>';
       $(new_brands).insertBefore('.brands');
     });
 
