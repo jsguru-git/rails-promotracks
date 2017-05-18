@@ -236,25 +236,18 @@ input.field {
   width: 900px;
 }
 
-@media (max-width: 768px) {
+@media (min-width: 768px) {
   #top-menu1 {
-    margin-left: 750px;
+    margin-left: 700px;
   }
 }
-
-@media (max-width: 992px) {
-  #top-menu1 {
-    margin-left: 850px;
-  }
-}
-
 @media (min-width: 1200px) {
   #top-menu1 {
-    margin-left: 850px;
+    margin-left: 1100px;
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 992px) {
   #top-menu1 {
     margin-left: 750px;
   }
