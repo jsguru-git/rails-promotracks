@@ -2,7 +2,7 @@ nav.left-menu left-menu=""
   .logo-container
     a.logo href=''
       img alt=("Promo Tracks") src=image_url("logo.png")
-  .left-menu-inner.scroll-pane.col-lg-offset-8
+  .left-menu-inner.scroll-pane.col-md-10
     ul.left-menu-list.left-menu-list-root.list-unstyled
       li class="#{active_class(admin_dashboard_index_path)}"
         a.left-menu-link href=admin_dashboard_index_path
@@ -12,12 +12,8 @@ nav.left-menu left-menu=""
         a.left-menu-link href=admin_events_path
           i.left-menu-link-icon.icmn-calendar
           | Events
-      li
-        a.left-menu-link href=destroy_user_session_path data= {:confirm => "Are you sure?", :method => :delete} title= 'Logout'
-          i.left-menu-link-icon.icmn-exit
-          | Logout
 
-      li
+      li#top-menu1
         nav.top-menu.csm-menu
           .menu-icon-container.hidden-md-up
             .animate-menu-button.left-menu-toggle
@@ -30,14 +26,13 @@ nav.left-menu left-menu=""
                     -image=current_user.image.blank? ? "default-user.jpg" : current_user.image.url
                     = image_tag image, alt: "Image"
                   .dropdown style="bottom:10px;"
-                    p &nbsp; #{current_user.first_name}
                 ul.dropdown-menu.dropdown-menu-right aria-labelledby="" role="menu"
                   .dropdown-item
                     -if Client.where(:admin_id => current_user.id).exists?
                       li
                         =link_to edit_admin_client_path(Client.where(:admin_id => current_user.id).first)
                           i.dropdown-icon.fa.fa-user
-                          |Profile
+                          |&nbsp; #{current_user.first_name}
                       .dropdown-divider
                       -if @current_slave_user
                         li

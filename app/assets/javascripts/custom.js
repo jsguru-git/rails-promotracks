@@ -8,9 +8,12 @@ $(document).on('turbolinks:load', function () {
         placeholder: "Nothing Selected"
     });
 
-    $('#start_time').datetimepicker();
+    $('#start_time').datetimepicker({
+        stepping: 15
+    });
     $('#end_time').datetimepicker({
-        useCurrent: false //Important! See issue #1075
+        useCurrent: false, //Important! See issue #1075
+        stepping: 15
     });
     $("#start_time").on("dp.change", function (e) {
         $('#end_time').data("DateTimePicker").minDate(e.date);

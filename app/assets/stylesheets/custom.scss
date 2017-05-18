@@ -33,7 +33,6 @@
 
 nav.csm-menu.top-menu {
   border: none;
-  border-left: solid 1px;
 }
 
 @media (min-width: 768px) {
@@ -235,4 +234,8 @@ input.field {
   overflow-y: auto;
   height: 400px;
   width: 900px;
+}
+
+#top-menu1 {
+  margin-left: 66rem;
 }
