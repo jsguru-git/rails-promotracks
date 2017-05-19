@@ -1,13 +1,15 @@
 div
 .panel
   .panel-heading
-    h3 Dashboard - #{@current_client.name}
+    .row
+      .col-md-6
+        h3 Dashboard - #{@current_client.name}
+      .pull-right.col-md-3
+        .form-group
+          = select_tag :sort_by, options_for_select(Event::SORT_BY, selected_key = params[:sort]), {class: 'form-control selectpicker', id: 'order-select'}
+      .pull-right style="margin-top: 4px;"
+        h6.filter Filter
   .panel-body
-    .pull-right.col-md-3
-      .form-group
-        = select_tag :sort_by, options_for_select(Event::SORT_BY, selected_key = params[:sort]), {class: 'form-control', id: 'order-select'}
-    .pull-right
-      h6.filter Filter
     #events_list
       =render partial: 'admin/dashboard/events', :locals => {:events => @events}
 .padding-bottom-25
