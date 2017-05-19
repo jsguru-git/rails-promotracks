@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170516043713) do
+ActiveRecord::Schema.define(version: 20170519071812) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -124,7 +124,7 @@ ActiveRecord::Schema.define(version: 20170516043713) do
     t.integer  "attendance",    default: 0
     t.integer  "sample",        default: 0
     t.boolean  "deleted",       default: false
-    t.integer  "total_expense", default: 0
+    t.float "total_expense", default: 0.0
     t.index ["event_id"], name: "index_user_events_on_event_id", using: :btree
     t.index ["user_id"], name: "index_user_events_on_user_id", using: :btree
   end

@@ -53,14 +53,22 @@
             -event.user_events.where(:status => UserEvent::statuses[:accepted]).each do |uv|
               tr data-hide="true"
                 td #{uv.user.full_name}
-                td #{uv.attendance}
-                td #{uv.sample}
-                -if uv.sample.nil?
-                  td N/A
+                -if uv.recommended==true
+                  td #{uv.attendance}
                 -else
-                  td  #{number_with_precision((event.brand&.unit_cost||0)*(uv.sample||0).round, precision: 1,  strip_insignificant_zeros: true)}
-
-                td #{uv.total_expense}
+                  td
+                -if uv.recommended==true
+                  td #{uv.sample}
+                -else
+                  td
+                -if uv.recommended==true
+                  td #{number_with_precision((event.brand&.unit_cost||0)*(uv.sample||0).round, precision: 1,  strip_insignificant_zeros: true)}
+                -else
+                  td
+                -if (uv.recommended==true || uv.recommended==false)
+                  td #{uv.total_expense}
+                -else
+                  td
                 -if !uv.check_in.nil? and !uv.check_out.nil?
                   -hour=time_diff(uv.check_out, uv.check_in)
                   td #{hour}
@@ -71,9 +79,9 @@
 
                 td
                   -if uv.recommended==true
-                    p Yes
+                    p.highlight Yes
                   -elsif uv.recommended==false
-                    p No
+                    p.highlight No
                 td
                   -if uv.follow_up.blank?
                     p N/A
@@ -87,7 +95,7 @@
                 td
                   -if uv.images&.size==0
 
-                    p Not available
+                    p N/A
                   -else
                     a class="images" href= images_admin_dashboard_index_path(:user_event=> uv.id)  Show
 
