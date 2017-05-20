@@ -62,10 +62,7 @@ section.page-content
                         td.text-left #{number_with_precision((@event.brand&.unit_cost||0)*((uv&.sample)||0).round, precision: 1,  strip_insignificant_zeros: true)}
                       -else
                         td.text-left
-                      -if (uv.recommended==true || uv.recommended==false)
-                        td.text-left #{uv.total_expense}
-                      -else
-                        td.text-left
+                      td.text-left #{uv.total_expense}
                       -if !uv.check_in.nil? and !uv.check_out.nil?
                         -hour=time_diff(uv.check_out, uv.check_in)
                         td.text-left #{hour}
