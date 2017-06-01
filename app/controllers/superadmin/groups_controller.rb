@@ -7,7 +7,7 @@ class Superadmin::GroupsController < Superadmin::SuperadminApplicationController
 
   def new
     @group=Group.new
-    @promo_reps=User.group_members
+    @promo_reps=User.promo_rep
   end
 
   def create
@@ -19,7 +19,7 @@ class Superadmin::GroupsController < Superadmin::SuperadminApplicationController
 
   def edit
     @group=Group.find(params[:id])
-    @promo_reps=User.promo_rep.where("group_id=? OR group_id is NULL", @group.id).order('first_name')
+    @promo_reps=User.promo_rep
   end
 
   def update

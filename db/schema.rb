@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170519124231) do
+ActiveRecord::Schema.define(version: 20170601074454) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,9 +53,9 @@ ActiveRecord::Schema.define(version: 20170519124231) do
   end
 
   create_table "contacts", force: :cascade do |t|
-    t.jsonb "details", default: {}
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.jsonb    "details",    default: {}
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "event_types", force: :cascade do |t|
@@ -71,21 +71,28 @@ ActiveRecord::Schema.define(version: 20170519124231) do
     t.datetime "end_time"
     t.string   "area"
     t.float    "product_cost"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.integer  "user_id"
     t.integer  "group_id"
     t.integer  "promo_category", default: 0
     t.integer  "client_id"
     t.integer  "max_users",      default: 0
     t.integer  "event_type_id"
-    t.float "pay", default: 0.0
-    t.integer "brand_id"
+    t.float    "pay",            default: 0.0
+    t.integer  "brand_id"
     t.index ["brand_id"], name: "index_events_on_brand_id", using: :btree
     t.index ["client_id"], name: "index_events_on_client_id", using: :btree
     t.index ["event_type_id"], name: "index_events_on_event_type_id", using: :btree
     t.index ["group_id"], name: "index_events_on_group_id", using: :btree
     t.index ["user_id"], name: "index_events_on_user_id", using: :btree
+  end
+
+  create_table "group_members", force: :cascade do |t|
+    t.integer "group_id"
+    t.integer "user_id"
+    t.index ["group_id"], name: "index_group_members_on_group_id", using: :btree
+    t.index ["user_id"], name: "index_group_members_on_user_id", using: :btree
   end
 
   create_table "groups", force: :cascade do |t|
@@ -116,7 +123,7 @@ ActiveRecord::Schema.define(version: 20170519124231) do
     t.integer  "category",      default: 0
     t.integer  "status",        default: 0
     t.string   "notes"
-    t.boolean "recommended"
+    t.boolean  "recommended"
     t.datetime "check_in"
     t.datetime "check_out"
     t.text     "images",        default: [],    array: true
@@ -124,7 +131,7 @@ ActiveRecord::Schema.define(version: 20170519124231) do
     t.integer  "attendance",    default: 0
     t.integer  "sample",        default: 0
     t.boolean  "deleted",       default: false
-    t.float "total_expense", default: 0.0
+    t.float    "total_expense", default: 0.0
     t.index ["event_id"], name: "index_user_events_on_event_id", using: :btree
     t.index ["user_id"], name: "index_user_events_on_user_id", using: :btree
   end
@@ -158,7 +165,7 @@ ActiveRecord::Schema.define(version: 20170519124231) do
     t.integer  "invitations_count",                 default: 0
     t.string   "image"
     t.integer  "group_id"
-    t.string "area"
+    t.string   "area"
     t.index ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["group_id"], name: "index_users_on_group_id", using: :btree

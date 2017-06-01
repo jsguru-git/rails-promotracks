@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
   has_many :user_events
   has_many :events, :through => :user_events
   has_many :brands
+  has_many :group_members
+  has_many :groups ,:through => :group_members
   has_and_belongs_to_many :clients , join_table: :clients_users
   accepts_nested_attributes_for :clients, reject_if: :all_blank, allow_destroy: true
   mount_uploader :image, ImageUploader
