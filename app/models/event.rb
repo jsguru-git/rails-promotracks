@@ -30,8 +30,8 @@ class Event < ActiveRecord::Base
 
   SORT_BY =
       {
-          'Date (dsc)' => 'nd',
-          'Date (asc)' => 'na',
+          # 'Date (dsc)' => 'nd',
+          # 'Date (asc)' => 'na',
           'Type (asc)' => 'ta',
           'Type (dsc)' => 'td',
           'Area (asc)' => 'aa',
