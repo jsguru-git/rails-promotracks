@@ -12,15 +12,16 @@ class Superadmin::UsersController < Superadmin::SuperadminApplicationController
 
   def create
     @client=Client.find(params[:client_id])
-    admin=User.new(user_params)
-    admin.invite!
-    if admin.valid?
-      @client.users << admin
+    user = User.find_by_email(params[:user][:email])
+    if user.nil?
+      user=User.new(user_params)
+      user.invite!
+      @client.users << user
       @client.save
       flash[:notice]= "Admin Invited Sucessfully"
       redirect_to superadmin_client_users_path
     else
-      flash[:error]=admin.errors.full_messages.join(', ')
+      flash[:error]= "User Already Exists"
       redirect_to :back
     end
   end
