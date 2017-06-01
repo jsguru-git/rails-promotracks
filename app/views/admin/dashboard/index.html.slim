@@ -6,7 +6,7 @@ div
         h3 Dashboard - #{@current_client.name}
       .pull-right.col-md-3
         .form-group
-          = select_tag :sort_by, options_for_select(Event::SORT_BY, selected_key = params[:sort]), {class: 'form-control selectpicker', id: 'order-select'}
+          = select_tag :sort_by, options_for_select(Event::SORT_BY, selected_key = params[:sort]), {:title=>'Nothing Selected',class: 'form-control selectpicker', id: 'order-select'}
       .pull-right style="margin-top: 4px;"
         h6.filter Filter
   .panel-body

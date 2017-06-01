@@ -21,12 +21,12 @@ div
           .col-md-6
             = f.label :type, 'Event Type'
             sup.text-danger *
-            =f.select :event_type_id, options_for_select(EventType.all.collect { |u| [u.name, u.id] }, selected_key = @event.event_type_id), {}, {:class => 'form-control pointer selectpicker', required: true}
+            =select_tag 'event[event_type_id]', options_for_select(EventType.all.collect { |u| [u.name, u.id] }, selected_key = @event.event_type_id), {:class => 'form-control pointer selectpicker', required: true ,:include_blank=>'Nothing Selected'}
             .help-block.with-errors
           .col-md-6
             = f.label :brand, 'Brand Name'
             sup.text-danger *
-            =f.select :brand_id, options_for_select(@current_client.brands.active_brands.collect { |u| [u.name, u.id] }, selected_key = @event.brand_id), {}, {:class => 'form-control pointer selectpicker', required: true}
+            =select_tag 'event[brand_id]', options_for_select(@current_client.brands.active_brands.collect { |u| [u.name, u.id] }, selected_key = @event.brand_id), {:class => 'form-control pointer selectpicker', required: true,:include_blank=>'Nothing Selected'}
         .form-group.row
           .col-md-6
 
@@ -38,7 +38,7 @@ div
           .col-md-3
             = f.label :promo_groups, 'Promo Groups'
             sup.text-danger
-            =f.select :group_id, options_for_select(Group.all.collect { |u| [u.name, u.id] }, selected_key = @event.group_id), {:include_blank => 'Nothing Selected'}, {:class => 'form-control selectpicker show-tick pointer', :title => 'Select Group'}
+            =f.select :group_id, options_for_select(Group.all.collect { |u| [u.name, u.id] }, selected_key = @event.group_id), {}, {:class => 'form-control selectpicker show-tick pointer', :title => 'Select Group'}
             .help-block.with-errors
           .col-md-3
             = f.label :max_users, 'Max Users'
