@@ -97,6 +97,10 @@ $(document).on('turbolinks:load', function () {
     $(".search_rep").autocomplete({
         source: '/admin/clients/reps_and_groups',
         minLength: 3,
+        focus: function (event, ui) {
+            $(".ui-helper-hidden-accessible").hide();
+            event.preventDefault();
+        },
         select: function (event, ui) {
             if (ui.item.type == "promo_rep") {
                 promo_id = ui.item.id;
