@@ -11,6 +11,7 @@ div
       .panel-heading
         h4.panel-title #{@event.new_record? ? 'Create ' : 'Edit '} Event
       .panel-body
+        =hidden_field_tag :selected
         =f.hidden_field :promo_category
         .form-group.row
           .col-md-12

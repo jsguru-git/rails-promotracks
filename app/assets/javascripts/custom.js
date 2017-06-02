@@ -35,7 +35,7 @@ $(document).on('turbolinks:load', function () {
     //});
 
 
-
+   $('#selected').val(false);
     $(".city").keyup(function () {
         $(this).autocomplete({
             source: getAutoCompleteData(this.value),
@@ -52,6 +52,7 @@ $(document).on('turbolinks:load', function () {
                         $('.latitude').val(ui.item.value.lat);
                         $('.longitude').val(ui.item.value.lng);
                         $(".formatted_address").val(ui.item.value.formatted_address);
+                        $('#selected').val(true);
 
 
                         if (cityVal == '') {

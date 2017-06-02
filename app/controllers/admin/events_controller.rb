@@ -39,6 +39,7 @@ class Admin::EventsController < Admin::AdminApplicationController
   def create
     @promo_reps=User.promo_representatives
     @event=@current_client.events.new(event_params)
+    @event.address.city = event_params[:address_attributes][:city] unless event_params[:address_attributes][:formatted_address].blank?
     user_ids=params[:event][:user_ids].reject(&:blank?).map(&:to_i)
     if event_params[:group_id].blank? and user_ids.blank?
       flash[:error]= "Either Promo Rep or Group should be selected"
@@ -90,6 +91,10 @@ class Admin::EventsController < Admin::AdminApplicationController
     end
     @event.assign_attributes(event_params)
     if @event.valid?
+      if @event.address.city_changed? and params[:selected]=="false"
+        @event.address.city = event_params[:address_attributes][:city]
+        @event.address.update(address_1: nil,state: nil ,country: nil ,formatted_address: nil,zip: nil,longitude: nil,latitude: nil)
+      end
       @event.start_time=Time.zone.strptime(event_params[:start_time], '%m/%d/%Y %I:%M %p') unless event_params[:start_time].nil?
       @event.end_time=Time.zone.strptime(event_params[:end_time], '%m/%d/%Y %I:%M %p') unless event_params[:end_time].nil?
       if @event.group_id_changed?
