@@ -109,13 +109,13 @@ section.page-content.height-auto
             span.cui-wizard--steps--title Brand
           section.text-center data-step="2"
             .row
-              .col-sm-12.col-md-offset-2
+              .col-sm-12.col-md-offset-1
                 .margin-bottom-50
                   .row
                     .col-md-2
                       .form-group
                         a.form-control.add_new_brand class="btn btn-primary"href='javascript:void(0)' Add More
-                  div.scroll_over
+                  .scroll_over
                     = f.fields_for :brands, @brands do |brand|
                       .row.brand_row
                         .col-md-6
@@ -137,9 +137,7 @@ section.page-content.height-auto
                               -brand_id = @brands[brand.options[:child_index]]&.id
                             a.form-control.btn.btn-danger.remove_brand data-id=brand_id data-client=@client&.id href='javascript:void(0)'
                               i.fa.fa-trash
-
                     .brands
-
 .flash_message
 .padding-bottom-40
 
