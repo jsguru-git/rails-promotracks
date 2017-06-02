@@ -13,8 +13,12 @@ section.page-content
               .col-md-6
                 address
                   | Timings:       #{@event&.start_time&.strftime('%m/%d/%Y %I:%M %p')} - #{@event&.end_time&.strftime('%m/%d/%Y %I:%M %p')}
+                -if @event.address&.formatted_address.blank?
+                  -address = @event.address&.city
+                -else
+                  -address = @event.address&.formatted_address
                 address
-                  | Venue:         #{@event.address&.formatted_address}
+                  | Venue:         #{address}
                 address
                   | Payment/hr :      #{@event.pay}
 
