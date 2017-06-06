@@ -54,15 +54,15 @@ section.page-content
                     tr
                       td.text-left #{uv.user.id}
                       td.text-left #{uv.user.full_name}
-                      -if uv.recommended==true
+                      -if uv.recap==true
                         td.text-left #{uv.attendance}
                       -else
                         td.text-left
-                      -if uv.recommended==true
+                      -if uv.recap==true
                         td.text-left #{uv.sample}
                       -else
                         td.text-left
-                      -if uv.recommended==true
+                      -if uv.recap==true
                         td.text-left #{number_with_precision((@event.brand&.unit_cost||0)*((uv&.sample)||0).round, precision: 1,  strip_insignificant_zeros: true)}
                       -else
                         td.text-left

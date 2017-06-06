@@ -6,7 +6,7 @@ json.events @events do |event|
     if user_event.nil?
       json.nil!
     else
-      json.extract! user_event, :sample, :attendance, :total_expense, :follow_up, :notes, :check_in, :check_out, :recommended
+      json.extract! user_event, :sample, :attendance, :total_expense, :follow_up, :notes, :check_in, :check_out, :recommended ,:recap
       json.images do
         json.array! user_event.images.map { |image| image.url }
       end
