@@ -6,8 +6,9 @@ section.page-content.height-auto
     .panel
       #breadcrumb-align
         ul.list-unstyled.breadcrumb
-          li
-            a href='#{superadmin_clients_path}'   Clients
+          -if object==:superadmin
+            li
+              a href='#{superadmin_clients_path}'   Clients
           li
             span #{@client.new_record? ? 'New ' : 'Edit '} Client
     /! Forms Wizard
