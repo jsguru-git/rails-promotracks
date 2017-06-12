@@ -17,8 +17,8 @@ module EmailHelper
     data[:id]=event.id
     data[:category]=event.promo_category
     data[:name]=event&.name
-    data[:start_time]=event.start_time
-    data[:end_time]=event.end_time
+    data[:start_time]=event.start_time&.localtime.strftime('%m/%d/%Y %I:%M %p')
+    data[:end_time]=event.end_time&.localtime.strftime('%m/%d/%Y %I:%M %p')
     data[:brand_name]=event.brand&.name
     data[:location]=event.address&.city
     data[:event_type]=event.event_type&.name
