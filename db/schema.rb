@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170606050036) do
+ActiveRecord::Schema.define(version: 20170612071213) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,8 +71,8 @@ ActiveRecord::Schema.define(version: 20170606050036) do
     t.datetime "end_time"
     t.string   "area"
     t.float    "product_cost"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.integer  "user_id"
     t.integer  "group_id"
     t.integer  "promo_category", default: 0
@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(version: 20170606050036) do
     t.integer  "event_type_id"
     t.float    "pay",            default: 0.0
     t.integer  "brand_id"
+    t.boolean  "deleted",        default: false
     t.index ["brand_id"], name: "index_events_on_brand_id", using: :btree
     t.index ["client_id"], name: "index_events_on_client_id", using: :btree
     t.index ["event_type_id"], name: "index_events_on_event_type_id", using: :btree
