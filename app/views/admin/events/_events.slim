@@ -21,8 +21,12 @@ table.table#sort-data-table
           td #{event.end_time&.strftime('%m/%d/%Y %I:%M %p')}
           td #{event.brand&.name}
           td.text-center
-            = link_to edit_admin_event_path(event), class: 'btn-sm  btn-icon btn btn-rounded btn-warning' do
-              i.icmn-pencil4
+            -if request.path.include? 'superadmin'
+              = link_to superadmin_event_path(:id => event.id), :data => {:confirm => 'Are you sure, you want to delete?'}, :title => 'Delete', :method => :delete, class: 'btn btn-sm btn-danger' do
+                i.glyphicon.glyphicon-trash
+            -else
+              = link_to edit_admin_event_path(event), class: 'btn-sm  btn-icon btn btn-rounded btn-warning' do
+                i.icmn-pencil4
     -else
       td
         | No events

@@ -6,9 +6,9 @@ class Admin::EventsController < Admin::AdminApplicationController
     if params[:search]
       unless params[:promo_id].blank?
         if params[:search_type]=='promo_group'
-          @events=@current_client.events.where(:group_id => params[:promo_id]).order('updated_at desc').collect { |u| u }
+          @events=@current_client.events.active.where(:group_id => params[:promo_id]).order('updated_at desc').collect { |u| u }
         elsif params[:search_type]=='promo_rep'
-          @events=@current_client.events.joins(:users).where("users.id IN (?)", params[:promo_id]).order('updated_at desc').collect { |u| u }
+          @events=@current_client.events.active.joins(:users).where("users.id IN (?)", params[:promo_id]).order('updated_at desc').collect { |u| u }
         end
         unless @events.kind_of?(Array)
           @events = @events.page(params[:page]).per(10)
@@ -17,7 +17,7 @@ class Admin::EventsController < Admin::AdminApplicationController
         end
       end
     else
-      @events=@current_client.events.page(params[:page]).per(20).order('updated_at desc')
+      @events=@current_client.events.active.page(params[:page]).per(20).order('updated_at desc')
     end
     respond_to do |format|
       format.html {

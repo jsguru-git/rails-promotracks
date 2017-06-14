@@ -2,7 +2,7 @@ class Admin::DashboardController < Admin::AdminApplicationController
 
 
   def index
-    @events=@current_client&.events.includes(:user_events, :event_type).order_events(params[:sort_by])
+    @events=@current_client&.events.active.includes(:user_events, :event_type).order_events(params[:sort_by])
     @total, @total_attendance, @total_sample, @total_product_cost, @total_payment=0.0
     sample=[]; total=[]; product_cost=[]; attendance=[]; final_pay=[]
 

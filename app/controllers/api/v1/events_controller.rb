@@ -2,7 +2,7 @@ class Api::V1::EventsController < Api::V1::ApiApplicationController
 
 
   def index
-    @events = current_user.events.active_events.includes(:user_events).where(:user_events => {:user_id => current_user.id})
+    @events = current_user.events.active.active_events.includes(:user_events).where(:user_events => {:user_id => current_user.id})
   end
 
   def update
@@ -19,7 +19,7 @@ class Api::V1::EventsController < Api::V1::ApiApplicationController
         render 'global/error', :locals => {:code => 701, :message => 'you can checkin only before an hour'}
         return
       end
-      if current_user.events.checkedin_events.includes(:user_events).where(:user_events => {:user_id => current_user.id}).size>0
+      if current_user.events.active.checkedin_events.includes(:user_events).where(:user_events => {:user_id => current_user.id}).size>0
         render 'global/error', :locals => {:code => 701, :message => 'can check in only one event at a time'}
         return
       end
@@ -44,12 +44,12 @@ class Api::V1::EventsController < Api::V1::ApiApplicationController
   end
 
   def active
-    @events = current_user.events.checkedin_events.includes(:user_events).where(:user_events => {:user_id => current_user.id})
+    @events = current_user.events.active.checkedin_events.includes(:user_events).where(:user_events => {:user_id => current_user.id})
     render :index
   end
 
   def expired
-    @events = current_user.events.expired_events.includes(:user_events).where(:user_events => {:user_id => current_user.id}).order('end_time desc')
+    @events = current_user.events.active.expired_events.includes(:user_events).where(:user_events => {:user_id => current_user.id}).order('end_time desc')
     render :index
   end
 

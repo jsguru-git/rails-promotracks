@@ -1,0 +1,8 @@
+div
+  .panel
+    .panel-heading
+       h3 Events
+    .panel-body
+      =render partial: 'admin/events/events', :locals => {:events => @events}
+    .pull-right
+      =render partial: 'admin/events/footer', :locals => {:events => @events}

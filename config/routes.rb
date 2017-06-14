@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :events
   namespace :superadmin do
     resources :event_types
+    resources :events ,:only=>[:index ,:destroy]
     resources :clients do
       delete :remove_brand
       get :impersonate
