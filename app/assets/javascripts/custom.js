@@ -286,5 +286,9 @@ $(document).on('turbolinks:load', function () {
         $('#imagemodal').modal('show');
     });
 
+    $('#sort-data-table').DataTable({
+        "order": [[3, "desc"]]
+    });
+
 
 });
