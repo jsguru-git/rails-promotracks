@@ -144,6 +144,6 @@ class Admin::EventsController < Admin::AdminApplicationController
   end
   private
   def event_params
-    params.require(:event).permit(:name, :event_type_id, :start_time, :end_time, :brand_id, :user_ids, :group_id, :max_users, :pay, :area, address_attributes: [:address_1, :city, :state, :zip, :country, :latitude, :longitude, :formatted_address])
+    params.require(:event).permit(:name, :event_type_id, :start_time, :end_time, :brand_id, :user_ids, :group_id, :max_users, :pay, :area, address_attributes: [:address_1, :city, :state, :zip, :country, :latitude, :longitude, :formatted_address ,:time_zone])
   end
 end

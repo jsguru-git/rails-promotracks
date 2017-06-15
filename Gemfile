@@ -18,6 +18,8 @@ gem 'time_difference'
 gem 'thin'
 gem 'settingslogic'
 gem 'browser-timezone-rails'
+gem 'timezone', '~> 1.0'
+gem 'geocoder'
 
 gem "select2-rails"
 # See https://github.com/rails/execjs#readme for more supported runtimes

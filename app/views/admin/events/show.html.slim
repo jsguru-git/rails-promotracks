@@ -12,7 +12,7 @@ section.page-content
             .row
               .col-md-6
                 address
-                  | Timings:       #{@event&.start_time&.strftime('%m/%d/%Y %I:%M %p')} - #{@event&.end_time&.strftime('%m/%d/%Y %I:%M %p')}
+                  | Timings:       #{((event.start_time).in_time_zone(event.address.time_zone))&.strftime('%m/%d/%Y %I:%M %p')} - #{((event.end_time).in_time_zone(event.address.time_zone))&.strftime('%m/%d/%Y %I:%M %p')}
                 -if @event.address&.formatted_address.blank?
                   -address = @event.address&.city
                 -else

@@ -18,21 +18,7 @@ module ApplicationHelper
 
 
   def time_diff(start_time, end_time)
-    seconds_diff = (start_time - end_time).to_i.abs
-
-    hours = seconds_diff / 3600
-    seconds_diff -= hours * 3600
-
-    minutes = seconds_diff / 60
-    seconds_diff -= minutes * 60
-
-    seconds = seconds_diff
-    puts "#{hours.to_s.rjust(2, '0')}:#{minutes.to_s.rjust(2, '0')}:#{seconds.to_s.rjust(2, '0')}"
-    if (minutes.to_s.rjust(2, '0').to_i > 35) and (minutes.to_s.rjust(2, '0').to_i < 59)
-      hours= minutes.to_s.rjust(2, '0').to_i+1
-    else
-      hours=hours.to_s.rjust(2, '0').to_i
-    end
+    hours=((end_time.to_i - start_time.to_i)/(60 * 60.00)).round
     if hours < 1
       1
     else
@@ -40,6 +26,14 @@ module ApplicationHelper
     end
   end
 
+
+  def formatted_api_datetime(datetime)
+    if datetime.blank?
+      ''
+    else
+      datetime.strftime('%Y-%m-%dT%H:%M:%SZ')
+    end
+  end
 
   def add_images(images, event)
     success = true

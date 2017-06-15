@@ -17,8 +17,8 @@ table.table#sort-data-table
           td #{event.name}
           td #{event.event_type&.name}
           td #{event.address&.city}
-          td #{event.start_time&.strftime('%m/%d/%Y %I:%M %p')}
-          td #{event.end_time&.strftime('%m/%d/%Y %I:%M %p')}
+          td #{((event.start_time).in_time_zone(event.address.time_zone))&.strftime('%m/%d/%Y %I:%M %p')}
+          td #{((event.end_time).in_time_zone(event.address.time_zone))&.strftime('%m/%d/%Y %I:%M %p')}
           td #{event.brand&.name}
           td.text-center
             -if request.path.include? 'superadmin'
