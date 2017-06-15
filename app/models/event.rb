@@ -12,6 +12,10 @@ class Event < ActiveRecord::Base
 
   enum promo_category: [:promo_rep, :promo_group]
 
+  def self.active
+    self.where(deleted: false)
+  end
+
   def self.active_events
     self.where('(end_time NOTNULL AND end_time > ?)', Time.now- 1.hour)
         .where(:user_events => {:status => UserEvent::statuses[:accepted], :check_out => nil})
