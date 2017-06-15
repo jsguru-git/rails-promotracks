@@ -2,7 +2,7 @@ class Superadmin::EventsController < Superadmin::SuperadminApplicationController
 
 
   def index
-    @events = Event.active
+    @events = Event.active.order('updated_at desc')
     unless @events.kind_of?(Array)
       @events = @events.page(params[:page]).per(20)
     else
