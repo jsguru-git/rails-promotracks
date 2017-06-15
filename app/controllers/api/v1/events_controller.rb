@@ -26,7 +26,7 @@ class Api::V1::EventsController < Api::V1::ApiApplicationController
     end
 
     if @user_event.update_attributes(user_event_params)
-      if @event.end_time + 1.hour < Time.now
+      if @event.end_time + 5.minutes < Time.now
         @user_event.update_attribute(:check_out,@event.end_time + 1.hour)
       end
       if params[:user_event][:images].nil?
