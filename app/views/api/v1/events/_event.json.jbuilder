@@ -1,9 +1,9 @@
 json.extract! event, :id, :name, :promo_category
 
-json.start_time event.start_time.in_time_zone(event.address&.time_zone)
+json.start_time event.start_time
 json.start_time_utc formatted_api_datetime(event.start_time)
 
-json.end_time event.end_time.in_time_zone(event.address&.time_zone)
+json.end_time event.end_time
 json.end_time_utc formatted_api_datetime(event.end_time)
 
 json.event_type do
