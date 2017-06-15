@@ -19,11 +19,7 @@ module ApplicationHelper
 
   def time_diff(start_time, end_time)
     hours=((end_time.to_i - start_time.to_i)/(60 * 60.00)).round
-    if hours < 1
-      1
-    else
-      hours
-    end
+    hours
   end
 
 
