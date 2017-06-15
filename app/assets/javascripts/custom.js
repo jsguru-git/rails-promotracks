@@ -287,7 +287,12 @@ $(document).on('turbolinks:load', function () {
     });
 
     $('#sort-data-table').DataTable({
-        "order": [[3, "desc"]]
+        "order": [[3, "desc"]],
+        "bPaginate": false,
+        "bDeferRender": true,
+        "bAutoWidth": false,
+        "bFilter": false,
+        "bInfo": false
     });
 
 
