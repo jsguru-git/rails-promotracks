@@ -92,3 +92,14 @@ section.page-content
                       td.text-center
                         = link_to edit_admin_event_user_event_path(:event_id => @event.id, :id => uv.id), class: 'btn-sm  btn-icon btn btn-rounded btn-warning' do
                           i.icmn-pencil4
+        .row
+          .col-md-12
+            small
+              /.text-inline.text-danger *
+              .text-inline Times are in the respective location's timezone
+        .row
+          .col-md-12
+            small
+              /.text-inline.text-danger #
+              .text-inline Times are in #{Time.zone.to_s} Timezone
+.padding-15
