@@ -47,8 +47,6 @@ class Admin::EventsController < Admin::AdminApplicationController
       return
     end
     @event.creator= current_user
-    @event.start_time= Time.zone.strptime(event_params[:start_time], '%m/%d/%Y %I:%M %p')
-    @event.end_time= Time.zone.strptime(event_params[:end_time], '%m/%d/%Y %I:%M %p')
     user_ids.each do |user_id|
       user=User.find(user_id)
       @event.user_events.new(user_id: user_id, token: SecureRandom.hex[0, 6], status: :accepted)
@@ -61,6 +59,9 @@ class Admin::EventsController < Admin::AdminApplicationController
       end
     end
     if @event.save
+      @event.start_time = Time.find_zone(@event.address.time_zone).strptime(event_params[:start_time], '%m/%d/%Y %I:%M %p') unless event_params[:start_time].blank?
+      @event.end_time = Time.find_zone(@event.address.time_zone).strptime(event_params[:end_time], '%m/%d/%Y %I:%M %p') unless event_params[:end_time].blank?
+      @event.save
       EventJob.perform_later('event', @event, @event.user_ids)
       redirect_to admin_events_path
     else
@@ -95,8 +96,6 @@ class Admin::EventsController < Admin::AdminApplicationController
         @event.address.city = event_params[:address_attributes][:city]
         @event.address.update(address_1: nil,state: nil ,country: nil ,formatted_address: nil,zip: nil,longitude: nil,latitude: nil)
       end
-      @event.start_time=Time.zone.strptime(event_params[:start_time], '%m/%d/%Y %I:%M %p') unless event_params[:start_time].nil?
-      @event.end_time=Time.zone.strptime(event_params[:end_time], '%m/%d/%Y %I:%M %p') unless event_params[:end_time].nil?
       if @event.group_id_changed?
         group_email=true
         group=Group.find(@event.group_id_was)
@@ -129,6 +128,9 @@ class Admin::EventsController < Admin::AdminApplicationController
         end
       end
       @event.save!
+      @event.start_time = Time.find_zone(@event.address.time_zone).strptime(event_params[:start_time], '%m/%d/%Y %I:%M %p') unless event_params[:start_time].blank?
+      @event.end_time = Time.find_zone(@event.address.time_zone).strptime(event_params[:end_time], '%m/%d/%Y %I:%M %p') unless event_params[:end_time].blank?
+      @event.save
       if group_email
         EventJob.perform_later('event', @event, @event.group.user_ids)
       end

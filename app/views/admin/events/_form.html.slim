@@ -54,14 +54,14 @@ div
             =f.label :start_time, 'Start Time'
             sup.text-danger *
             #start_time.input-group.date
-              =f.text_field :start_time, class: 'form-control', required: true, value: (@event&.start_time&.strftime('%m/%d/%Y %I:%M %p'))
+              =f.text_field :start_time, class: 'form-control', required: true, value: ((@event.start_time).in_time_zone(@event.address&.time_zone))&.strftime('%m/%d/%Y %I:%M %p')
               span.input-group-addon.pointer
                 i.icmn-calendar4
           .col-sm-6
             =f.label :end_time, 'End Time'
             sup.text-danger *
             #end_time.input-group.date
-              =f.text_field :end_time, class: 'form-control', required: true, value: (@event&.end_time&.strftime('%m/%d/%Y %I:%M %p'))
+              =f.text_field :end_time, class: 'form-control', required: true, value: ((@event&.end_time).in_time_zone(@event.address&.time_zone))&.strftime('%m/%d/%Y %I:%M %p')
               span.input-group-addon.pointer
                 i.icmn-calendar4
         .form-group.row
