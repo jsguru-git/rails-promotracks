@@ -12,6 +12,16 @@ div
   .panel-body
     #events_list
       =render partial: 'admin/dashboard/events', :locals => {:events => @events}
+    .row
+      .col-md-12
+        small
+          /.text-inline.text-danger *
+          .text-inline Times are in the respective location's timezone
+    .row
+      .col-md-12
+        small
+          /.text-inline.text-danger #
+          .text-inline Times are in #{Time.zone.to_s} Timezone
 .padding-bottom-25
 
 

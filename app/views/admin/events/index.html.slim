@@ -22,6 +22,19 @@ div
     .panel-body
       #events
         =render partial: 'admin/events/events', :locals => {:events => @events}
-    .pull-right
-      #events-footer
-        =render partial: 'admin/events/footer', :locals => {:events => @events}
+      .row
+        .col-md-12
+          small
+            /.text-inline.text-danger *
+            .text-inline Times are in the respective location's timezone
+      .row
+        .col-md-12
+          small
+            /.text-inline.text-danger #
+            .text-inline Times are in #{Time.zone.to_s} Timezone
+      .pull-right
+        #events-footer
+          = render partial: 'admin/events/footer', :locals => {:events => @events}
+      - if @events.count>=5
+        .padding-35
+.padding-bottom-25

@@ -1,8 +1,18 @@
 div
   .panel
     .panel-heading
-       h3 Events
+      h3 Events
     .panel-body
       =render partial: 'admin/events/events', :locals => {:events => @events}
+      .row
+        .col-md-12
+          small
+            /.text-inline.text-danger *
+            .text-inline Times are in the respective location's timezone
+      .row
+        .col-md-12
+          small
+            /.text-inline.text-danger #
+            .text-inline Times are in #{Time.zone.to_s} Timezone
     .pull-right
       =render partial: 'admin/events/footer', :locals => {:events => @events}
