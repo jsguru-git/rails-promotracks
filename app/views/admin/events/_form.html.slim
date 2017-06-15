@@ -83,7 +83,7 @@ div
               = f.label :city, 'Event Venue Address'
               sup.text-danger *
               .input-group
-                = addr.text_field :city, class: 'city form-control ', :autocomplete => true, required: true
+                = addr.text_field :city, class: 'city form-control ', :autocomplete => true, placeholder: "Please enter correct zip code or address", required: true
                 span.input-group-addon.btn-primary.pointer
                   i.fa.fa-map-marker
                 =addr.hidden_field :state, class: 'state'

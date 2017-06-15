@@ -3,6 +3,7 @@ table.table#sort-data-table
     tr.active
       th ID
       th Event Name
+      th Client Name
       th Event Type
       th Venue
       th Start Time
@@ -15,6 +16,7 @@ table.table#sort-data-table
         tr
           td #{event.id}
           td #{event.name}
+          td #{event.client.name}
           td #{event.event_type&.name}
           td #{event.address&.city}
           td #{((event.start_time)&.in_time_zone(event.address&.time_zone))&.strftime('%m/%d/%Y %I:%M %p')}
