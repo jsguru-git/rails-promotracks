@@ -24,11 +24,10 @@ class Api::V1::EventsController < Api::V1::ApiApplicationController
         return
       end
     end
-
     if @user_event.update_attributes(user_event_params)
-      # if @event.end_time + 1.hour < Time.now
-      #   @user_event.update_attribute(:check_out,@event.end_time + 1.hour)
-      # end
+      if (@event.end_time+1.hour).to_i  < Time.now.utc.to_i and !user_event_params[:check_out].nil?
+        @user_event.update_attribute(:check_out,@event.end_time + 1.hour)
+      end
       if params[:user_event][:images].nil?
         render :show
       else
