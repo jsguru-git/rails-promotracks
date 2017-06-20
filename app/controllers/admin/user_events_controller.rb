@@ -20,6 +20,12 @@ class Admin::UserEventsController < Admin::AdminApplicationController
       end
     end
     @user_event.assign_attributes(user_event_params)
+    if @user_event.recap==false
+      @user_event.sample = 0
+      @user_event.attendance = 0
+      @user_event.follow_up = nil
+      @user_event.recommended = nil
+    end
     if @user_event.valid?
       @user_event.check_in = Time.zone.strptime(user_event_params[:check_in], '%m/%d/%Y %I:%M %p') unless user_event_params[:check_in].nil?
       @user_event.check_out = Time.zone.strptime(user_event_params[:check_out], '%m/%d/%Y %I:%M %p') unless user_event_params[:check_out].nil?
@@ -60,7 +66,7 @@ class Admin::UserEventsController < Admin::AdminApplicationController
 
   private
   def user_event_params
-    params.require(:user_event).permit(:notes, :total_expense, :check_in, :check_out, :follow_up, :recommended, :attendance, :sample, :images => [])
+    params.require(:user_event).permit(:notes, :total_expense, :check_in, :check_out, :follow_up,:recap, :recommended, :attendance, :sample, :images => [])
   end
 
 end

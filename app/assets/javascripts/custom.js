@@ -7,7 +7,29 @@ $(document).on('turbolinks:load', function () {
         closeOnSelect: false,
         placeholder: "Nothing Selected"
     });
-
+    if($('#user_event_recap').is(':checked'))
+    {
+        $('#recap_off').show();
+    }
+    else{
+        $('#recap_off').hide();
+    }
+    $('#user_event_recap').click(function () {
+        if ($(this).is(':checked')) {
+            $('#recap_off').show();
+            $('#user_event_attendance').prop('required', true);
+            $('#user_event_sample').prop('required', true);
+            $('#user_event_total_expense').prop('required', true);
+            $('#user_event_total_recommended').prop('required', true);
+            $('#user_event_total_follow_up').prop('required', true);
+        } else {
+            $('#recap_off').hide();
+            $('#user_event_attendance').prop('required', false);
+            $('#user_event_sample').prop('required', false);
+            $('#user_event_total_recommended').prop('required', false);
+            $('#user_event_total_follow_up').prop('required', false);
+        }
+    });
     $('#start_time').datetimepicker({
         stepping: 15
     });
