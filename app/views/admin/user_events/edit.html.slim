@@ -7,36 +7,49 @@ section.page-content
             h3 #{@user_event.new_record? ? 'New ' : 'Edit '}
           .panel-body
             .form-group.row
-              .col-md-12
-                = f.label :attendance, 'Total Attendance'
-                sup.text-danger
-                = f.text_field :attendance, class: 'form-control '
-            .form-group.row
-              .col-md-12
-                = f.label :sample, 'Number Sampled'
-                sup.text-danger
-                = f.text_field :sample, class: 'form-control'
-            .form-group.row
-              .col-md-6
-                = f.label :total_expense, 'Total Expense for event'
-                sup.text-danger
-                = f.text_field :total_expense, class: 'form-control'
-              .col-md-6
+              .col-md-3
                 label &nbsp;
                 .input-group
                   .input-group-addon
-                    = f.check_box :recommended
-                  .form-control Recommended
+                    -if @user_event.recap.nil? or @user_event.recap==true
+                      -checked= true
+                    -elsif @user_event.recap==false
+                      -checked= false
+                    = f.check_box :recap, {:checked => checked}
+                  .form-control Recap
             .form-group.row
               .col-md-12
-                = f.label :follow_up, 'Bar/Store Owner Meetup for Followup'
+                = f.label :total_expense, 'Total Expense for event'
                 sup.text-danger
-                = f.text_field :follow_up, class: 'form-control'
-            .form-group.row
-              .col-md-12
-                = f.label :notes, 'Notes'
-                sup.text-danger
-                = f.text_area :notes, class: 'form-control', rows: 5
+                = f.text_field :total_expense, class: 'form-control'
+
+            #recap_off
+              .form-group.row
+                .col-md-12
+                  = f.label :sample, 'Number Sampled'
+                  sup.text-danger
+                  = f.text_field :sample, class: 'form-control'
+              .form-group.row
+                .col-md-6
+                  = f.label :attendance, 'Total Attendance'
+                  sup.text-danger
+                  = f.text_field :attendance, class: 'form-control '
+                .col-md-6
+                  label &nbsp;
+                  .input-group
+                    .input-group-addon
+                      = f.check_box :recommended
+                    .form-control Recommended
+              .form-group.row
+                .col-md-12
+                  = f.label :follow_up, 'Bar/Store Owner Meetup for Followup'
+                  sup.text-danger
+                  = f.text_field :follow_up, class: 'form-control'
+              .form-group.row
+                .col-md-12
+                  = f.label :notes, 'Notes'
+                  sup.text-danger
+                  = f.text_area :notes, class: 'form-control', rows: 5
             .form-group.row
               .col-sm-6
                 =f.label :check_in, 'Check In time'
