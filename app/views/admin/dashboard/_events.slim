@@ -100,7 +100,7 @@
           tr/
         -else
           tr
-            td #{((event.start_time).in_time_zone(event.address.time_zone))&.strftime('%m/%d/%Y %I:%M %p')}
+            td #{((event.start_time).in_time_zone(event.address&.time_zone))&.strftime('%m/%d/%Y %I:%M %p')}
             td
               =link_to " #{event.name}", admin_event_path(event.id), :id => 'text-color'
 
