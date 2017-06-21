@@ -44,7 +44,7 @@
         -if event.user_events.where(:status => UserEvent::statuses[:accepted]).size>0
           -count=event.user_events.where(:status => UserEvent::statuses[:accepted]).count
           tr
-            td rowspan="#{count+count}" #{((event.start_time).in_time_zone(event.address&.time_zone))&.strftime('%m/%d/%Y %I:%M %p')}
+            td rowspan="#{count+count}" #{((event.start_time)&.in_time_zone(event.address&.time_zone))&.strftime('%m/%d/%Y %I:%M %p')}
             td rowspan="#{count+count}"
               =link_to " #{event.name}", admin_event_path(event.id), :id => 'text-color'
 
