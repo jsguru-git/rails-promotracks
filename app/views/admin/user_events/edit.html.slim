@@ -65,26 +65,27 @@ section.page-content
                   =f.text_field :check_out, class: 'form-control', value: (@user_event&.check_out&.strftime('%m/%d/%Y %I:%M %p'))
                   span.input-group-addon.pointer
                     i.icmn-calendar4
-            .form-group.row
-              .col-md-1.pull-right.padding-top-20
-                =label_tag '', ''
-                a.btn.btn-default.add_images href='javascript:void(0)'
-                  i.fa.fa-plus
-              .col-md-11
-                = f.label :images, 'Images'
-                sup.text-danger
-                  =f.file_field :images, :class => 'form-control file', :multiple => true
-            .controls.attach
+            #image_off
+              .form-group.row
+                .col-md-1.pull-right.padding-top-20
+                  = label_tag '', ''
+                  a.btn.btn-default.add_images href='javascript:void(0)'
+                    i.fa.fa-plus
+                .col-md-11
+                  = f.label :images, 'Images'
+                  sup.text-danger
+                    = f.file_field :images, :class => 'form-control file', :multiple => true
+              .controls.attach
 
-            .row
-              .col-lg-12
-                br
-                .margin-bottom-50
-                  #owl3.owl-carousel.owl-theme.owl-demo-img
-                    -@user_event&.images.each_with_index do |img, index|
-                      div class="image_#{index}"
-                        span class="fa fa-times remove_image" data-event=@event.id data-uv="#{@user_event.id}" data-item="#{index}" aria-hidden="true"
-                          img src=image_path(img) class='fa fa-times'
+              .row
+                .col-lg-12
+                  br
+                  .margin-bottom-50
+                    #owl3.owl-carousel.owl-theme.owl-demo-img
+                      - @user_event&.images.each_with_index do |img, index|
+                        div class="image_#{index}"
+                          span class="fa fa-times remove_image" data-event=@event.id data-uv="#{@user_event.id}" data-item="#{index}" aria-hidden="true"
+                            img src=image_path(img) class='fa fa-times'
           .panel-footer
             .form-group.row
               .col-md-9.col-md-offset-3
