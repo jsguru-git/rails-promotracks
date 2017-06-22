@@ -38,7 +38,11 @@ section.page-content
                   label &nbsp;
                   .input-group
                     .input-group-addon
-                      = f.check_box :recommended
+                      - if @user_event.recommended.nil? or @user_event.recommended==true
+                        - checked= true
+                      - elsif @user_event.recommended==false
+                        - checked= false
+                      = f.check_box :recommended, {:checked => checked}
                     .form-control Recommended
               .form-group.row
                 .col-md-12
