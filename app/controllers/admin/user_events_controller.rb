@@ -27,8 +27,8 @@ class Admin::UserEventsController < Admin::AdminApplicationController
       @user_event.recommended = nil
     end
     if @user_event.valid?
-      @user_event.check_in = Time.zone.strptime(user_event_params[:check_in], '%m/%d/%Y %I:%M %p') unless user_event_params[:check_in].nil?
-      @user_event.check_out = Time.zone.strptime(user_event_params[:check_out], '%m/%d/%Y %I:%M %p') unless user_event_params[:check_out].nil?
+      @user_event.check_in = Time.zone.strptime(user_event_params[:check_in], '%m/%d/%Y %I:%M %p') unless user_event_params[:check_in].blank?
+      @user_event.check_out = Time.zone.strptime(user_event_params[:check_out], '%m/%d/%Y %I:%M %p') unless user_event_params[:check_out].blank?
       @user_event.save
       flash[:notice]="Updated Successfully"
       redirect_to admin_event_path(@event)
