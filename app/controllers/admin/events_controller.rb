@@ -42,7 +42,7 @@ class Admin::EventsController < Admin::AdminApplicationController
     @event.address.city = event_params[:address_attributes][:city] unless event_params[:address_attributes][:formatted_address].blank?
     user_ids=params[:event][:user_ids].reject(&:blank?).map(&:to_i)
     if event_params[:group_id].blank? and user_ids.blank?
-      flash[:error]= "Either Promo Rep or Group should be selected"
+      flash[:error]= "Either Direct Sourced or Group should be selected"
       render :new
       return
     end
@@ -86,7 +86,7 @@ class Admin::EventsController < Admin::AdminApplicationController
     @event=Event.find(params[:id])
     user_ids=params[:event][:user_ids].reject(&:blank?).map(&:to_i)
     if event_params[:group_id].blank? and user_ids.blank?
-      flash[:error]= "Either Promo Rep or Group should be selected"
+      flash[:error]= "Either Direct Sourced or Group should be selected"
       redirect_to :back
       return
     end
