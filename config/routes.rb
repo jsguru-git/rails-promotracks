@@ -14,7 +14,9 @@ Rails.application.routes.draw do
     resources :clients do
       delete :remove_brand
       get :impersonate
-      resources :users
+      resources :users do
+        get :resend_invitation
+      end
     end
     resources :promo_reps do
       get :resend

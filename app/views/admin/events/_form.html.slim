@@ -37,18 +37,19 @@ div
             =f.select :user_ids, options_for_select(@promo_reps.collect { |u| [u.full_name, u.id] }, selected_key = selected), {}, {:multiple => true, :class => 'form-control selectpicker show-tick', 'data-live-search' => true}
             .help-block.with-errors
           .col-md-3
-            = f.label :promo_groups, 'Promo Groups'
-            sup.text-danger
-            =f.select :group_id, options_for_select(Group.all.collect { |u| [u.name, u.id] }, selected_key = @event.group_id), {}, {:class => 'form-control selectpicker show-tick pointer', :title => 'Select Group'}
-            .help-block.with-errors
-          .col-md-3
-            = f.label :max_users, 'Max Users'
+            = f.label :max_users, 'Promo Staff Needed'
             sup.text-danger *
             -if @event.max_users==0
               -value=1
             -else
               -value=@event.max_users
             = f.number_field :max_users, min: 1, class: 'form-control', required: true, :value => value
+          .col-md-3
+            = f.label :promo_groups, 'Promo Groups'
+            sup.text-danger
+            =f.select :group_id, options_for_select(@current_client.groups.collect { |u| [u.name, u.id] }, selected_key = @event.group_id), {}, {:class => 'form-control selectpicker show-tick pointer', :title => 'Select Group'}
+            .help-block.with-errors
+
         .form-group.row
           .col-sm-6
             =f.label :start_time, 'Start Time'
@@ -65,14 +66,7 @@ div
               span.input-group-addon.pointer
                 i.icmn-calendar4
         .form-group.row
-          .col-sm-6
-            =f.label :pay, 'Payment/hr'
-            sup.text-danger *
-            .input-group
-              span.input-group-addon
-                i.fa.fa-dollar
-              = f.number_field :pay, min: 1, class: 'form-control', required: true
-          .col-sm-6
+          .col-sm-12
             =f.label :area, 'Area'
             sup.text-danger *
             = f.text_field :area, class: 'form-control', required: true
@@ -92,7 +86,11 @@ div
                 =addr.hidden_field :formatted_address, class: 'formatted_address'
                 =addr.hidden_field :latitude, class: 'latitude'
                 =addr.hidden_field :longitude, class: 'longitude'
-
+        .form-group.row
+          .col-sm-12
+            =f.label :notes, 'Notes'
+            sup.text-danger *
+            = f.text_area :notes, class: 'form-control', rows: 5
       .panel-footer
         .form-group.row
           .col-md-9.col-md-offset-5

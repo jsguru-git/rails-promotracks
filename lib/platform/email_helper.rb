@@ -21,6 +21,7 @@ module EmailHelper
     data[:end_time]=((event.end_time).in_time_zone(event.address.time_zone))&.strftime('%m/%d/%Y %I:%M %p')
     data[:brand_name]=event.brand&.name
     data[:location]=event.address&.city
+    data[:notes] = event.notes
     data[:event_type]=event.event_type&.name
     data
   end

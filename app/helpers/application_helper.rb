@@ -54,4 +54,12 @@ module ApplicationHelper
     return success, error, event.images
   end
 
+  def get_amount(event)
+    if !event.pay.blank?
+      event.pay
+    elsif !event.client.payment.blank?
+      event.client.payment
+    end
+  end
+
 end

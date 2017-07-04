@@ -169,7 +169,7 @@ $(document).on('turbolinks:load', function () {
         eyeCloseClass: 'icmn-eye-blocked'
     });
 
-    $('#us-phone-mask-input').mask('(000) 000-0000', {placeholder: "(___) ___-____"});
+    $('#us-phone-mask-input ,#user_phone').mask('(000) 000-0000', {placeholder: "(___) ___-____"});
 
     $('.group_users').popover();
     $('[data-toggle="popover"]').popover();

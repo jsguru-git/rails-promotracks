@@ -41,6 +41,17 @@ section.page-content.height-auto
                     .form-group
                       = f.text_field :phone, class: 'form-control', id: 'us-phone-mask-input'
                       .help-block.with-errors
+                .row
+                  .col-md-3.col-lg-offset-2
+                    label.form-control-label for="l0"
+                      | Payment/hr
+                      sup.text-danger *
+                  .col-md-4
+                    .form-group
+                      .input-group
+                        span.input-group-addon
+                          i.fa.fa-dollar
+                        = f.number_field :payment, min: 1, class: 'form-control', required: true
           h3
             i.icmn-user.cui-wizard--steps--icon
             span.cui-wizard--steps--title Admin

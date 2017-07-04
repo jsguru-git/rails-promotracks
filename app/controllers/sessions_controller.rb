@@ -7,6 +7,10 @@ class SessionsController < Devise::SessionsController
     respond_to do |format|
       format.html {
         if resource
+          if resource.deleted
+            sign_out_and_redirect(user_session_path,"Not Authorized to login!")
+            return
+          end
           sign_in(resource_name, resource)
         else
           sign_out_and_redirect(user_session_path, "Invalid Username or Password")

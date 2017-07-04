@@ -20,7 +20,7 @@ section.page-content
                 address
                   | Venue:         #{address}
                 address
-                  | Payment/hr :      #{@event.pay}
+                  | Payment/hr :      #{(get_amount(@event))}
 
                   br/
                   br/
@@ -70,7 +70,7 @@ section.page-content
                       -if !uv.check_in.nil? and !uv.check_out.nil?
                         -hour=time_diff(uv.check_out, uv.check_in)
                         td.text-left #{hour}
-                        td.text-left #{hour*@event.pay}
+                        td.text-left #{hour*(get_amount(@event))}
                       -else
                         td.text-left
                         td.text-left

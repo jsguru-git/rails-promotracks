@@ -12,6 +12,14 @@ nav.left-menu left-menu=""
         a.left-menu-link href=admin_events_path
           i.left-menu-link-icon.icmn-calendar
           | Events
+      li class="#{active_class(admin_promo_reps_path)}"
+        a.left-menu-link href=admin_promo_reps_path
+          i.left-menu-link-icon.icmn-users
+          | Promo Reps
+      li.left-menu-list class="#{active_class(admin_groups_path)}"
+        a.left-menu-link href=admin_groups_path
+          i.left-menu-link-icon.icmn-users4
+          | Promo Groups
 
       li#top-menu1
         nav.top-menu.csm-menu

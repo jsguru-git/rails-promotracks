@@ -1,108 +1,109 @@
-.table-responsive
-  table.table
-    thead
-      tr.active
-        th Date
+div class="scrollit"
+  .table-responsive
+    table.table
+      thead
+        tr.active
+          th Date
 
-        th style="width: 8%" Name
+          th style="width: 8%" Name
 
-        th style="width: 8%" Type
+          th style="width: 8%" Type
 
-        th style="width: 8%" Area
-        th style="width: 8%" Rep
-        th Attendance
-        th Sample
-        th style="width: 8%" Prod cost($)
-        th  Expenses($)
-        th  Hours
-        th  Pay($)
-        th Recommend
-        th style="width: 8%" Follow up
-        th Notes
-        th Images
+          th style="width: 8%" Area
+          th style="width: 8%" Rep
+          th Attendance
+          th Sample
+          th style="width: 8%" Prod cost($)
+          th  Expenses($)
+          th  Hours
+          th  Pay($)
+          th Recommend
+          th style="width: 8%" Follow up
+          th Notes
+          th Images
 
 
-    tfoot
-      tr.active
-        th &nbsp;
-        th &nbsp;
-        th colspan="3" Events Data Summary
-        th  #{@total_attendance}
-        th  #{@total_sample}
-        th  $#{@total_product_cost.round(2)}
-        th  $#{@total.round(2)}
-        th &nbsp;
-        th $#{@total_payment.round(2)}
-        th &nbsp;
-        th &nbsp;
-        th &nbsp;
-        th &nbsp;
+      tfoot
+        tr.active
+          th &nbsp;
+          th &nbsp;
+          th colspan="3" Events Data Summary
+          th  #{@total_attendance}
+          th  #{@total_sample}
+          th  $#{@total_product_cost.round(2)}
+          th  $#{@total.round(2)}
+          th &nbsp;
+          th $#{@total_payment.round(2)}
+          th &nbsp;
+          th &nbsp;
+          th &nbsp;
+          th &nbsp;
 
-    tbody
+      tbody
 
-      -events.each do |event|
-        -if event.user_events.where(:status => UserEvent::statuses[:accepted]).size>0
-          -count=event.user_events.where(:status => UserEvent::statuses[:accepted]).count
-          tr
-            td rowspan="#{count+count}" #{((event.start_time)&.in_time_zone(event.address&.time_zone))&.strftime('%m/%d/%Y %I:%M %p')}
-            td rowspan="#{count+count}"
-              =link_to " #{event.name}", admin_event_path(event.id), :id => 'text-color'
+        -events.each do |event|
+          -if event.user_events.where(:status => UserEvent::statuses[:accepted]).size>0
+            -count=event.user_events.where(:status => UserEvent::statuses[:accepted]).count
+            tr
+              td rowspan="#{count+count}" #{((event.start_time)&.in_time_zone(event.address&.time_zone))&.strftime('%m/%d/%Y %I:%M %p')}
+              td rowspan="#{count+count}"
+                =link_to " #{event.name}", admin_event_path(event.id), :id => 'text-color'
 
-            td rowspan="#{count+count}" #{event&.event_type&.name}
-            td rowspan="#{count+count}" #{event&.area}
-            -event.user_events.where(:status => UserEvent::statuses[:accepted]).each do |uv|
-              tr data-hide="true"
-                td #{uv.user.full_name}
-                -if uv.recap==true
-                  td #{uv.attendance}
-                -else
-                  td
-                -if uv.recap==true
-                  td #{uv.sample}
-                -else
-                  td
-                -if uv.recap==true
-                  td #{number_with_precision((event.brand&.unit_cost||0)*(uv.sample||0).round, precision: 1,  strip_insignificant_zeros: true)}
-                -else
-                  td
-                td #{uv.total_expense}
-                -if !uv.check_in.nil? and !uv.check_out.nil?
-                  -hour=time_diff(uv.check_out, uv.check_in)
-                  td #{hour}
-                  td #{hour*event.pay}
-                -else
-                  td
-                  td
-
-                td
-                  -if uv.recommended==true
-                    p.highlight Yes
-                  -elsif uv.recommended==false
-                    p.highlight No
-                td
-                  -if uv.follow_up.blank?
-                    p N/A
+              td rowspan="#{count+count}" #{event&.event_type&.name}
+              td rowspan="#{count+count}" #{event&.area}
+              -event.user_events.where(:status => UserEvent::statuses[:accepted]).each do |uv|
+                tr data-hide="true"
+                  td #{uv.user.full_name}
+                  -if uv.recap==true
+                    td #{uv.attendance}
                   -else
-                    a href="javascript:void" title="Notes" data-toggle="popover" data-placement="bottom" data-content="#{uv.follow_up}" View
-                td
-                  -if uv.notes.blank?
-                    p N/A
+                    td
+                  -if uv.recap==true
+                    td #{uv.sample}
                   -else
-                    a href="javascript:void" title="Notes" data-toggle="popover" data-placement="bottom" data-content="#{uv.notes}" View
-                td
-                  -if uv.images&.size==0
-
-                    p N/A
+                    td
+                  -if uv.recap==true
+                    td #{number_with_precision((event.brand&.unit_cost||0)*(uv.sample||0).round, precision: 1,  strip_insignificant_zeros: true)}
                   -else
-                    a class="images" href= images_admin_dashboard_index_path(:user_event=> uv.id)  Show
+                    td
+                  td #{uv.total_expense}
+                  -if !uv.check_in.nil? and !uv.check_out.nil?
+                    -hour=time_diff(uv.check_out, uv.check_in)
+                    td #{hour}
+                    td #{hour*(get_amount(event))}
+                  -else
+                    td
+                    td
 
-              tr/
-          tr/
-        -else
-          tr
-            td #{((event.start_time)&.in_time_zone(event.address&.time_zone))&.strftime('%m/%d/%Y %I:%M %p')}
-            td
-              =link_to " #{event.name}", admin_event_path(event.id), :id => 'text-color'
+                  td
+                    -if uv.recommended==true
+                      p.highlight Yes
+                    -elsif uv.recommended==false
+                      p.highlight No
+                  td
+                    -if uv.follow_up.blank?
+                      p N/A
+                    -else
+                      a href="javascript:void" title="Notes" data-toggle="popover" data-placement="bottom" data-content="#{uv.follow_up}" View
+                  td
+                    -if uv.notes.blank?
+                      p N/A
+                    -else
+                      a href="javascript:void" title="Notes" data-toggle="popover" data-placement="bottom" data-content="#{uv.notes}" View
+                  td
+                    -if uv.images&.size==0
 
-            td  #{event&.event_type&.name}
-            td  #{event&.area}
+                      p N/A
+                    -else
+                      a class="images" href= images_admin_dashboard_index_path(:user_event=> uv.id)  Show
+
+                tr/
+            tr/
+          -else
+            tr
+              td #{((event.start_time)&.in_time_zone(event.address&.time_zone))&.strftime('%m/%d/%Y %I:%M %p')}
+              td
+                =link_to " #{event.name}", admin_event_path(event.id), :id => 'text-color'
+
+              td  #{event&.event_type&.name}
+              td  #{event&.area}

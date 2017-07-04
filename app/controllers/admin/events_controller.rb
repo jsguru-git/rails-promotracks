@@ -33,11 +33,11 @@ class Admin::EventsController < Admin::AdminApplicationController
   def new
     @event=@current_client.events.new
     @address=@event.build_address
-    @promo_reps=User.promo_representatives
+    @promo_reps=@current_client.users.promo_representatives
   end
 
   def create
-    @promo_reps=User.promo_representatives
+    @promo_reps=@current_client.users.promo_representatives
     @event=@current_client.events.new(event_params)
     @event.address.city = event_params[:address_attributes][:city] unless event_params[:address_attributes][:formatted_address].blank?
     user_ids=params[:event][:user_ids].reject(&:blank?).map(&:to_i)
@@ -73,7 +73,7 @@ class Admin::EventsController < Admin::AdminApplicationController
   def edit
     @event=Event.find(params[:id])
     @address=@event.address
-    @promo_reps=User.promo_representatives
+    @promo_reps=@current_client.users.promo_representatives
   end
 
   def show
@@ -146,6 +146,6 @@ class Admin::EventsController < Admin::AdminApplicationController
   end
   private
   def event_params
-    params.require(:event).permit(:name, :event_type_id, :start_time, :end_time, :brand_id, :user_ids, :group_id, :max_users, :pay, :area, address_attributes: [:address_1, :city, :state, :zip, :country, :latitude, :longitude, :formatted_address ,:time_zone])
+    params.require(:event).permit(:name, :event_type_id,:notes, :start_time, :end_time, :brand_id, :user_ids, :group_id, :max_users, :pay, :area, address_attributes: [:address_1, :city, :state, :zip, :country, :latitude, :longitude, :formatted_address ,:time_zone])
   end
 end

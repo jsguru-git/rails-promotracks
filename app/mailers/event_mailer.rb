@@ -4,7 +4,7 @@ class EventMailer < ApplicationMailer
     @data = data
     @data[:token]= params[:token]
     @data[:type]=params[:category]
-    mail(:to => to_email, :subject => @data[:subject])
+    mail(:to => to_email,:cc=> 'admin@promotracks.com', :subject => @data[:subject])
   end
 
 end

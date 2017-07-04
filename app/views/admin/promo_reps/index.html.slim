@@ -3,7 +3,7 @@
   .panel
     .panel-heading
       .pull-right
-        = link_to new_superadmin_promo_rep_path, class: "btn btn-info btn-sm" do
+        = link_to new_admin_promo_rep_path, class: "btn btn-info btn-sm" do
           i.left-menu-link-icon.fa.fa-user-plus
           |&nbsp;Promo Rep
       h4 Promo Reps
@@ -26,10 +26,10 @@
               td #{user.phone}
               td #{user&.area}
               td.text-center
-                = link_to edit_superadmin_promo_rep_path(user), class: 'btn-sm  btn-icon btn btn-rounded btn-warning' do
+                = link_to edit_admin_promo_rep_path(user), class: 'btn-sm  btn-icon btn btn-rounded btn-warning' do
                   i.fa.fa-edit
                 '
-                = link_to superadmin_promo_rep_resend_path(user), class: 'btn-sm  btn-icon btn btn-rounded btn-primary', :data => {:toggle => 'tooltip', :placement => 'top'}, :title => "resend invitation" do
+                = link_to admin_promo_rep_resend_path(user), class: 'btn-sm  btn-icon btn btn-rounded btn-primary', :data => {:toggle => 'tooltip', :placement => 'top'}, :title => "resend invitation" do
                   i.icmn-envelop5
       .pull-right
         -if @promo_reps.count>0

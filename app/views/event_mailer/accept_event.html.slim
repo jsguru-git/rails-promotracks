@@ -69,6 +69,9 @@ html
                   /  p Timings: #{@data[:event][:start_time]&.strftime('%m/%d/%Y %I:%M %p')}  to  #{@data[:event][:end_time]&.strftime('%m/%d/%Y %I:%M %p')}
                   /  p Brand : #{@data[:event][:brand_name]}
                   /  p Location : #{@data[:event][:location]}
+                  p
+                    strong
+                      | Notes: #{@data[:event][:notes]}
                   br
                   /br
                   -if @data[:type] == 'promo_group'

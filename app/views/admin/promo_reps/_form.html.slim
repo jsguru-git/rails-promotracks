@@ -1,11 +1,11 @@
--url=@promo_rep.new_record? ? superadmin_promo_reps_path(@promo_rep) : superadmin_promo_rep_path(@promo_rep)
+-url=@promo_rep.new_record? ? admin_promo_reps_path(@promo_rep) : admin_promo_rep_path(@promo_rep)
 .col-md-offset-3.col-md-6
   =form_for @promo_rep, url: url, :html => {:"data-toggle" => "validator"} do |f|
     .panel
       #breadcrumb-align
         ul.list-unstyled.breadcrumb
           li
-            a href='#{superadmin_promo_reps_path}'   Promo Reps
+            a href='#{admin_promo_reps_path}'   Promo Reps
           li
             span #{@promo_rep.new_record? ? 'New ' : 'Edit '} Promo Rep
     .panel.panel-with-borders
@@ -43,4 +43,4 @@
           .col-md-9.col-md-offset-3
             =f.submit 'Submit', class: 'button btn width-150 btn-primary'
             '
-            a.button.btn.btn-default href="#{superadmin_promo_reps_path}" Cancel
+            a.button.btn.btn-default href="#{admin_promo_reps_path}" Cancel

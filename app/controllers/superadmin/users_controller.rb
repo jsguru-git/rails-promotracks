@@ -2,7 +2,7 @@ class Superadmin::UsersController < Superadmin::SuperadminApplicationController
 
   def index
     @client=Client.find(params[:client_id])
-    @users=@client.users.client_admin
+    @users=@client.users.active_users.client_admin
   end
 
   def new
@@ -24,6 +24,21 @@ class Superadmin::UsersController < Superadmin::SuperadminApplicationController
       flash[:error]= "User Already Exists"
       redirect_to :back
     end
+  end
+
+  def resend_invitation
+    @user = User.find(params[:user_id])
+    @user.invite!
+    flash[:notice] = 'Invitation sent!'
+    redirect_to superadmin_client_users_path
+  end
+
+  def destroy
+    @client=Client.find(params[:client_id])
+    @user = User.find(params[:id])
+    @user.update_attribute(:deleted , true)
+    flash[:notice] = 'Admin deleted successfully!'
+    redirect_to superadmin_client_users_path
   end
 
   private

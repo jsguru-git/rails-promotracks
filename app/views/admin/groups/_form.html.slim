@@ -1,10 +1,10 @@
 .col-md-offset-3.col-md-6
-  = form_for [:superadmin, @group] do |f|
+  = form_for [:admin, @group] do |f|
     .panel
       #breadcrumb-align
         ul.list-unstyled.breadcrumb
           li
-            a href='#{superadmin_groups_path}'   Promo Groups
+            a href='#{admin_groups_path}'   Promo Groups
           li
             span #{@group.new_record? ? 'New ' : 'Edit '} Group
     .clearfix
@@ -21,7 +21,7 @@
           .col-md-12
             = f.label :promo_reps, 'Promo Reps'
             sup.text-danger *
-            =f.select :user_ids, options_for_select(@promo_reps.collect { |u| [u.full_name, u.id] }, selected_key = @group.user_ids), {}, {:multiple => true, required: true, :class => 'form-control selectpicker show-tick', :"data-live-search" => true }
+            =f.select :user_ids, options_for_select(@promo_reps.collect { |u| [u.full_name, u.id] }, selected_key = @group.user_ids), {}, {:multiple => true, required: true, :class => 'form-control selectpicker show-tick', :"data-live-search" => true}
             .help-block.with-errors
 
       .panel-footer
@@ -29,4 +29,4 @@
           .col-md-9.col-md-offset-3
             =f.submit 'Submit', class: 'button btn width-150 btn-primary'
             '
-            a.button.btn.btn-default href="#{superadmin_groups_path}" Cancel
+            a.button.btn.btn-default href="#{admin_groups_path}" Cancel

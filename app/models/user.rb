@@ -22,6 +22,10 @@ class User < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
+  def self.active_users
+    self.where(deleted: false)
+  end
+
   def self.group_members
     promo_rep.where(:group_id => nil).order('first_name')
   end

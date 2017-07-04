@@ -1,9 +1,9 @@
 require 'platform/email_helper'
-class Superadmin::PromoRepsController < Superadmin::SuperadminApplicationController
+class Admin::PromoRepsController < Admin::AdminApplicationController
   include EmailHelper
 
   def index
-    @promo_reps=User.where(role: 'promo_rep').order('first_name').collect { |u| u }
+    @promo_reps=@current_client.users.where(role: 'promo_rep').order('first_name').collect { |u| u }
     unless @promo_reps.kind_of?(Array)
       @promo_reps = @promo_reps.page(params[:page]).per(10)
     else
@@ -12,7 +12,7 @@ class Superadmin::PromoRepsController < Superadmin::SuperadminApplicationControl
   end
 
   def new
-    @promo_rep=User.new
+    @promo_rep=@current_client.users.new
   end
 
   def create
@@ -20,8 +20,10 @@ class Superadmin::PromoRepsController < Superadmin::SuperadminApplicationControl
     pro_rep.password = generate_token
     pro_rep.token = generate_token
     if pro_rep.save
+      @current_client.users << pro_rep
+      @current_client.save
       UserJob.perform_later('add_rep', pro_rep)
-      redirect_to superadmin_promo_reps_path
+      redirect_to admin_promo_reps_path
     else
       flash[:error]=pro_rep.errors.full_messages.join(', ')
       redirect_to :back
@@ -30,13 +32,13 @@ class Superadmin::PromoRepsController < Superadmin::SuperadminApplicationControl
 
 
   def edit
-    @promo_rep=User.find(params[:id])
+    @promo_rep=@current_client.users.find(params[:id])
   end
 
   def update
-    @promo_rep=User.find(params[:id])
+    @promo_rep=@current_client.users.find(params[:id])
     if @promo_rep.update_attributes(user_params)
-      redirect_to superadmin_promo_reps_path
+      redirect_to admin_promo_reps_path
     else
       flash[:error]=@promo_rep.errors.full_messages.join(', ')
       redirect_to :back
@@ -45,11 +47,11 @@ class Superadmin::PromoRepsController < Superadmin::SuperadminApplicationControl
 
 
   def resend
-    @promo_rep=User.find(params[:promo_rep_id])
+    @promo_rep=@current_client.users.find(params[:promo_rep_id])
     @promo_rep.update_attribute(:token, generate_token)
     UserJob.perform_later('resend_token', @promo_rep)
     flash[:notice] = "Password sent!"
-    redirect_to superadmin_promo_reps_path
+    redirect_to admin_promo_reps_path
   end
 
 
