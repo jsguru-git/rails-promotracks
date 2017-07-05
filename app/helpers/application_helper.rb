@@ -55,10 +55,10 @@ module ApplicationHelper
   end
 
   def get_amount(event)
-    if !event.pay.blank?
-      event.pay
-    elsif !event.client.payment.blank?
+    if !event.client.payment.blank?
       event.client.payment
+    elsif !event.pay.blank?
+      event.pay
     end
   end
 
