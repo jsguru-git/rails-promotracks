@@ -257,3 +257,12 @@ input.field {
   overflow:scroll;
   height:500px;
 }
+
+.bootstrap-select.btn-group .dropdown-menu li a {
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  padding-bottom: 13px;
+}
