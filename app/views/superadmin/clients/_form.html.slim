@@ -51,7 +51,7 @@ section.page-content.height-auto
                       .input-group
                         span.input-group-addon
                           i.fa.fa-dollar
-                        = f.number_field :payment, min: 1, class: 'form-control', required: true
+                        = f.number_field :payment, :step => :any, min: 1, class: 'form-control', required: true
           h3
             i.icmn-user.cui-wizard--steps--icon
             span.cui-wizard--steps--title Admin
