@@ -16,10 +16,14 @@ class Admin::PromoRepsController < Admin::AdminApplicationController
   end
 
   def create
-    pro_rep=User.new(user_params)
-    pro_rep.password = generate_token
-    pro_rep.token = generate_token
-    if pro_rep.save
+    pro_rep=User.find_by_email(user_params[:email])
+    if pro_rep.nil?
+      pro_rep=User.new(user_params)
+      pro_rep.password = generate_token
+      pro_rep.token = generate_token
+      pro_rep.save
+    end
+    if pro_rep.valid?
       @current_client.users << pro_rep
       @current_client.save
       UserJob.perform_later('add_rep', pro_rep)
