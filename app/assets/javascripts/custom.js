@@ -321,5 +321,12 @@ $(document).on('turbolinks:load', function () {
         "bInfo": false
     });
 
+    $('.search_form').on('keyup keypress', function (e) {
+        var keyCode = e.keyCode || e.which;
+        if (keyCode === 13) {
+            e.preventDefault();
+            return false;
+        }
+    });
 
 });
