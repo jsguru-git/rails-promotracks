@@ -21,16 +21,23 @@ class Admin::PromoRepsController < Admin::AdminApplicationController
       pro_rep=User.new(user_params)
       pro_rep.password = generate_token
       pro_rep.token = generate_token
-      pro_rep.save
-    end
-    if pro_rep.valid?
+      if pro_rep.valid?
+        @current_client.users << pro_rep
+        @current_client.save
+        UserJob.perform_later('add_rep', pro_rep)
+        redirect_to admin_promo_reps_path
+      else
+        flash[:error]=pro_rep.errors.full_messages.join(', ')
+        redirect_to :back
+      end
+    elsif @current_client.users.include? pro_rep
+      flash[:error]= "Direct Sourced Already Exsits"
+      redirect_to :back
+    else
       @current_client.users << pro_rep
       @current_client.save
-      UserJob.perform_later('add_rep', pro_rep)
+      flash[:notice] = "Direct Sourced information is found already and added to your Direct Sourced"
       redirect_to admin_promo_reps_path
-    else
-      flash[:error]=pro_rep.errors.full_messages.join(', ')
-      redirect_to :back
     end
   end
 
