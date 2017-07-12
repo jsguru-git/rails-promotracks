@@ -23,6 +23,9 @@ module EmailHelper
     data[:location]=event.address&.city
     data[:notes] = event.notes
     data[:event_type]=event.event_type&.name
+    data[:client_name]= event.client.name
+    data[:client_email]= event.client.admin.email
+    data[:client_phone]= event.client.phone
     data
   end
 
