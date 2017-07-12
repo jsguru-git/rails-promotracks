@@ -69,9 +69,29 @@ html
                   /  p Timings: #{@data[:event][:start_time]&.strftime('%m/%d/%Y %I:%M %p')}  to  #{@data[:event][:end_time]&.strftime('%m/%d/%Y %I:%M %p')}
                   /  p Brand : #{@data[:event][:brand_name]}
                   /  p Location : #{@data[:event][:location]}
-                  p
-                    strong
-                      | Notes: #{@data[:event][:notes]}
+                  - unless @data[:event][:notes].blank?
+                    p
+                      strong
+                        | Notes:
+                      |&nbsp; #{@data[:event][:notes]}
+                  - if @data[:type] == 'promo_group'
+                    p
+                      strong
+                        | Invited By:
+                      |&nbsp; #{@data[:event][:client_name]}
+                    p
+                      strong
+                        | Contact:
+                      |&nbsp; #{@data[:event][:client_phone]}
+                  - else
+                    p
+                      strong
+                        | Assigned By:
+                      |&nbsp; #{@data[:event][:client_name]}
+                    p
+                      strong
+                        | Contact:
+                      |&nbsp; #{@data[:event][:client_phone]}
                   br
                   /br
                   -if @data[:type] == 'promo_group'
