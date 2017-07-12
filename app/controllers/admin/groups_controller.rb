@@ -7,7 +7,7 @@ class Admin::GroupsController < Admin::AdminApplicationController
 
   def new
     @group=@current_client.groups.new
-    @promo_reps=@current_client.users.promo_rep
+    @promo_reps=@current_client.users.promo_rep.uniq
   end
 
   def create
@@ -21,7 +21,7 @@ class Admin::GroupsController < Admin::AdminApplicationController
 
   def edit
     @group=@current_client.groups.find(params[:id])
-    @promo_reps=@current_client.users.promo_rep
+    @promo_reps=@current_client.users.promo_rep.uniq
   end
 
   def update
