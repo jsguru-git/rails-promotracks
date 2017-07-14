@@ -29,13 +29,6 @@ div
             sup.text-danger *
             =select_tag 'event[brand_id]', options_for_select(@current_client.brands.active_brands.collect { |u| [u.name, u.id] }, selected_key = @event.brand_id), {:class => 'form-control pointer selectpicker', required: true,:include_blank=>'Nothing Selected'}
         .form-group.row
-          .col-md-6
-
-            = f.label :promo_reps, 'Direct Sourced'
-            sup.text-danger
-            -selected=@event.user_events.where(:category => 0).collect { |c| c[:user_id] }
-            =f.select :user_ids, options_for_select(@promo_reps.collect { |u| [u.full_name, u.id] }, selected_key = selected), {}, {:multiple => true, :class => 'form-control selectpicker show-tick', 'data-live-search' => true}
-            .help-block.with-errors
           .col-md-3
             = f.label :max_users, 'Promo Staff Needed'
             sup.text-danger *
@@ -44,6 +37,12 @@ div
             -else
               -value=@event.max_users
             = f.number_field :max_users, min: 1, class: 'form-control', required: true, :value => value
+          .col-md-6
+            = f.label :promo_reps, 'Direct Sourced'
+            sup.text-danger
+            -selected=@event.user_events.where(:category => 0).collect { |c| c[:user_id] }
+            =f.select :user_ids, options_for_select(@promo_reps.collect { |u| [u.full_name, u.id] }, selected_key = selected), {}, {:multiple => true, :class => 'form-control selectpicker show-tick', 'data-live-search' => true}
+            .help-block.with-errors
           .col-md-3
             = f.label :promo_groups, 'Promo Groups'
             sup.text-danger
