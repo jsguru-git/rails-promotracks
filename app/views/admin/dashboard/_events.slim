@@ -53,7 +53,7 @@ div class="scrollit"
               td rowspan="#{count+count}" #{event&.area}
               -event.user_events.where(:status => UserEvent::statuses[:accepted]).each do |uv|
                 tr data-hide="true"
-                  td #{uv.user.full_name}
+                  td #{uv&.user&.full_name}
                   -if uv.recap==true
                     td #{uv.attendance}
                   -else
