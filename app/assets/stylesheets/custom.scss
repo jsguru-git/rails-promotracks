@@ -266,3 +266,19 @@ input.field {
   user-select: none;
   padding-bottom: 13px;
 }
+
+tbody, thead tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+thead {
+  display: block;
+  position: sticky;
+  top: 0;
+}
+
+.tab-width {
+  width: 8%;
+}
