@@ -20,6 +20,16 @@ class Superadmin::UsersController < Superadmin::SuperadminApplicationController
       @client.save
       flash[:notice]= "Admin Invited Sucessfully"
       redirect_to superadmin_client_users_path
+    elsif user.deleted
+      user.deleted = false
+      user.update_attributes(user_params)
+      user.invite!
+      unless @client.user_ids.include? user.id
+        @client.users << user
+        @client.save
+      end
+      flash[:notice]= "Admin Invited Sucessfully"
+      redirect_to superadmin_client_users_path
     else
       flash[:error]= "User Already Exists"
       redirect_to :back
@@ -37,6 +47,7 @@ class Superadmin::UsersController < Superadmin::SuperadminApplicationController
     @client=Client.find(params[:client_id])
     @user = User.find(params[:id])
     @user.update_attribute(:deleted , true)
+    @client.users.delete(@user)
     flash[:notice] = 'Admin deleted successfully!'
     redirect_to superadmin_client_users_path
   end
