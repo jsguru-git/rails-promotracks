@@ -46,10 +46,18 @@ class Superadmin::UsersController < Superadmin::SuperadminApplicationController
   def destroy
     @client=Client.find(params[:client_id])
     @user = User.find(params[:id])
-    @user.update_attribute(:deleted , true)
-    @client.users.delete(@user)
-    flash[:notice] = 'Admin deleted successfully!'
-    redirect_to superadmin_client_users_path
+    @users=@client.users.active_users.client_admin
+    if @users.size>1
+      @client.users.delete(@user)
+      @user.update_attribute(:deleted , true)
+      @client.admin=@users.first
+      @client.save
+      flash[:notice] = 'Admin deleted successfully!'
+      redirect_to superadmin_client_users_path
+    else
+      flash[:notice] = 'Their should atleast one active admin'
+      redirect_to :back
+    end
   end
 
   private
