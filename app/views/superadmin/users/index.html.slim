@@ -1,4 +1,4 @@
-.col-md-offset-2.col-md-7
+.col-md-offset-1.col-md-10
   .panel
     .container#breadcrumb-align
       ul.list-unstyled.breadcrumb
@@ -15,17 +15,17 @@
       table.table.table-striped
         thead
           tr
-            th ID
-            th Name
-            th Email
-            th.text-center Action
+            th.col-md-2 ID
+            th.col-md-3 Name
+            th.col-md-5 Email
+            th.col-md-2.text-center Action
         tbody
           -@users.each do |user|
             tr
-              td #{user.id}
-              td #{user.full_name}
-              td #{user.email}
-              td.text-center
+              td.col-md-2 #{user.id}
+              td.col-md-3 #{user.full_name}
+              td.col-md-5 #{user.email}
+              td.col-md-2.text-center
                 -unless @client.admin == user
                   = link_to superadmin_client_user_resend_invitation_path(@client.id,user.id), class: 'btn-sm  btn-icon btn btn-rounded btn-primary' ,:data => {:toggle => 'tooltip', :placement => 'top'}, :title => "resend invitation" do
                     i.icmn-envelop5
