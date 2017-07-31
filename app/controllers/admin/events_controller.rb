@@ -118,7 +118,7 @@ class Admin::EventsController < Admin::AdminApplicationController
           create_users=new_rep_ids-delete_users
           rep_email=true if create_users.any?
           create_users.each do |user_id|
-            if @event.user_ids.exclude? user_id
+            if @event.user_events.where(:category => 0).collect { |c| c[:user_id] }.exclude? user_id
               next if @event.group_id and @event.group.user_ids.include? user_id
               rep=User.find(user_id)
               reps << rep
