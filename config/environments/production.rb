@@ -87,9 +87,11 @@ Rails.application.configure do
   config.action_mailer.perform_deliveries = true
   config.logger = ActiveSupport::Logger.new(config.paths['log'].first, 1, 20*1024*1024)
   Rails.application.config.middleware.use ExceptionNotification::Rack,
-                                          :email => {
-                                              :email_prefix => 'Promo Tracks  | Broken Link | Staging',
-                                              :sender_address => %{admin@promotracks.com},
-                                              :exception_recipients => %w{manjula@bitcot.com}
+                                          :slack => {
+                                              :webhook_url => "https://hooks.slack.com/services/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",
+                                              :channel => "#bitcot-notifications",
+                                              :additional_parameters => {
+                                                  :mrkdwn => true
+                                              }
                                           }
 end

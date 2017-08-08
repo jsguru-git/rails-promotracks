@@ -5,6 +5,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   # before_action :authenticate_user!
 
+  def set_notification
+    request.env['exception_notifier.exception_data'] = {'server' => Rails.env}
+    # can be any key-value pairs
+  end
 
   def after_sign_in_path_for(resource)
     if resource.super_admin?
